@@ -1,3 +1,4 @@
 # Portfolio
 Meu Portfolio com meus projetos e informações sobre mim <br>
-https://portfolio-ashen-omega-76.vercel.app
+<a href="https://portfolio-ashen-omega-76.vercel.app" target="_blank">Clica aqui para visualizar o projeto<a/>
+
