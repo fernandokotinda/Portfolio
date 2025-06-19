@@ -8,33 +8,10 @@ function Home() {
       <div className="h-screen bg-[url('./imgs/home_fundo.jpg')] bg-cover bg-center flex flex-col">
         <div className="absolute inset-0 bg-black/50 "></div>
 
-        {/* NavBar */}
-        <div className="fixed w-full z-100 bg-azulEscuro h-16 flex place-content-center border-b-1 border-beje">
-
-          <div className="flex items-center gap-10 text-lg text-white">
-            <a href="" target="_blank" rel="noopener noreferrer" className="transition-colors duration-300 hover:text-cinzaClaro">
-              Início
-            </a>
-            <a href="" target="_blank" rel="noopener noreferrer" className="transition-colors duration-300 hover:text-cinzaClaro">
-              Sobre Mim
-            </a>
-            <a href="" target="_blank" rel="noopener noreferrer" className="transition-colors duration-300 hover:text-cinzaClaro">
-              Tecnologias
-            </a>
-            <a href="" target="_blank" rel="noopener noreferrer" className="transition-colors duration-300 hover:text-cinzaClaro">
-              Projetos
-            </a>
-            <a href="" target="_blank" rel="noopener noreferrer" className="transition-colors duration-300 hover:text-cinzaClaro">
-              Contato
-            </a>  
-          </div>
-
-        </div>
-
         {/* Conteúdo Central */}
         <div className="relative z-10 text-white flex items-center justify-center flex-col gap-5 h-full">
           <p className="text-gray-300 text-xl">Portfólio</p>
-          <h1 className="text-5xl font-semibold">Fernando Kotinda</h1>
+          <h1 className="text-5xl font-semibold" data-aos="flip-up" data-aos-duration="1500">Fernando Kotinda</h1>
           <h2 className="text-gray-300 text-xl">{"<Desenvolvedor Full-Stack />"}</h2>
           
           <div className="flex items-center gap-5">
