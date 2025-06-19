@@ -5,8 +5,8 @@ function Home() {
 
   return (
     <>
-      <div className="h-screen bg-[url('./imgs/home_fundo.jpg')] bg-cover bg-center flex flex-col">
-        <div className="absolute inset-0 bg-black/50 "></div>
+      <div id="home" className="h-screen bg-[url('./imgs/home_fundo.jpg')] bg-cover bg-center flex flex-col">
+        <div className="absolute inset-0 bg-black/50 z-0 scroll-mt-16"></div>
 
         {/* Conteúdo Central */}
         <div className="relative z-10 text-white flex items-center justify-center flex-col gap-5 h-full">
@@ -39,11 +39,13 @@ function Home() {
 
         </div>
 
-        {/* Seta indicando Scroll */}
-        <ChevronDown
-          size={40}
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white animate-bounce"
-        />
+          {/* Seta indicando Scroll */}
+          <a href="#about">
+            <ChevronDown
+              size={40}
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white animate-bounce z-10 cursor-pointer"
+            />
+          </a>
       </div>
     </>
   )

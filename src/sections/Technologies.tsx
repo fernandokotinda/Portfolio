@@ -14,7 +14,7 @@ import mysqlIcon from "../imgs/mysql.png";
 
 const Technologies = () => {
   return (
-    <div className="min-h-screen bg-[#0f172a] flex items-center justify-center flex-col w-full py-16 px-4 space-y-10">
+    <div id="technologies" className="min-h-screen bg-[#0f172a] flex items-center justify-center flex-col w-full py-16 px-4 space-y-10 scroll-mt-16">
       <h2 className="text-4xl font-bold text-white">Tecnologias</h2>
       <p className="text-white text-center max-w-xl">
         Minhas principais competências incluem:
@@ -41,7 +41,7 @@ const Technologies = () => {
       </div>
 
       {/* Back-end + Banco de Dados */}
-      <div className="w-3xl mt-12 px-2">
+      <div className="w-3xl mt-8 px-2">
         <div className="flex flex-row justify-between gap-12">
           {/* Back-end */}
           <div className="flex flex-col">
