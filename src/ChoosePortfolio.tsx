@@ -1,6 +1,6 @@
 import murilo_img from './assets/murilo.png';
 import fernando_img from './assets/fernando.jpg';
-import CardDev from './CardDev';
+import CardDev from './components/CardDev';
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -33,12 +33,12 @@ function Portfolio() {
         </h1>
         <div className="flex gap-20" data-aos="fade-up">
           <CardDev
-            link="#/murilo"
+            link="/murilo"
             img={murilo_img}
             name="Murilo Luiz"
           />
           <CardDev
-            link="#/fernando"
+            link="/fernando"
             img={fernando_img}
             name="Fernando Kotinda"
           />
