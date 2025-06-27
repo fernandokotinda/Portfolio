@@ -33,9 +33,9 @@ function Portfolio() {
         </h1>
         <div className="flex gap-20" data-aos="fade-up">
           <CardDev
-            link="/murilo"
-            img={murilo_img}
-            name="Murilo Luiz"
+          link="/murilo" // Laravel via proxy
+          img={murilo_img}
+          name="Murilo Luiz"
           />
           <CardDev
             link="/fernando"

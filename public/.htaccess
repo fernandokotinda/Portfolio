@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Redirecionar /murilo para o servidor Laravel
+RewriteCond %{REQUEST_URI} ^/murilo(.*)$
+RewriteRule ^murilo(.*)$ http://localhost:8000$1 [P,L]
+
+# Para todas as outras rotas, servir o React
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L] 
