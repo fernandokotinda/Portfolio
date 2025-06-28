@@ -11,6 +11,11 @@
     scroll-behavior: smooth;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px; /* Compensa a altura do header fixo */
+}
+
 ::-webkit-scrollbar {
     width: 12px; 
   }
@@ -40,11 +45,13 @@ body{
     height: 100vh;
     position: relative;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 main {
     position: relative;
     z-index: 10;
+    padding-top: 120px; /* Compensa a altura do header fixo */
 }
 
 .interface{
@@ -85,8 +92,20 @@ h2.title span{
 
 header{
     padding: 40px 4%;
-    position: relative;
-    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+header.header-scrolled {
+    padding: 20px 4%;
+    background-color: rgba(0, 0, 0, 0.85);
+    box-shadow: 0 2px 20px rgba(122, 44, 191, 0.3);
 }
 
 header > .interface {
@@ -230,20 +249,25 @@ section.top-of-site .flex{
 
 .top-of-site .img-top-of-site img{
     position: relative;
-    animation: float 2s ease-in-out infinite alternate;
     width: 25rem;
     height: 25rem;
     border-radius: 50%;
     box-shadow: rgba(122, 44, 191, 0.4) 0px 5px,rgba(122, 44, 191, 0.3) 0px 10px,rgba(122, 44, 191, 0.2) 0px 15px,rgba(122, 44, 191, 0.1) 0px 20px,rgba(122, 44, 191, 0.05) 0px 25px;
-    border: 2px solid #7a2cbf ;
+    border: 2px solid #7a2cbf;
+    transition: transform 0.1s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    cursor: pointer;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 @keyframes float{
     0%{
-        top: 0;
+        transform: translateY(0px);
     }
     100%{
-        top: 30px;
+        transform: translateY(-15px);
     }
 }
 
@@ -328,6 +352,12 @@ section.about .flex{
     height: 40rem;
     border-radius: 20px;
     box-shadow: 0 0 20px #7a2cbf;
+    transition: transform 0.1s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    cursor: pointer;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 /* Portfolio Style */
@@ -652,7 +682,7 @@ footer .line-footer p a{
     color: #fff;
     opacity: 0.1;
     font-size: 2rem;
-    animation: float 6s ease-in-out infinite;
+    animation: float-elements 6s ease-in-out infinite;
 }
 
 .floating-element:hover {
@@ -772,7 +802,7 @@ footer .line-footer p a{
     animation-duration: 9s;
 }
 
-@keyframes float {
+@keyframes float-elements {
     0%, 100% {
         transform: translateY(0px) rotate(0deg);
     }
