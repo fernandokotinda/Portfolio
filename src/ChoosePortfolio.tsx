@@ -6,7 +6,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 
-function Portfolio() {
+function ChoosePortfolio() {
 
   useEffect(() => {
     AOS.init({
@@ -33,7 +33,7 @@ function Portfolio() {
         </h1>
         <div className="flex gap-20" data-aos="fade-up">
           <CardDev
-          link="/murilo" // Laravel via proxy
+          link="/murilo"
           img={murilo_img}
           name="Murilo Luiz"
           />
@@ -48,4 +48,4 @@ function Portfolio() {
   );
 }
 
-export default Portfolio;
+export default ChoosePortfolio;
