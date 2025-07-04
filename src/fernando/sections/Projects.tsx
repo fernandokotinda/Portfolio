@@ -47,7 +47,7 @@ function Projects() {
 
               {/* Tags com tecnologias utilizadas */}
               <div className="flex flex-col gap-1 mb-3">
-                <p className="mb-1">A tecnologias utilizadas foram:</p>
+                <p className="mb-1">As tecnologias utilizadas foram:</p>
                 <div className="flex flex-wrap gap-3 max-w-xl">
                   <Tag color="bg-orange-600" text="HTML" /> 
                   <Tag color="bg-yellow-500" text="JavaScript" textColor="text-black" />
@@ -97,7 +97,7 @@ function Projects() {
 
               {/* Tags com tecnologias utilizadas */}
               <div className="flex flex-col gap-1 mb-3">
-                <p className="mb-1">A tecnologias utilizadas foram:</p>
+                <p className="mb-1">As tecnologias utilizadas foram:</p>
                 <div className="flex flex-wrap gap-3 max-w-xl">
                   <Tag color="bg-orange-600" text="HTML" /> 
                   <Tag color="bg-blue-500" text="CSS" />
@@ -158,7 +158,7 @@ function Projects() {
               </p>
               {/* Tags com tecnologias utilizadas */}
               <div className="flex flex-col gap-1 mb-3">
-                <p className="mb-1">A tecnologias utilizadas foram:</p>
+                <p className="mb-1">As tecnologias utilizadas foram:</p>
                 <div className="flex flex-wrap gap-3 max-w-xl">
                   <Tag color="bg-orange-600" text="HTML" /> 
                   <Tag color="bg-blue-500" text="CSS" />
@@ -176,7 +176,7 @@ function Projects() {
                   icon={<FaGithub className="ml-2 text-lg" size={20}/>}
                 />
                 <ProjectButton 
-                  link="https://fernandokotinda.github.io/Layout_para_Restaurante/"
+                  link="https://fernandokotinda.github.io/Site-Pizzaria/"
                   colorButton="bg-blue-900"
                   colorHover="bg-[#162b69]"
                   text="Ver Projeto"

@@ -4,7 +4,7 @@ function AboutMe() {
 
   return (
     <>
-      <div id="about" className="min-h-screen bg-[#1e293b] flex items-center justify-center px-10 flex-col md:flex-row w-full gap-20 scroll-mt-16">
+      <div id="about" className="min-h-screen bg-[#1e293b] flex items-center justify-center px-10 flex-col md:flex-row w-full gap-20 scroll-mt-16 border-y border-gray-600">
     
           {/* Foto de Perfil */}
           <div

@@ -16,7 +16,7 @@ import sqlServerIcon from "../imgs/sql_server.png";
 
 const Technologies = () => {
   return (
-    <div id="technologies" className="min-h-screen bg-[#0f172a] flex items-center justify-center flex-col w-full py-16 px-4 space-y-10 scroll-mt-16">
+    <div id="technologies" className="min-h-screen bg-[#0f172a] flex items-center justify-center flex-col w-full py-16 px-4 space-y-10 scroll-mt-16 border-b border-gray-800">
       <h2 className="text-4xl font-bold text-white">Tecnologias</h2>
       <p className="text-white text-center max-w-xl">
         Minhas principais competências incluem:

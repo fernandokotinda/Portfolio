@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar";
 import AboutMe from "./sections/AboutMe";
 import Technologies from "./sections/Technologies";
 import Projects from "./sections/Projects";
+import Footer from "./sections/Footer";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -27,6 +28,8 @@ function Portfolio() {
       <Technologies />
 
       <Projects />
+
+      <Footer />
     </>
   )
 }

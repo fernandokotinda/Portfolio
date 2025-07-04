@@ -17,7 +17,7 @@ function NavBar() {
                 <a href="#projects" className="transition-colors duration-300 hover:text-cinzaClaro">
                     Projetos
                 </a>
-                <a href="#contact" className="transition-colors duration-300 hover:text-cinzaClaro">
+                <a href="#footer" className="transition-colors duration-300 hover:text-cinzaClaro">
                     Contato
                 </a>
             </div>
