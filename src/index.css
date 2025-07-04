@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap'); /* Font Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Jersey+25&display=swap'); /* Fonte Jersey 25 */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap'); /* Fonte Baloo 2 */
+
 @import "tailwindcss";
 
 @theme {
@@ -27,10 +30,21 @@ body {
 }
 
 .shadow {
-    box-shadow: 0 0 5px 0 rgb(255, 255, 255);
+  box-shadow: 0 0 5px 0 #ffffff;
 }
 
 a.shadow:hover {
-    box-shadow: 0 0 10px 0 rgb(255, 255, 255);
+  box-shadow: 0 0 10px 0 #ffffff;
 }
 
+.font-tag {
+  font-family: 'Baloo 2', cursive;
+}
+
+.shadow-project {
+  box-shadow: 0 0 10px 0 #ffffff;
+}
+
+.shadow-link:hover {
+  box-shadow: 0 0 5px 0 #ffffff;
+}

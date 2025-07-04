@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ChoosePortfolio from "./ChoosePortfolio";
-import FernandoPortfolio from "../fernando/Portfolio";
+import FernandoPortfolio from "./fernando/Portfolio";
 
 export default function AppRoutes() {
   return (
