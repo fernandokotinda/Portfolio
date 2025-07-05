@@ -259,7 +259,7 @@
                             <div class="overlay">
                                 <div class="project-info">
                                     <h3>Echo</h3>
-                                    <p class="project-description">Empresa de auroidade de Murilo Luiz Jaboinski focada no desenvolvimento web de pequenos comércios.</p>
+                                    <p class="project-description">Empresa de autoridade de Murilo Luiz Jaboinski focada no desenvolvimento web de pequenos comércios.</p>
                                     <div class="project-tech">
                                         <span class="tech-tag">HTML5</span>
                                         <span class="tech-tag">CSS3</span>
@@ -271,41 +271,233 @@
                             </div>
                         </div><!--img-port-->
                     </a>
+                    <a href="/murilo/privado" class="scroll-reveal-scale scroll-reveal-delay-1">
+                        <div class="img-port"
+                            style="background-image: url('{{ asset('images/portfolio/csvFormatter.png') }}');">
+                            <div class="overlay">
+                                <div class="project-info">
+                                    <h3>Csv Formatter</h3>
+                                    <p class="project-description">Uma tela simples de formatação de um arquivo .xlsx para .csv com base no layout do .xlsx do índice de INPC.</p>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">HTML5</span>
+                                        <span class="tech-tag">CSS3</span>
+                                        <span class="tech-tag">JavaScript</span>
+                                        <span class="tech-tag">Laravel</span>
+                                        <span class="tech-tag">Blade</span>
+                                        <span class="tech-tag">PHPSpreadsheet</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--img-port-->
+                    </a>
+                    <a href="" class="scroll-reveal-scale scroll-reveal-delay-1">
+                        <div class="img-port"
+                            style="background-image: url('{{ asset('images/portfolio/BioVerde.png') }}');">
+                            <div class="overlay">
+                                <div class="project-info">
+                                    <h3>Bio Verde</h3>
+                                    <p class="project-description">Sistema completo de gestão para uma empresa de produtos orgânicos. </p>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">HTML5</span>
+                                        <span class="tech-tag">TailwindCSS</span>
+                                        <span class="tech-tag">JavaScript</span>
+                                        <span class="tech-tag">React</span>
+                                        <span class="tech-tag">PHP</span>
+                                        <span class="tech-tag">MySQL</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--img-port-->
+                    </a>
                 </div><!--flex-->
             </div><!--interface-->
         </section><!--portfolio-->
         <section class="certificates" id="certificates">
             <div class="interface">
                 <h2 class="title title-reveal">CERTIFICADOS<span>.</span></h2>
-                <div class="flex flexCertif">
-                    <div class="row scroll-reveal scroll-reveal-delay-1">
-                        <div class="img-general" title="HTML5"
-                            style="background-image: url('{{ asset('images/certificados/CertificadoHTML5.jpg') }}');">
+                
+                <!-- Filtros de Categoria -->
+                <div class="certificate-filters scroll-reveal">
+                    <button class="filter-btn active" data-category="all">Todos</button>
+                    <button class="filter-btn" data-category="web-dev">Desenvolvimento Web</button>
+                    <button class="filter-btn" data-category="programming">Programação</button>
+                    <button class="filter-btn" data-category="languages">Idiomas</button>
+                    <button class="filter-btn" data-category="admin">Administração</button>
+                </div>
+
+                <!-- Container do Carousel -->
+                <div class="certificates-carousel-container scroll-reveal scroll-reveal-delay-1">
+                    <div class="certificates-carousel">
+                        <!-- Slide 1 - Desenvolvimento Web -->
+                        <div class="certificate-slide active" data-category="web-dev">
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/CertificadoHTML5.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>HTML5</h4>
+                                    <p>Fundamentos do HTML5</p>
+                                    <span class="certificate-date">2023</span>
+                                </div>
+                            </div>
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/CertificadoCSS3.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>CSS3</h4>
+                                    <p>Estilização Avançada</p>
+                                    <span class="certificate-date">2023</span>
+                                </div>
+                            </div>
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/CertificadoHTML5Curso.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>HTML5/CSS3</h4>
+                                    <p>Curso Completo</p>
+                                    <span class="certificate-date">2023</span>
+                                </div>
+                            </div>
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/ReactJS.png') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>ReactJS</h4>
+                                    <p>Desenvolvimento Frontend</p>
+                                    <span class="certificate-date">2024</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="img-general" title="CSS3"
-                            style="background-image: url('{{ asset('images/certificados/CertificadoCSS3.jpg') }}');">
+
+                        <!-- Slide 2 - Programação -->
+                        <div class="certificate-slide" data-category="programming">
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/CertificadoCC50.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>Ciência da Computação</h4>
+                                    <p>CS50 - Harvard</p>
+                                    <span class="certificate-date">2023</span>
+                                </div>
+                            </div>
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Escola Virtual - Fundação Bradesco-1.png') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>Python - Básico</h4>
+                                    <p>Fundação Bradesco</p>
+                                    <span class="certificate-date">2023</span>
+                                </div>
+                            </div>
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Informática Básica.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>Informática Básica</h4>
+                                    <p>Fundamentos da Informática</p>
+                                    <span class="certificate-date">2022</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="img-general" title="HTML5/CSS3"
-                            style="background-image: url('{{ asset('images/certificados/CertificadoHTML5Curso.jpg') }}');">
+
+                        <!-- Slide 3 - Idiomas -->
+                        <div class="certificate-slide" data-category="languages">
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Ceriticado Inglês II.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>Inglês II</h4>
+                                    <p>Nível Intermediário</p>
+                                    <span class="certificate-date">2023</span>
+                                </div>
+                            </div>
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certitificado Dialogue I.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>Dialogue I</h4>
+                                    <p>Inglês Básico</p>
+                                    <span class="certificate-date">2022</span>
+                                </div>
+                            </div>
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Dialogue II.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>Dialogue II</h4>
+                                    <p>Inglês Pré-Intermediário</p>
+                                    <span class="certificate-date">2022</span>
+                                </div>
+                            </div>
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Dialogue III.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>Dialogue III</h4>
+                                    <p>Inglês Intermediário</p>
+                                    <span class="certificate-date">2023</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 - Idiomas Parte 2 -->
+                        <div class="certificate-slide" data-category="languages">
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Dialogue IV.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>Dialogue IV</h4>
+                                    <p>Inglês Avançado</p>
+                                    <span class="certificate-date">2023</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 5 - Administração -->
+                        <div class="certificate-slide" data-category="admin">
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Auxiliar Administrativo.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>Auxiliar Administrativo</h4>
+                                    <p>Gestão Administrativa</p>
+                                    <span class="certificate-date">2022</span>
+                                </div>
+                            </div>
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Treinamento e Desenvolvimento.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>Treinamento e Desenvolvimento</h4>
+                                    <p>Gestão de Pessoas</p>
+                                    <span class="certificate-date">2022</span>
+                                </div>
+                            </div>
+                            <div class="certificate-card">
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Cedaspy.jpg') }}');"></div>
+                                <div class="certificate-info">
+                                    <h4>Cedaspy</h4>
+                                    <p>Certificação Profissional</p>
+                                    <span class="certificate-date">2022</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row scroll-reveal scroll-reveal-delay-2">
-                        <div class="img-general" title="Ciência da Computação"
-                            style="background-image: url('{{ asset('images/certificados/CertificadoCC50.jpg') }}');">
-                        </div>
-                        <div class="img-general" title="Certificado Inglês II"
-                            style="background-image: url('{{ asset('images/certificados/Ceriticado Inglês II.jpg') }}');">
-                        </div>
-                        <div class="img-general" title="Auxiliar Admnistrativo"
-                            style="background-image: url('{{ asset('images/certificados/Certificado Auxiliar Administrativo.jpg') }}');">
-                        </div>
+
+                    <!-- Navegação do Carousel -->
+                    <div class="carousel-navigation">
+                        <button class="carousel-btn prev-btn">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        <button class="carousel-btn next-btn">
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
                     </div>
-                    <div class="row scroll-reveal scroll-reveal-delay-3">
-                        <div class="img-general" title="Python - Básico"
-                            style="background-image: url('{{ asset('images/certificados/Escola Virtual - Fundação Bradesco-1.png') }}');">
-                        </div>
-                        <div class="img-general" title="ReactJS"
-                            style="background-image: url('{{ asset('images/certificados/ReactJS.png') }}');"></div>
+
+                    <!-- Indicadores -->
+                    <div class="carousel-indicators">
+                        <span class="indicator active" data-slide="0"></span>
+                        <span class="indicator" data-slide="1"></span>
+                        <span class="indicator" data-slide="2"></span>
+                        <span class="indicator" data-slide="3"></span>
+                        <span class="indicator" data-slide="4"></span>
+                    </div>
+                </div>
+
+                <!-- Contador de Certificados -->
+                <div class="certificates-counter scroll-reveal scroll-reveal-delay-2">
+                    <div class="counter-item">
+                        <span class="counter-number" data-count="15">0</span>
+                        <span class="counter-label">Certificados</span>
+                    </div>
+                    <div class="counter-item">
+                        <span class="counter-number" data-count="4">0</span>
+                        <span class="counter-label">Categorias</span>
                     </div>
                 </div>
             </div>
