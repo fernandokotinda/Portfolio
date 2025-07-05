@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#7B2CBF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <!-- GOOGLE FONTS FINAL -->
     <!-- Bootstrap ICONS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <!-- Bootstrap icons final -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="assets/js/menu.js" defer></script>
-    <script src="assets/js/fone.js" defer></script>
     <link rel="shortcut icon" href="imgs/favicon-32x32.png" type="image/x-icon">
     <title>Murilo's | Portfolio</title>
 </head>
+
 <body>
     <!-- Elementos decorativos flutuantes -->
     <div class="floating-elements">
@@ -110,28 +116,41 @@
             </div>
         </div> <!--Interface-->
     </header>
-    
+
     <main>
         <section class="top-of-site">
             <div class="interface">
                 <div class="flex">
-                    <div class="txt-top-of-site">
+                    <div class="txt-top-of-site scroll-reveal-left">
                         <h1>OLÁ! MEU NOME É MURILO<span>.</span></h1>
                         <h2 class="typewriter">DESENVOLVEDOR BACK-END</h2>
-                        <p>Estou sempre aberto a novos desafios e oportunidades de colaboração! Se você tem um projeto em mente ou precisa de um desenvolvedor dedicado para transformar suas ideias em realidade digital, vamos conversar.</p>
-                        
-                        <p>Minha jornada na tecnologia evoluiu para o desenvolvimento web, onde me especializo em criar websites responsivos, landing pages impactantes e sistemas de controle eficientes. Tenho experiência com HTML5, CSS3, JavaScript, Bootstrap, ReactJS e outras tecnologias modernas.</p>
-                        
-                        <p>Além da programação, possuo formação em Design Gráfico, Administração Financeira e Marketing Digital, o que me permite oferecer soluções completas e inovadoras. Vamos trabalhar juntos para criar algo incrível!</p>
-                        
+                        <p>Estou sempre aberto a novos desafios e oportunidades de colaboração! Se você tem um projeto
+                            em mente ou precisa de um desenvolvedor dedicado para transformar suas ideias em realidade
+                            digital, vamos conversar.</p>
+
+                        <p>Minha jornada na tecnologia evoluiu para o desenvolvimento web, onde me especializo em criar
+                            websites responsivos, landing pages impactantes e sistemas de controle eficientes. Tenho
+                            experiência com HTML5, CSS3, JavaScript, Bootstrap, ReactJS e outras tecnologias modernas.
+                        </p>
+
+                        <p>Além da programação, possuo formação em Design Gráfico, Administração Financeira e Marketing
+                            Digital, o que me permite oferecer soluções completas e inovadoras. Vamos trabalhar juntos
+                            para criar algo incrível!</p>
+
                         <div class="btn-contact">
                             <a href="#form-menu">
                                 <button>CONTATO</button>
                             </a>
                         </div>
                     </div>
-                    <div class="img-top-of-site">
+                    <div class="img-top-of-site scroll-reveal-right">
                         <img src="{{ asset('images/muriloImages/ft 1 linkedin.png') }}" alt="Foto Murilo">
+                    </div>
+                </div>
+                <!-- Seta de scroll -->
+                <div class="scroll-indicator">
+                    <div class="scroll-arrow">
+                        <i class="bi bi-chevron-down"></i>
                     </div>
                 </div>
             </div><!--Interface-->
@@ -139,86 +158,115 @@
 
         <section id="specialties-menu" class="specialties">
             <div class="interface">
-                <h2 class="title">MINHAS <span>ESPECIALIDADES.</span></h2>
+                <h2 class="title title-reveal">MINHAS <span>ESPECIALIDADES.</span></h2>
                 <div class="flex">
-                    <div class="specialties-box">
-                        <i class="bi bi-code"></i>
-                        <h3>WebSite (Landing Page)</h3>
-                        <p>Eu me especializo na criação e desenvolvimento de websites personalizados e páginas de destino eficazes para fins de publicidade profissional. Ao longo da minha carreira, acumulei uma experiência significativa na construção de plataformas digitais que se destacam e cativam o público-alvo, impulsionando a visibilidade e o reconhecimento de marcas, lojas e diversas iniciativas.
-                        </p>
+                    <div class="specialties-box scroll-reveal scroll-reveal-delay-1">
+                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <h3>Criação de sites responsivos</h3>
+                        <p>Desenvolvimento de websites modernos e responsivos que se adaptam perfeitamente a qualquer dispositivo, garantindo uma experiência de usuário excepcional.</p>
                     </div><!--specialties-box -->
-                    <div class="specialties-box">
-                        <i class="bi bi-basket3"></i></i>
-                        <h3>Lojas Online (E-commerce)</h3>
-                        <p>Reconhecendo a crescente importância das vendas online para impulsionar a produtividade e o alcance das lojas físicas, trago uma sólida experiência na criação de websites focados em facilitar transações comerciais pela internet. Compreendo as necessidades específicas das empresas em expandir suas operações para o ambiente digital e sou capaz de desenvolver soluções que integram e aprimoram as vendas online para estabelecimentos presenciais.</p>
+                    <div class="specialties-box scroll-reveal scroll-reveal-delay-2">
+                        <i class="bi bi-gear-wide-connected"></i>
+                        <h3>Desenvolvimento de sistemas sob medida</h3>
+                        <p>Criação de sistemas personalizados e soluções digitais específicas para atender às necessidades únicas do seu negócio.</p>
                     </div><!--specialties-box -->
-                    <div class="specialties-box">
-                        <i class="bi bi-substack"></i>
-                        <h3>Sistema de Controle</h3>
-                        <p>Eu compreendo a importância vital do controle eficiente de despesas, estoque e outros itens para o sucesso e eficiência de um negócio. Tenho uma sólida experiência no desenvolvimento de sistemas e ferramentas dedicadas ao controle detalhado de inventário e gerenciamento de produtos.</p>
+                    <div class="specialties-box scroll-reveal scroll-reveal-delay-3">
+                        <i class="bi bi-tools"></i>
+                        <h3>Manutenção e otimização de sistemas existentes</h3>
+                        <p>Aprimoramento, correção e otimização de sistemas já em funcionamento para melhor performance e segurança.</p>
+                    </div><!--specialties-box -->
+                    <div class="specialties-box scroll-reveal scroll-reveal-delay-4">
+                        <i class="bi bi-code-square"></i>
+                        <h3>Refatoração e Otimização de Código</h3>
+                        <p>Melhoria de códigos existentes para garantir melhor desempenho, legibilidade, manutenibilidade e escalabilidade.</p>
                     </div><!--specialties-box -->
                 </div>
             </div>
         </section> <!--Specialties -->
 
-        <section id="about-menu" class="about">
-            <div class="interface">
-                <div class="flex">
-                    <div class="img-about">
-                        <img src="{{ asset('images/muriloImages/murilo-sobre.jpeg') }}" alt="Sobre Murilo">
-                    </div> <!--img- about-->
-                    <div class="txt-about">
-                        <h2>Prazer em conhecer você, <span>Eu sou Murilo Luiz</span></h2>
-                        <p>Atualmente, estou matriculado no terceiro semestre do curso de Análise e Desenvolvimento de Sistemas. Ao longo da minha jornada acadêmica e profissional, tenho buscado ampliar meus conhecimentos por meio de uma variedade de cursos, tanto dentro quanto fora do campo da programação de front-end. Entre esses cursos, destaco Design Gráfico, Manutenção e Configuração de Computadores, Administração Financeira, Plataforma Web II, Desenvolvimento de Jogos, Ambiente Web, Produção de Documentos, Mídias Sociais, Marketing Pessoal e Profissional, Desenvolvimento de Websites e Photoshop.</p>
-                        <p>Além disso, busquei aprimoramento em áreas relacionadas, como Treinamento e Desenvolvimento na Área Administrativa, adquirindo habilidades em atividades como Assistente Administrativo, Comunicação, Expressão Corporal, Redação de Currículos, Técnicas de Entrevista de Emprego, Telemarketing, Atendimento ao Cliente, Finanças Pessoais, Liderança, Trabalho em Equipe e Resolução de Conflitos no Ambiente de Trabalho.
-                        </p>
-                        <p>No campo da programação, tenho experiência em linguagens como HTML5, CSS3, JavaScript, Bootstrap, jQuery, Ajax e ReactJS, juntamente com conhecimentos básicos em PHP. Atualmente, estou aprimorando minhas habilidades por meio de estudos intensivos em Bootstrap, Sass, React e outros frameworks e linguagens relevantes.</p>
-                        <div class="btn-social">
-                            <a  target="_blank" href="https://www.instagram.com/izmurilo_cwb/"><button><i class="bi bi-instagram"></i></button></a>
-                            <a target="_blank" href="https://www.linkedin.com/in/murilo-luiz-jaboinski-246096229/"><button><i class="bi bi-linkedin"></i></button></a>
-                            <a target="_blank" href="https://github.com/muriloLuix"><button><i class="bi bi-github"></i></button></a>
-                        </div>
-                    </div><!--txt - about -->
-                </div><!--flex-->
-            </div><!--interface-->
-        </section><!--about-->
-
         <section id="portfolio-menu" class="portfolio">
             <div class="interface">
-                <h2 class="title">MEU <span>PORTFÓLIO.</span></h2>
+                <h2 class="title title-reveal">MEU <span>PORTFÓLIO.</span></h2>
                 <div class="flex">
-                    <a target="_blank" href="https://github.com/fernandokotinda/Sistema-Controle-de-Estoque">
-                        <div class="img-port" style="background-image: url('{{ asset('images/portfolio/controle_de_estoque.png') }}');">
+                    <a target="_blank" href="https://github.com/fernandokotinda/Sistema-Controle-de-Estoque" class="scroll-reveal-scale scroll-reveal-delay-1">
+                        <div class="img-port"
+                            style="background-image: url('{{ asset('images/portfolio/controle_de_estoque.png') }}');">
                             <div class="overlay">
-                                Controle de Estoque
+                                <div class="project-info">
+                                    <h3>Controle de Estoque</h3>
+                                    <p class="project-description">Sistema completo para gerenciamento de estoque com controle de entrada e saída de produtos.</p>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">PHP</span>
+                                        <span class="tech-tag">MySQL</span>
+                                        <span class="tech-tag">JavaScript</span>
+                                        <span class="tech-tag">Bootstrap</span>
+                                    </div>
+                                </div>
                             </div>
                         </div><!--img-port-->
                     </a>
-                    <a target="_blank" href="https://github.com/muriloLuix/Calculator">
-                        <div class="img-port" style="background-image: url('{{ asset('images/portfolio/Calculadora.png') }}');">
+                    <a target="_blank" href="https://github.com/muriloLuix/Calculator" class="scroll-reveal-scale scroll-reveal-delay-2">
+                        <div class="img-port"
+                            style="background-image: url('{{ asset('images/portfolio/Calculadora.png') }}');">
                             <div class="overlay">
-                                Calculadora
+                                <div class="project-info">
+                                    <h3>Calculadora</h3>
+                                    <p class="project-description">Calculadora funcional com interface moderna e operações matemáticas básicas e avançadas.</p>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">HTML5</span>
+                                        <span class="tech-tag">CSS3</span>
+                                        <span class="tech-tag">JavaScript</span>
+                                    </div>
+                                </div>
                             </div>
                         </div><!--img-port-->
                     </a>
-                    <a target="_blank" href="https://github.com/muriloLuix/Game-of-Memory">
-                        <div class="img-port" style="background-image: url('{{ asset('images/portfolio/memoryGame.png') }}');">
+                    <a target="_blank" href="https://github.com/muriloLuix/Game-of-Memory" class="scroll-reveal-scale scroll-reveal-delay-3">
+                        <div class="img-port"
+                            style="background-image: url('{{ asset('images/portfolio/memoryGame.png') }}');">
                             <div class="overlay">
-                                Memory Game
+                                <div class="project-info">
+                                    <h3>Memory Game</h3>
+                                    <p class="project-description">Jogo da memória interativo com diferentes níveis de dificuldade e sistema de pontuação.</p>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">HTML5</span>
+                                        <span class="tech-tag">CSS3</span>
+                                        <span class="tech-tag">JavaScript</span>
+                                    </div>
+                                </div>
                             </div>
                         </div><!--img-port-->
                     </a>
-                    <a target="_blank" href="https://github.com/muriloLuix/Tic-Tac-Toe">
-                        <div class="img-port" style="background-image: url('{{ asset('images/portfolio/jogoDaVelha.png') }}');">
+                    <a target="_blank" href="https://github.com/muriloLuix/Tic-Tac-Toe" class="scroll-reveal-scale scroll-reveal-delay-4">
+                        <div class="img-port"
+                            style="background-image: url('{{ asset('images/portfolio/jogoDaVelha.png') }}');">
                             <div class="overlay">
-                                Tic Tac Toe
+                                <div class="project-info">
+                                    <h3>Tic Tac Toe</h3>
+                                    <p class="project-description">Jogo da velha clássico com interface responsiva e modo para dois jogadores.</p>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">HTML5</span>
+                                        <span class="tech-tag">CSS3</span>
+                                        <span class="tech-tag">JavaScript</span>
+                                    </div>
+                                </div>
                             </div>
                         </div><!--img-port-->
                     </a>
-                    <a target="_blank" href="https://github.com/muriloLuix/Echo">
-                        <div class="img-port" style="background-image: url('{{ asset('images/portfolio/Echo.png') }}');">
+                    <a target="_blank" href="https://github.com/muriloLuix/Echo" class="scroll-reveal-scale scroll-reveal-delay-1">
+                        <div class="img-port"
+                            style="background-image: url('{{ asset('images/portfolio/Echo.png') }}');">
                             <div class="overlay">
-                                Echo
+                                <div class="project-info">
+                                    <h3>Echo</h3>
+                                    <p class="project-description">Aplicação de comunicação em tempo real com funcionalidades de chat e notificações.</p>
+                                    <div class="project-tech">
+                                        <span class="tech-tag">React</span>
+                                        <span class="tech-tag">Node.js</span>
+                                        <span class="tech-tag">Socket.io</span>
+                                        <span class="tech-tag">CSS3</span>
+                                    </div>
+                                </div>
                             </div>
                         </div><!--img-port-->
                     </a>
@@ -227,21 +275,36 @@
         </section><!--portfolio-->
         <section class="certificates" id="certificates">
             <div class="interface">
-                <h2 class="title">CERTIFICADOS<span>.</span></h2>
+                <h2 class="title title-reveal">CERTIFICADOS<span>.</span></h2>
                 <div class="flex flexCertif">
-                    <div class="row">
-                        <div class="img-general" title="HTML5" style="background-image: url('{{ asset('images/certificados/CertificadoHTML5.jpg') }}');"></div>
-                        <div class="img-general" title="CSS3" style="background-image: url('{{ asset('images/certificados/CertificadoCSS3.jpg') }}');"></div>
-                        <div class="img-general" title="HTML5/CSS3" style="background-image: url('{{ asset('images/certificados/CertificadoHTML5Curso.jpg') }}');"></div>
+                    <div class="row scroll-reveal scroll-reveal-delay-1">
+                        <div class="img-general" title="HTML5"
+                            style="background-image: url('{{ asset('images/certificados/CertificadoHTML5.jpg') }}');">
+                        </div>
+                        <div class="img-general" title="CSS3"
+                            style="background-image: url('{{ asset('images/certificados/CertificadoCSS3.jpg') }}');">
+                        </div>
+                        <div class="img-general" title="HTML5/CSS3"
+                            style="background-image: url('{{ asset('images/certificados/CertificadoHTML5Curso.jpg') }}');">
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="img-general" title="Ciência da Computação" style="background-image: url('{{ asset('images/certificados/CertificadoCC50.jpg') }}');"></div>
-                        <div class="img-general" title="Certificado Inglês II" style="background-image: url('{{ asset('images/certificados/Ceriticado Inglês II.jpg') }}');"></div>
-                        <div class="img-general" title="Auxiliar Admnistrativo" style="background-image: url('{{ asset('images/certificados/Certificado Auxiliar Administrativo.jpg') }}');"></div>
+                    <div class="row scroll-reveal scroll-reveal-delay-2">
+                        <div class="img-general" title="Ciência da Computação"
+                            style="background-image: url('{{ asset('images/certificados/CertificadoCC50.jpg') }}');">
+                        </div>
+                        <div class="img-general" title="Certificado Inglês II"
+                            style="background-image: url('{{ asset('images/certificados/Ceriticado Inglês II.jpg') }}');">
+                        </div>
+                        <div class="img-general" title="Auxiliar Admnistrativo"
+                            style="background-image: url('{{ asset('images/certificados/Certificado Auxiliar Administrativo.jpg') }}');">
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="img-general" title="Python - Básico" style="background-image: url('{{ asset('images/certificados/Escola Virtual - Fundação Bradesco-1.png') }}');"></div>
-                        <div class="img-general" title="ReactJS" style="background-image: url('{{ asset('images/certificados/ReactJS.png') }}');"></div>
+                    <div class="row scroll-reveal scroll-reveal-delay-3">
+                        <div class="img-general" title="Python - Básico"
+                            style="background-image: url('{{ asset('images/certificados/Escola Virtual - Fundação Bradesco-1.png') }}');">
+                        </div>
+                        <div class="img-general" title="ReactJS"
+                            style="background-image: url('{{ asset('images/certificados/ReactJS.png') }}');"></div>
                     </div>
                 </div>
             </div>
@@ -249,20 +312,20 @@
 
         <section class="certificates" id="certificates">
             <div class="interface">
-                <h2 class="title">LINGUAGENS<span>.</span></h2>
+                <h2 class="title title-reveal">LINGUAGENS<span>.</span></h2>
                 <div class="imgLanguages">
-                    <img src="{{ asset('images/linguagens/html5.png') }}" alt="HTML5">
-                    <img src="{{ asset('images/linguagens/css3.png') }}" alt="CSS3">
-                    <img src="{{ asset('images/linguagens/js.png') }}" alt="JavaScript">
-                    <img src="{{ asset('images/linguagens/bootstrap.png') }}" alt="Bootstrap">
-                    <img src="{{ asset('images/linguagens/react.png') }}" alt="React">
+                    <img src="{{ asset('images/linguagens/html5.png') }}" alt="HTML5" class="scroll-reveal scroll-reveal-delay-1">
+                    <img src="{{ asset('images/linguagens/css3.png') }}" alt="CSS3" class="scroll-reveal scroll-reveal-delay-2">
+                    <img src="{{ asset('images/linguagens/js.png') }}" alt="JavaScript" class="scroll-reveal scroll-reveal-delay-3">
+                    <img src="{{ asset('images/linguagens/bootstrap.png') }}" alt="Bootstrap" class="scroll-reveal scroll-reveal-delay-4">
+                    <img src="{{ asset('images/linguagens/react.png') }}" alt="React" class="scroll-reveal scroll-reveal-delay-1">
                 </div>
             </div>
         </section><!--certificates-->
-    
+
         <section class="form" id="form-menu">
             <div class="interface">
-                <h2 class="title">FALE <span>COMIGO.</span></h2>
+                <h2 class="title title-reveal">FALE <span>COMIGO.</span></h2>
                 <form id="contact-form" action="assets/php/process_form.php" method="post">
                     <input type="text" name="name" id="name" placeholder="Seu nome:" required>
                     <input type="email" name="email" id="email" placeholder="Seu e-mail:" required>
@@ -275,24 +338,30 @@
                 </form>
             </div><!--interface-->
         </section><!--form-->
-        
+
     </main>
-    
+
     <footer>
         <div class="interface">
             <div class="line-footer">
                 <div class="flex">
                     <div class="btn-social">
-                        <a  target="_blank" href="https://www.instagram.com/izmurilo_cwb/"><button><i class="bi bi-instagram"></i></button></a>
-                        <a target="_blank" href="https://www.linkedin.com/in/murilo-luiz-jaboinski-246096229/"><button><i class="bi bi-linkedin"></i></button></a>
-                        <a target="_blank" href="https://github.com/muriloLuix"><button><i class="bi bi-github"></i></button></a>
+                        <a target="_blank" href="https://www.instagram.com/izmurilo_cwb/"><button><i
+                                    class="bi bi-instagram"></i></button></a>
+                        <a target="_blank"
+                            href="https://www.linkedin.com/in/murilo-luiz-jaboinski-246096229/"><button><i
+                                    class="bi bi-linkedin"></i></button></a>
+                        <a target="_blank" href="https://github.com/muriloLuix"><button><i
+                                    class="bi bi-github"></i></button></a>
                     </div><!--btn-social-->
                 </div><!--flex-->
             </div><!--line-footer-->
             <div class="line-footer borda">
-                <p><i class="bi bi-envelope-fill"><a target="_blank" href="mailto:muriloluiz654@gmail.com">muriloluiz654@gmail.com</a></i></p>
+                <p><i class="bi bi-envelope-fill"><a target="_blank"
+                            href="mailto:muriloluiz654@gmail.com">muriloluiz654@gmail.com</a></i></p>
             </div><!--line-footer-->
         </div><!--interface-->
     </footer>
 </body>
+
 </html>
