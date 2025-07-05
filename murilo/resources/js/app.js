@@ -74,7 +74,7 @@ function initHeaderScrollEffect() {
         const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
         
         // Adiciona classe header-scrolled para estilo menor
-        if (currentScroll > 100) {
+        if (currentScroll > 50) {
             header.classList.add('header-scrolled');
         } else {
             header.classList.remove('header-scrolled');
@@ -83,7 +83,7 @@ function initHeaderScrollEffect() {
         // Controle do indicador de scroll
         const scrollIndicator = document.querySelector('.scroll-indicator');
         if (scrollIndicator) {
-            if (currentScroll > 200) {
+            if (currentScroll > 150) {
                 scrollIndicator.style.opacity = '0';
                 scrollIndicator.style.pointerEvents = 'none';
             } else {
@@ -93,12 +93,12 @@ function initHeaderScrollEffect() {
         }
 
         // Efeito de esconder/mostrar header
-        if (currentScroll <= 150) {
+        if (currentScroll <= 100) {
             // No topo da página
             header.classList.remove('header-hidden');
             header.classList.add('header-visible');
         } else {
-            // Após 150px de scroll
+            // Após 100px de scroll
             if (currentScroll > lastScrollTop) {
                 // Scrolling down - hide header
                 header.classList.add('header-hidden');
@@ -497,6 +497,169 @@ function initScrollReveal() {
     }
 }
 
+// Custom Tooltip for Technology Images
+function initCustomTooltips() {
+    const techImages = document.querySelectorAll('.imgLanguages img');
+    const techContainer = document.querySelector('#technologies');
+    let currentTooltip = null;
+    let hideTimeout = null;
+    let isOverContainer = false;
+
+    // Criar elemento tooltip (só criar uma vez)
+    function createTooltip() {
+        if (currentTooltip) {
+            return currentTooltip;
+        }
+        
+        const tooltip = document.createElement('div');
+        tooltip.className = 'custom-tooltip';
+        document.body.appendChild(tooltip);
+        return tooltip;
+    }
+
+    // Posicionar tooltip usando coordenadas fixas
+    function positionTooltip(tooltip, target) {
+        const rect = target.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+        
+        // Posição horizontal - centralizada em relação à imagem
+        let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+        
+        // Posição vertical - SEMPRE abaixo da imagem por padrão
+        let top = rect.bottom + 10;
+        
+        // Verificar limites horizontais da viewport
+        const margin = 10;
+        if (left < margin) {
+            left = margin;
+        } else if (left + tooltipRect.width > window.innerWidth - margin) {
+            left = window.innerWidth - tooltipRect.width - margin;
+        }
+        
+        // Verificar se o tooltip sai da parte inferior da tela
+        if (top + tooltipRect.height > window.innerHeight - margin) {
+            // Se não cabe embaixo, mostrar em cima
+            top = rect.top - tooltipRect.height - 10;
+            tooltip.classList.add('tooltip-top');
+            tooltip.classList.remove('tooltip-bottom');
+        } else {
+            // Padrão: embaixo da imagem
+            tooltip.classList.add('tooltip-bottom');
+            tooltip.classList.remove('tooltip-top');
+        }
+        
+        // Aplicar posição
+        tooltip.style.left = left + 'px';
+        tooltip.style.top = top + 'px';
+    }
+
+    // Mostrar/atualizar tooltip
+    function showTooltip(target, text) {
+        // Cancelar qualquer timeout de esconder
+        if (hideTimeout) {
+            clearTimeout(hideTimeout);
+            hideTimeout = null;
+        }
+        
+        // Criar tooltip se não existir
+        if (!currentTooltip) {
+            currentTooltip = createTooltip();
+        }
+        
+        // Atualizar conteúdo
+        currentTooltip.textContent = text;
+        
+        // Recalcular posição
+        requestAnimationFrame(() => {
+            positionTooltip(currentTooltip, target);
+            
+            // Mostrar tooltip se não estiver visível
+            if (!currentTooltip.classList.contains('show')) {
+                requestAnimationFrame(() => {
+                    if (currentTooltip) {
+                        currentTooltip.classList.add('show');
+                    }
+                });
+            }
+        });
+    }
+
+    // Esconder tooltip (com delay para evitar piscar)
+    function hideTooltip(immediate = false) {
+        if (hideTimeout) {
+            clearTimeout(hideTimeout);
+        }
+        
+        if (immediate) {
+            if (currentTooltip) {
+                currentTooltip.classList.remove('show');
+                setTimeout(() => {
+                    if (currentTooltip && currentTooltip.parentNode) {
+                        currentTooltip.parentNode.removeChild(currentTooltip);
+                        currentTooltip = null;
+                    }
+                }, 150);
+            }
+        } else {
+            // Delay para permitir movimento entre imagens
+            hideTimeout = setTimeout(() => {
+                if (!isOverContainer && currentTooltip) {
+                    currentTooltip.classList.remove('show');
+                    setTimeout(() => {
+                        if (currentTooltip && currentTooltip.parentNode) {
+                            currentTooltip.parentNode.removeChild(currentTooltip);
+                            currentTooltip = null;
+                        }
+                    }, 150);
+                }
+                hideTimeout = null;
+            }, 100); // Pequeno delay para evitar piscar
+        }
+    }
+
+    // Event listeners para o container da seção de tecnologias
+    if (techContainer) {
+        techContainer.addEventListener('mouseenter', () => {
+            isOverContainer = true;
+        });
+        
+        techContainer.addEventListener('mouseleave', () => {
+            isOverContainer = false;
+            hideTooltip();
+        });
+    }
+
+    // Adicionar event listeners para cada imagem
+    techImages.forEach(img => {
+        // Guardar o title original e remover do atributo
+        const originalTitle = img.getAttribute('title');
+        img.removeAttribute('title');
+        
+        img.addEventListener('mouseenter', (e) => {
+            if (originalTitle) {
+                isOverContainer = true;
+                showTooltip(e.target, originalTitle);
+            }
+        });
+        
+        // Não esconder imediatamente ao sair da imagem
+        // O tooltip só deve ser escondido ao sair do container todo
+    });
+
+    // Esconder tooltip em scroll ou resize
+    window.addEventListener('scroll', () => {
+        if (currentTooltip) {
+            hideTooltip(true); // Esconder imediatamente no scroll
+        }
+    }, { passive: true });
+    
+    window.addEventListener('resize', () => {
+        if (currentTooltip) {
+            hideTooltip(true); // Esconder imediatamente no resize
+        }
+    });
+}
+
 // Inicializar a animação quando a página carregar
 document.addEventListener('DOMContentLoaded', function () {
     const typewriterElement = document.querySelector('.typewriter');
@@ -515,6 +678,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initHeaderScrollEffect();
     initScrollIndicator();
     initScrollReveal();
+    initCustomTooltips(); // Adicionar tooltips personalizados
     
     // Inicializar funcionalidades móveis
     initMobileTouchExperience();
@@ -522,4 +686,5 @@ document.addEventListener('DOMContentLoaded', function () {
     initMobileOptimizations();
     initMobileScrollEnhancements();
     initTouchFeedback();
+    initCustomTooltips();
 });

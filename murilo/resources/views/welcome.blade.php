@@ -11,10 +11,9 @@
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- GOOGLE FONTS FINAL -->
+
     <!-- Bootstrap ICONS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <!-- Bootstrap icons final -->
@@ -80,11 +79,12 @@
         <div class="interface">
             <nav class="desktop-menu">
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="/murilo">Inicio</a></li>
                     <li><a href="#specialties-menu">Habilidades</a></li>
                     <li><a href="#about-menu">Sobre</a></li>
                     <li><a href="#portfolio-menu">Projetos</a></li>
                     <li><a href="#certificates">Certificados</a></li>
+                    <li><a href="#technologies">Tecnologias</a></li>
                 </ul>
             </nav>
             <div class="btn-contact">
@@ -107,7 +107,8 @@
                         <li><a href="#about-menu">Sobre</a></li>
                         <li><a href="#portfolio-menu">Projetos</a></li>
                         <li><a href="#certificates">Certificados</a></li>
-                        <li><a href="#">Contato</a></li>
+                        <li><a href="#technologies">Tecnologias</a></li>
+                        <li><a href="#form-menu">Contato</a></li>
                     </ul>
                 </nav>
             </div><!--menu-mobile-->
@@ -196,10 +197,9 @@
                                     <h3>Controle de Estoque</h3>
                                     <p class="project-description">Sistema completo para gerenciamento de estoque com controle de entrada e saída de produtos.</p>
                                     <div class="project-tech">
-                                        <span class="tech-tag">PHP</span>
-                                        <span class="tech-tag">MySQL</span>
+                                        <span class="tech-tag">HTML5</span>
+                                        <span class="tech-tag">CSS3</span>
                                         <span class="tech-tag">JavaScript</span>
-                                        <span class="tech-tag">Bootstrap</span>
                                     </div>
                                 </div>
                             </div>
@@ -253,18 +253,19 @@
                             </div>
                         </div><!--img-port-->
                     </a>
-                    <a target="_blank" href="https://github.com/muriloLuix/Echo" class="scroll-reveal-scale scroll-reveal-delay-1">
+                    <a href="/murilo/privado" class="scroll-reveal-scale scroll-reveal-delay-1">
                         <div class="img-port"
                             style="background-image: url('{{ asset('images/portfolio/Echo.png') }}');">
                             <div class="overlay">
                                 <div class="project-info">
                                     <h3>Echo</h3>
-                                    <p class="project-description">Aplicação de comunicação em tempo real com funcionalidades de chat e notificações.</p>
+                                    <p class="project-description">Empresa de auroidade de Murilo Luiz Jaboinski focada no desenvolvimento web de pequenos comércios.</p>
                                     <div class="project-tech">
-                                        <span class="tech-tag">React</span>
-                                        <span class="tech-tag">Node.js</span>
-                                        <span class="tech-tag">Socket.io</span>
+                                        <span class="tech-tag">HTML5</span>
                                         <span class="tech-tag">CSS3</span>
+                                        <span class="tech-tag">JavaScript</span>
+                                        <span class="tech-tag">Laravel</span>
+                                        <span class="tech-tag">Blade</span>
                                     </div>
                                 </div>
                             </div>
@@ -310,18 +311,45 @@
             </div>
         </section><!--certificates-->
 
-        <section class="certificates" id="certificates">
+        <section class="certificates" id="technologies">
             <div class="interface">
-                <h2 class="title title-reveal">LINGUAGENS<span>.</span></h2>
-                <div class="imgLanguages">
-                    <img src="{{ asset('images/linguagens/html5.png') }}" alt="HTML5" class="scroll-reveal scroll-reveal-delay-1">
-                    <img src="{{ asset('images/linguagens/css3.png') }}" alt="CSS3" class="scroll-reveal scroll-reveal-delay-2">
-                    <img src="{{ asset('images/linguagens/js.png') }}" alt="JavaScript" class="scroll-reveal scroll-reveal-delay-3">
-                    <img src="{{ asset('images/linguagens/bootstrap.png') }}" alt="Bootstrap" class="scroll-reveal scroll-reveal-delay-4">
-                    <img src="{{ asset('images/linguagens/react.png') }}" alt="React" class="scroll-reveal scroll-reveal-delay-1">
+                <h2 class="title title-reveal">LINGUAGENS E <span>TECNOLOGIAS.</span></h2>
+                
+                <!-- Front-end Technologies -->
+                <div class="tech-category">
+                    <h3 class="tech-title scroll-reveal">FRONT-END</h3>
+                    <div class="imgLanguages">
+                        <img src="{{ asset('images/linguagens/html5.png') }}" alt="HTML5" class="scroll-reveal scroll-reveal-delay-1" title="HTML5">
+                        <img src="{{ asset('images/linguagens/css3.png') }}" alt="CSS3" class="scroll-reveal scroll-reveal-delay-2" title="CSS3">
+                        <img src="{{ asset('images/linguagens/js.png') }}" alt="JavaScript" class="scroll-reveal scroll-reveal-delay-3" title="JavaScript">
+                        <img src="{{ asset('images/linguagens/ajax.png') }}" alt="AJAX" class="scroll-reveal scroll-reveal-delay-4" title="AJAX">
+                        <img src="{{ asset('images/linguagens/react.png') }}" alt="React" class="scroll-reveal scroll-reveal-delay-1" title="React">
+                        <img src="{{ asset('images/linguagens/bootstrap.png') }}" alt="Bootstrap" class="scroll-reveal scroll-reveal-delay-2" title="Bootstrap">
+                        <img src="{{ asset('images/linguagens/materializecss-original.svg') }}" alt="Materialize CSS" class="scroll-reveal scroll-reveal-delay-3" title="Materialize CSS">
+                    </div>
+                </div>
+
+                <!-- Back-end Technologies -->
+                <div class="tech-category">
+                    <h3 class="tech-title scroll-reveal">BACK-END</h3>
+                    <div class="imgLanguages">
+                        <img src="{{ asset('images/linguagens/php.png') }}" alt="PHP" class="scroll-reveal scroll-reveal-delay-1" title="PHP">
+                        <img src="{{ asset('images/linguagens/laravel-original.svg') }}" alt="Laravel" class="scroll-reveal scroll-reveal-delay-2" title="Laravel">
+                        <img src="{{ asset('images/linguagens/symfony-original.svg') }}" alt="Symfony" class="scroll-reveal scroll-reveal-delay-3" title="Symfony">
+                    </div>
+                </div>
+
+                <!-- Database Technologies -->
+                <div class="tech-category">
+                    <h3 class="tech-title scroll-reveal">BANCO DE DADOS</h3>
+                    <div class="imgLanguages">
+                        <img src="{{ asset('images/linguagens/mysql-original-wordmark.svg') }}" alt="MySQL" class="scroll-reveal scroll-reveal-delay-1" title="MySQL">
+                        <img src="{{ asset('images/linguagens/postgresql-plain-wordmark.svg') }}" alt="PostgreSQL" class="scroll-reveal scroll-reveal-delay-2" title="PostgreSQL">
+                        <img src="{{ asset('images/linguagens/sql-server.png') }}" alt="SQL Server" class="scroll-reveal scroll-reveal-delay-3" title="SQL Server">
+                    </div>
                 </div>
             </div>
-        </section><!--certificates-->
+        </section><!--technologies-->
 
         <section class="form" id="form-menu">
             <div class="interface">
