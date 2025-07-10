@@ -1,4 +1,3 @@
-import React from "react";
 import TechnologyCard from "../components/TechnologyCard";
 import htmlIcon from "../imgs/html.png";        // substitua pelos seus ícones reais
 import cssIcon from "../imgs/css.png";
@@ -16,14 +15,14 @@ import sqlServerIcon from "../imgs/sql_server.png";
 
 const Technologies = () => {
   return (
-    <div id="technologies" className="min-h-screen bg-[#0f172a] flex items-center justify-center flex-col w-full py-16 px-4 space-y-10 scroll-mt-16 border-b border-gray-800">
+    <div id="technologies" className="min-h-screen bg-[#0f172a] flex items-center justify-center flex-col w-full py-16 px-4 space-y-10 md:scroll-mt-16 border-b border-gray-800">
       <h2 className="text-4xl font-bold text-white">Tecnologias</h2>
       <p className="text-white text-center max-w-xl">
         Minhas principais competências incluem:
       </p>
 
       {/* Front-end */}
-      <div className="w-3xl flex flex-col items-center">
+      <div className="max-w-3xl flex flex-col items-center">
         <h3 className="text-white text-xl mb-4 w-full text-left pl-2">Front-end:</h3>
         <div className="flex flex-col gap-4 items-center w-full">
           <div className="flex flex-wrap justify-center gap-4">
@@ -32,8 +31,6 @@ const Technologies = () => {
             <TechnologyCard name="JavaScript" icon={jsIcon} />
             <TechnologyCard name="TypeScript" icon={tsIcon} />
             <TechnologyCard name="React" icon={reactIcon} />
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
             <TechnologyCard name="Next.js" icon={nextIcon} />
             <TechnologyCard name="Sass" icon={sassIcon} />
             <TechnologyCard name="Bootstrap" icon={bootstrapIcon} />
@@ -43,21 +40,21 @@ const Technologies = () => {
       </div>
 
       {/* Back-end + Banco de Dados */}
-      <div className="w-3xl mt-8 px-2">
-        <div className="flex flex-row justify-between gap-12">
+      <div className="mt-5 px-2 max-w-3xl md:w-2xl lg:w-3xl">
+        <div className="flex flex-col md:flex-row justify-between gap-16 lg:gap-0">
           {/* Back-end */}
           <div className="flex flex-col">
             <h3 className="text-white text-xl mb-4">Back-end:</h3>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 justify-center">
               <TechnologyCard name="Node.js" icon={nodeIcon} />
               <TechnologyCard name="PHP" icon={phpIcon} />
             </div>
           </div>
 
           {/* Banco de Dados */}
-          <div className="flex flex-col">
+          <div className="flex flex-col lg:mr-7">
             <h3 className="text-white text-xl mb-4">Banco de Dados:</h3>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 justify-center">
               <TechnologyCard name="MySQL" icon={mysqlIcon} />
               <TechnologyCard name="SQL Server" icon={sqlServerIcon} />
             </div>

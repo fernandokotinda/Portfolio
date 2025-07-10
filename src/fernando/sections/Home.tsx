@@ -7,20 +7,20 @@ function Home() {
     <>
       <div 
         id="home" 
-        className="relative h-screen bg-cover bg-center flex flex-col bg-[url('/home_fundo.jpg')]"
+        className="relative h-screen bg-cover bg-right lg:bg-center flex flex-col bg-[url('/home_fundo.jpg')]"
       >
-        <div className="absolute inset-0 bg-black/50 z-0 scroll-mt-16"></div>
+        <div className="absolute inset-0 bg-black/50 z-0"></div>
 
         {/* Conteúdo Central */}
         <div className="relative z-10 text-white flex items-center justify-center flex-col gap-5 h-full">
           <p className="text-gray-300 text-xl">Portfólio</p>
-          <h1 className="text-5xl font-semibold" data-aos="flip-up" data-aos-duration="1500">Fernando Kotinda</h1>
+          <h1 className="text-5xl font-semibold text-center" data-aos="flip-up" data-aos-duration="1500">Fernando Kotinda</h1>
           <h2 className="text-gray-300 text-xl">{"<Desenvolvedor Full-Stack />"}</h2>
           
           <div className="flex items-center gap-5">
 
             {/* Linha esquerda */}
-            <div className="h-px bg-white/50 w-24" />
+            <div className="h-px bg-white/50 w-[17vw] md:w-28" />
 
             {/* Ícones com links */}
             <div className="flex items-center gap-6 text-2xl">
@@ -36,7 +36,7 @@ function Home() {
             </div>
 
             {/* Linha direita */}
-            <div className="h-px bg-white/50 w-24" />
+            <div className="h-px bg-white/50 w-[17vw] md:w-28" />
 
           </div>
 

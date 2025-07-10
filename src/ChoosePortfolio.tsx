@@ -27,15 +27,15 @@ function ChoosePortfolio() {
         aria-hidden="true"
       />
       {/* Conteúdo acima do blur */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-4xl font-semibold mb-13 text-white drop-shadow-lg text-center" data-aos="zoom-out">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-7">
+        <h1 className="text-2xl md:text-4xl font-semibold mb-8 md:mb-13 max-w-2xl lg:max-w-full text-white drop-shadow-lg text-center" data-aos="zoom-out">
           Escolha de quem você quer visualizar o Portfólio
         </h1>
-        <div className="flex gap-20" data-aos="fade-up">
+        <div className="flex flex-col md:flex-row gap-13 md:gap-20" data-aos="fade-up">
           <CardDev
-          link="/murilo"
-          img={murilo_img}
-          name="Murilo Luiz"
+            link="/murilo"
+            img={murilo_img}
+            name="Murilo Luiz"
           />
           <CardDev
             link="/fernando"

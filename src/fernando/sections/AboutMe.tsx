@@ -4,11 +4,11 @@ function AboutMe() {
 
   return (
     <>
-      <div id="about" className="min-h-screen bg-[#1e293b] flex items-center justify-center px-10 flex-col md:flex-row w-full gap-20 scroll-mt-16 border-y border-gray-600">
+      <div id="about" className="min-h-screen bg-[#1e293b] flex items-center justify-center px-10 flex-col lg:flex-row w-full gap-10 lg:gap-20 md:scroll-mt-16 border-y border-gray-600">
     
           {/* Foto de Perfil */}
           <div
-            className="w-72 h-72 rounded-full object-cover border-2 border-white shadow-white"
+            className="w-40 h-40 md:w-55 md:h-55 lg:w-72 lg:h-72 rounded-full object-cover border-2 border-white shadow-white mt-10 lg:mt-0"
             style={{
               animation: "float 3s ease-in-out infinite",
               boxShadow: "0 0 15px white",
@@ -22,8 +22,8 @@ function AboutMe() {
           </div>
 
           {/* Conteúdo */}
-          <div className="text-white space-y-4 md:w-1/2">
-            <h2 className="text-4xl font-bold text-beje" data-aos="zoom-out">Sobre Mim</h2>
+          <div className="text-white space-y-4 lg:w-1/2 max-w-2xl mb-10 lg:mb-0">
+            <h2 className="text-3xl md:text-4xl font-bold text-beje" data-aos="zoom-out">Sobre Mim</h2>
             <hr className="border-beje" />
             <p className=" leading-relaxed">
               Olá, me chamo <strong>Fernando Kotinda</strong> e sou <strong>desenvolvedor Web Full-Stack</strong>. Tenho experiência como desenvolvedor de software e atualmente estou focado em aprimorar minhas habilidades técnicas e profissionais para me tornar cada vez mais capacitado na área de tecnologia.
