@@ -5,8 +5,14 @@ import { FaGithub } from "react-icons/fa";
 import { FiArrowRight } from "react-icons/fi";
 import Tag from '../components/Tag'
 import ProjectButton from '../components/ProjectButton'
+import Modal from '../components/Modal'
+import React from 'react'
 
 function Projects() {
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
   
   return (
     <div 
@@ -67,15 +73,25 @@ function Projects() {
                   colorButton="bg-indigo-900"
                   colorHover="bg-[#221f5d]"
                   text="Ver no GitHub"
-                  icon={<FaGithub className="ml-2 text-lg" size={20}/>}
+                  icon={<FaGithub className="ml-2 text-lg" size={20}/>} 
                 />
-                <ProjectButton 
+                {/* <ProjectButton 
                   link="#"
                   colorButton="bg-blue-900"
                   colorHover="bg-[#162b69]"
                   text="Ver Projeto"
                   icon={<FiArrowRight className="ml-1 text-lg" size={20} />}
-                />
+                /> */}
+                <button
+                  type="button"
+                  onClick={handleOpenModal}
+                  className={
+                    `bg-blue-900 hover:bg-[#162b69] w-full font-medium text-white px-4 py-2 rounded-md shadow-link border-1 border-gray-500 cursor-pointer flex items-center justify-center transition-all duration-300`
+                  }
+                >
+                  Ver Projeto
+                  <FiArrowRight className="ml-1 text-lg" size={20} />
+                </button>
               </div>
               
             </div>
@@ -190,6 +206,26 @@ function Projects() {
 
         </div> 
       </div>
+
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <h2 className="text-xl font-semibold mb-4 text-center">Atenção!</h2>
+        <p className=" flex flex-col gap-3 mb-6 text-center">
+          <p>O link para acessar o sistema BioVerde ainda não está disponível publicamente.</p>
+          <p>Por enquanto, você pode visualizar o código-fonte completo do sistema no GitHub.</p>
+          <p>Em breve, o sistema estará disponível para demonstração online!</p>
+        </p>
+        <div className='flex justify-center'>
+          <ProjectButton
+            link="https://github.com/muriloLuix/BioVerde"
+            colorButton="bg-indigo-900"
+            colorHover="bg-[#221f5d]"
+            text="Ver no GitHub"
+            icon={<FaGithub className="ml-2 text-lg" size={20}/>}
+            isModal
+          />
+        </div>
+      </Modal>
+      
     </div>
   )
 }
