@@ -2,9 +2,14 @@
 <html lang="pt-BR">
 
 <head>
+    @php
+        $isMuriloRoute = request()->is('murilo*');
+        $baseUrl = $isMuriloRoute ? '/murilo' : '';
+    @endphp
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#7B2CBF">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
@@ -79,16 +84,16 @@
         <div class="interface">
             <nav class="desktop-menu">
                 <ul>
-                    <li><a href="/murilo">Inicio</a></li>
-                    <li><a href="#specialties-menu">Habilidades</a></li>
-                    <li><a href="#about-menu">Sobre</a></li>
-                    <li><a href="#portfolio-menu">Projetos</a></li>
-                    <li><a href="#certificates">Certificados</a></li>
-                    <li><a href="#technologies">Tecnologias</a></li>
+                    <li><a href="{{ $baseUrl ?: '/' }}">Inicio</a></li>
+                    <li><a href="{{ $baseUrl }}#specialties-menu">Habilidades</a></li>
+                    <li><a href="{{ $baseUrl }}#about-menu">Sobre</a></li>
+                    <li><a href="{{ $baseUrl }}#portfolio-menu">Projetos</a></li>
+                    <li><a href="{{ $baseUrl }}#certificates">Certificados</a></li>
+                    <li><a href="{{ $baseUrl }}#technologies">Tecnologias</a></li>
                 </ul>
             </nav>
             <div class="btn-contact">
-                <a href="#form-menu"><button>CONTATO</button></a>
+                <a href="{{ $baseUrl }}#form-menu"><button>CONTATO</button></a>
             </div><!--btn-contact-->
 
             <div class="btn-open-menu" id="btn-menu">
@@ -102,13 +107,13 @@
 
                 <nav>
                     <ul>
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="#specialties-menu">Habilidades</a></li>
-                        <li><a href="#about-menu">Sobre</a></li>
-                        <li><a href="#portfolio-menu">Projetos</a></li>
-                        <li><a href="#certificates">Certificados</a></li>
-                        <li><a href="#technologies">Tecnologias</a></li>
-                        <li><a href="#form-menu">Contato</a></li>
+                        <li><a href="{{ $baseUrl ?: '/' }}">Inicio</a></li>
+                        <li><a href="{{ $baseUrl }}#specialties-menu">Habilidades</a></li>
+                        <li><a href="{{ $baseUrl }}#about-menu">Sobre</a></li>
+                        <li><a href="{{ $baseUrl }}#portfolio-menu">Projetos</a></li>
+                        <li><a href="{{ $baseUrl }}#certificates">Certificados</a></li>
+                        <li><a href="{{ $baseUrl }}#technologies">Tecnologias</a></li>
+                        <li><a href="{{ $baseUrl }}#form-menu">Contato</a></li>
                     </ul>
                 </nav>
             </div><!--menu-mobile-->
@@ -139,7 +144,7 @@
                             para criar algo incrível!</p>
 
                         <div class="btn-contact">
-                            <a href="#form-menu">
+                            <a href="{{ $baseUrl }}#form-menu">
                                 <button>CONTATO</button>
                             </a>
                         </div>
@@ -253,7 +258,7 @@
                             </div>
                         </div><!--img-port-->
                     </a>
-                    <a href="/murilo/privado" class="scroll-reveal-scale scroll-reveal-delay-1">
+                    <a href="{{ $baseUrl }}/privado" class="scroll-reveal-scale scroll-reveal-delay-1">
                         <div class="img-port"
                             style="background-image: url('{{ asset('images/portfolio/Echo.png') }}');">
                             <div class="overlay">
@@ -271,7 +276,7 @@
                             </div>
                         </div><!--img-port-->
                     </a>
-                    <a href="/murilo/privado" class="scroll-reveal-scale scroll-reveal-delay-1">
+                    <a href="{{ $baseUrl }}/privado" class="scroll-reveal-scale scroll-reveal-delay-1">
                         <div class="img-port"
                             style="background-image: url('{{ asset('images/portfolio/csvFormatter.png') }}');">
                             <div class="overlay">
@@ -546,7 +551,8 @@
         <section class="form" id="form-menu">
             <div class="interface">
                 <h2 class="title title-reveal">FALE <span>COMIGO.</span></h2>
-                <form id="contact-form" action="assets/php/process_form.php" method="post">
+                <form id="contact-form" action="{{ request()->is('murilo*') ? route('murilo.contact.send') : route('contact.send') }}" method="post">
+                    @csrf
                     <input type="text" name="name" id="name" placeholder="Seu nome:" required>
                     <input type="email" name="email" id="email" placeholder="Seu e-mail:" required>
                     <input type="tel" name="phone" id="telefone" placeholder="Seu celular:" maxlength="15">
@@ -554,7 +560,58 @@
                     <div class="btn-submit">
                         <input type="submit" value="ENVIAR">
                     </div>
-                    <div id="form-messages"></div> <!-- Para exibir mensagens de sucesso/erro -->
+                    <div id="form-messages">
+                        @if(session('success'))
+                            <div style="
+                                background: #d4edda;
+                                color: #155724;
+                                padding: 15px;
+                                border-radius: 5px;
+                                border: 1px solid #c3e6cb;
+                                margin-top: 20px;
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                            ">
+                                <i class="bi bi-check-circle-fill" style="font-size: 20px;"></i>
+                                <span>{{ session('success') }}</span>
+                            </div>
+                        @endif
+
+                        @if(session('error'))
+                            <div style="
+                                background: #f8d7da;
+                                color: #721c24;
+                                padding: 15px;
+                                border-radius: 5px;
+                                border: 1px solid #f5c6cb;
+                                margin-top: 20px;
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                            ">
+                                <i class="bi bi-exclamation-triangle-fill" style="font-size: 20px;"></i>
+                                <span>{{ session('error') }}</span>
+                            </div>
+                        @endif
+
+                        @if($errors->any())
+                            <div style="
+                                background: #f8d7da;
+                                color: #721c24;
+                                padding: 15px;
+                                border-radius: 5px;
+                                border: 1px solid #f5c6cb;
+                                margin-top: 20px;
+                            ">
+                                <ul style="margin: 0; padding-left: 20px;">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div> <!-- Para exibir mensagens de sucesso/erro -->
                 </form>
             </div><!--interface-->
         </section><!--form-->

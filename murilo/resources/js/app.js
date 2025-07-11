@@ -25,8 +25,15 @@ class Typewriter {
     updateDisplay() {
         const currentText = this.texts[this.currentTextIndex];
         const displayText = currentText.substring(0, this.currentCharIndex);
-        const cursor = this.cursorVisible ? '|' : '';
+        const cursor = this.cursorVisible ? '|' : '\u00A0'; // Usa espaço não-quebrável quando cursor não está visível
+        
+        // Garante que sempre há algo no elemento para manter a altura
         this.element.textContent = displayText + cursor;
+        
+        // Se o texto estiver vazio, ainda mantém o cursor/espaço
+        if (displayText.length === 0 && !this.cursorVisible) {
+            this.element.textContent = '\u00A0'; // Espaço não-quebrável para manter altura
+        }
     }
 
     type() {
@@ -1124,8 +1131,131 @@ function initCertificateModal() {
     addCertificateModalListeners();
 }
 
+// Mobile Menu Functionality
+function initMobileMenu() {
+    const btnOpenMenu = document.getElementById('btn-menu');
+    const menuMobile = document.getElementById('menu-mobile');
+    const btnCloseMenu = document.querySelector('.menu-mobile .btn-close');
+    const overlayMenu = document.getElementById('overlay-menu');
+    const menuLinks = document.querySelectorAll('.menu-mobile nav ul li a');
+
+    if (!btnOpenMenu || !menuMobile || !btnCloseMenu || !overlayMenu) {
+        console.warn('Elementos do menu mobile não encontrados');
+        return;
+    }
+
+    // Abrir menu
+    function openMenu() {
+        menuMobile.classList.add('open-menu');
+        overlayMenu.style.display = 'block';
+        setTimeout(() => {
+            overlayMenu.style.opacity = '1';
+        }, 10);
+        document.body.style.overflow = 'hidden'; // Previne scroll do body
+        console.log('Menu mobile aberto');
+    }
+
+    // Fechar menu
+    function closeMenu() {
+        menuMobile.classList.remove('open-menu');
+        overlayMenu.style.opacity = '0';
+        setTimeout(() => {
+            overlayMenu.style.display = 'none';
+        }, 300);
+        document.body.style.overflow = ''; // Restaura scroll do body
+        console.log('Menu mobile fechado');
+    }
+
+    // Event listeners
+    btnOpenMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openMenu();
+    });
+
+    btnCloseMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeMenu();
+    });
+
+    overlayMenu.addEventListener('click', closeMenu);
+
+    // Fechar menu ao clicar em um link
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            closeMenu();
+        });
+    });
+
+    // Fechar menu com ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menuMobile.classList.contains('open-menu')) {
+            closeMenu();
+        }
+    });
+
+    // Prevenir propagação de cliques dentro do menu
+    menuMobile.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    console.log('Menu mobile inicializado com sucesso');
+}
+
+// Desabilitar animações do portfolio em mobile
+function disablePortfolioAnimationsOnMobile() {
+    const portfolioItems = document.querySelectorAll('section.portfolio .scroll-reveal, section.portfolio .scroll-reveal-scale, section.portfolio [class*="scroll-reveal"]');
+    
+    function checkScreenSize() {
+        const isMobile = window.innerWidth <= 830;
+        
+        portfolioItems.forEach(item => {
+            if (isMobile) {
+                // Remover classes de animação em mobile
+                item.classList.remove('scroll-reveal', 'scroll-reveal-scale', 'scroll-reveal-delay-1', 'scroll-reveal-delay-2', 'scroll-reveal-delay-3', 'scroll-reveal-delay-4');
+                // Garantir visibilidade
+                item.style.opacity = '1';
+                item.style.transform = 'none';
+                item.style.transition = 'none';
+            } else {
+                // Re-adicionar classes de animação em desktop (se necessário)
+                const originalClasses = item.getAttribute('data-original-classes');
+                if (originalClasses) {
+                    item.className = originalClasses;
+                } else {
+                    // Fallback: re-adicionar classes básicas baseado no índice
+                    const index = Array.from(portfolioItems).indexOf(item);
+                    item.classList.add('scroll-reveal-scale');
+                    item.classList.add(`scroll-reveal-delay-${(index % 4) + 1}`);
+                }
+                // Remover estilos inline
+                item.style.opacity = '';
+                item.style.transform = '';
+                item.style.transition = '';
+            }
+        });
+    }
+    
+    // Salvar classes originais
+    portfolioItems.forEach(item => {
+        item.setAttribute('data-original-classes', item.className);
+    });
+    
+    // Verificar na inicialização
+    checkScreenSize();
+    
+    // Verificar quando redimensionar a janela
+    window.addEventListener('resize', checkScreenSize);
+    
+    console.log('Sistema de desabilitação de animações do portfolio inicializado');
+}
+
 // Inicializar a animação quando a página carregar
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('DOM carregado, inicializando componentes...');
+    
+    // Inicializar sistema de desabilitação de animações do portfolio
+    disablePortfolioAnimationsOnMobile();
+    
     const typewriterElement = document.querySelector('.typewriter');
     if (typewriterElement) {
         const texts = [
@@ -1141,7 +1271,15 @@ document.addEventListener('DOMContentLoaded', function () {
     initSmoothScroll();
     initHeaderScrollEffect();
     initScrollIndicator();
-    initScrollReveal();
+    
+    // Inicializar ScrollReveal apenas para desktop
+    if (window.innerWidth > 830) {
+        initScrollReveal();
+        console.log('ScrollReveal inicializado para desktop');
+    } else {
+        console.log('ScrollReveal desabilitado para mobile');
+    }
+    
     initCustomTooltips(); // Adicionar tooltips personalizados
     
     // Inicializar funcionalidades móveis
@@ -1156,4 +1294,10 @@ document.addEventListener('DOMContentLoaded', function () {
     initCertificatesSystem();
     initCounterAnimation();
     initCertificateModal();
+    
+    // Inicializar menu mobile
+    initMobileMenu();
 });
+
+// Importar e inicializar funcionalidades de contato
+import './contact.js';
