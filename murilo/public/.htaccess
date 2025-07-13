@@ -4,6 +4,7 @@
     </IfModule>
 
     RewriteEngine On
+    RewriteBase /murilo/
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

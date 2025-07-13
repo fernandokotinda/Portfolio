@@ -60,23 +60,23 @@ export default function MuriloRedirect() {
       </div>
 
       {/* Conteúdo principal */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-8">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8">
         {/* Avatar do Murilo com efeito */}
         <div 
-          className="mb-8 relative"
+          className="mb-6 sm:mb-8 relative"
           data-aos="zoom-in"
         >
           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 opacity-75 blur-xl animate-pulse"></div>
           <img
             src={murilo_img}
             alt="Murilo Luiz"
-            className="relative w-32 h-32 rounded-full object-cover border-4 border-white shadow-2xl transform hover:scale-105 transition-transform duration-300"
+            className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-white shadow-2xl transform hover:scale-105 transition-transform duration-300"
           />
         </div>
 
         {/* Título com gradiente */}
         <h1 
-          className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-500 to-blue-600 bg-clip-text text-transparent drop-shadow-2xl"
+          className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-blue-400 via-purple-500 to-blue-600 bg-clip-text text-transparent drop-shadow-2xl px-2"
           data-aos="fade-up"
           data-aos-delay="200"
         >
@@ -84,7 +84,7 @@ export default function MuriloRedirect() {
         </h1>
         
         <h2 
-          className="text-6xl font-bold mb-8 text-white drop-shadow-2xl"
+          className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 text-white drop-shadow-2xl px-2"
           data-aos="fade-up"
           data-aos-delay="400"
         >
@@ -93,7 +93,7 @@ export default function MuriloRedirect() {
 
         {/* Descrição */}
         <p 
-          className="text-xl text-gray-200 mb-8 max-w-md leading-relaxed"
+          className="text-lg sm:text-xl text-gray-200 mb-6 sm:mb-8 max-w-sm sm:max-w-md leading-relaxed px-2"
           data-aos="fade-up"
           data-aos-delay="600"
         >
@@ -102,23 +102,23 @@ export default function MuriloRedirect() {
 
         {/* Contador regressivo estilizado */}
         <div 
-          className="mb-8 flex flex-col items-center"
+          className="mb-6 sm:mb-8 flex flex-col items-center"
           data-aos="zoom-in"
           data-aos-delay="800"
         >
           <div className="relative">
-            <div className="w-20 h-20 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+            <div className="w-16 h-16 sm:w-20 sm:h-20 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-2xl font-bold text-white">{countdown}</span>
+              <span className="text-xl sm:text-2xl font-bold text-white">{countdown}</span>
             </div>
           </div>
-          <p className="text-gray-300 mt-4">Redirecionando em {countdown} segundos...</p>
+          <p className="text-gray-300 mt-3 sm:mt-4 text-sm sm:text-base">Redirecionando em {countdown} segundos...</p>
         </div>
 
         {/* Botão para redirecionar imediatamente */}
         <button
           onClick={handleRedirectNow}
-          className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-300 cursor-pointer"
+          className="group relative px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold text-sm sm:text-base rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-300 cursor-pointer mx-4"
           data-aos="fade-up"
           data-aos-delay="1000"
         >
@@ -128,18 +128,18 @@ export default function MuriloRedirect() {
 
         {/* Texto de informação adicional */}
         <div 
-          className="mt-6 px-4 py-2 bg-black/30 backdrop-blur-sm rounded-full border border-white/20"
+          className="mt-4 sm:mt-6 px-3 py-2 sm:px-4 bg-black/30 backdrop-blur-sm rounded-full border border-white/20 mx-2"
           data-aos="fade-in"
           data-aos-delay="1200"
         >
-          <p className="text-sm text-white font-medium">
+          <p className="text-xs sm:text-sm text-white font-medium">
             Construído com <span className="text-red-400 font-semibold">Laravel</span> • <span className="text-blue-400 font-semibold">PHP</span> • <span className="text-orange-400 font-semibold">HTML</span> • <span className="text-cyan-400 font-semibold">CSS</span>
           </p>
         </div>
       </div>
 
       {/* Efeito de brilho de fundo */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-r from-blue-500/10 to-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
     </div>
   );
 }

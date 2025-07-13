@@ -25,8 +25,15 @@ class Typewriter {
     updateDisplay() {
         const currentText = this.texts[this.currentTextIndex];
         const displayText = currentText.substring(0, this.currentCharIndex);
-        const cursor = this.cursorVisible ? '|' : '';
+        const cursor = this.cursorVisible ? '|' : '\u00A0'; // Usa espaço não-quebrável quando cursor não está visível
+        
+        // Garante que sempre há algo no elemento para manter a altura
         this.element.textContent = displayText + cursor;
+        
+        // Se o texto estiver vazio, ainda mantém o cursor/espaço
+        if (displayText.length === 0 && !this.cursorVisible) {
+            this.element.textContent = '\u00A0'; // Espaço não-quebrável para manter altura
+        }
     }
 
     type() {
@@ -662,6 +669,14 @@ function initCustomTooltips() {
 
 // Certificates Carousel and Filter System
 function initCertificatesSystem() {
+    // Prevenir múltiplas inicializações
+    if (window.certificatesSystemInitialized) {
+        console.log('⚠️ Sistema de certificados já foi inicializado');
+        return;
+    }
+    
+    console.log('🚀 Iniciando sistema de certificados');
+    
     let currentSlide = 0;
     const slides = document.querySelectorAll('.certificate-slide');
     const indicators = document.querySelectorAll('.indicator');
@@ -669,49 +684,100 @@ function initCertificatesSystem() {
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     
-    if (!slides.length) return;
+    if (!slides.length) {
+        console.log('⚠️ Nenhum slide encontrado');
+        return;
+    }
 
-    // Salvar o HTML original dos slides para restauração posterior
+    // Salvar o HTML original dos slides E certificados individuais para restauração posterior
     const originalSlidesHTML = [];
+    const allOriginalCertificates = []; // Nova estrutura para certificados individuais
+    
     slides.forEach(slide => {
+        // Salva dados do slide completo (para compatibilidade)
         originalSlidesHTML.push({
             html: slide.innerHTML,
             category: slide.getAttribute('data-category')
         });
+        
+        // Extrai certificados individuais de cada slide
+        const certs = slide.querySelectorAll('.certificate-card');
+        certs.forEach((cert, certIndex) => {
+            const certId = `${slide.getAttribute('data-category')}_${certIndex}`;
+            allOriginalCertificates.push({
+                id: certId,
+                html: cert.outerHTML,
+                element: cert.cloneNode(true),
+                category: slide.getAttribute('data-category')
+            });
+        });
     });
+    
+    console.log(`Sistema inicializado com ${allOriginalCertificates.length} certificados individuais`);
+    console.log('Certificados por categoria:', allOriginalCertificates.reduce((acc, cert) => {
+        acc[cert.category] = (acc[cert.category] || 0) + 1;
+        return acc;
+    }, {}));
 
     // Função para mostrar slide específico
     function showSlide(index) {
-        // Remove active de todos os slides
-        slides.forEach(slide => slide.classList.remove('active'));
-        indicators.forEach(indicator => indicator.classList.remove('active'));
+        console.log(`Tentando mostrar slide ${index}`);
         
-        // Adiciona active ao slide atual
-        if (slides[index]) {
-            slides[index].classList.add('active');
-            indicators[index].classList.add('active');
+        // Usar elementos atuais do DOM (incluindo os criados dinamicamente)
+        const currentSlides = document.querySelectorAll('.certificate-slide');
+        const currentIndicators = document.querySelectorAll('.indicator');
+        
+        // Remove active de todos os slides e esconde todos
+        currentSlides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (slide.style.display !== 'none') {
+                slide.style.display = 'none'; // Esconde slides que estão visíveis
+            }
+        });
+        currentIndicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // Verifica se o slide existe e está disponível (não hidden)
+        if (currentSlides[index] && currentSlides[index].innerHTML.trim() !== '') {
+            currentSlides[index].classList.add('active');
+            currentSlides[index].style.display = 'grid'; // Mostra o slide
+            if (currentIndicators[index]) {
+                currentIndicators[index].classList.add('active');
+            }
             currentSlide = index;
+            console.log(`Slide ${index} ativado com sucesso`);
+        } else {
+            console.log(`Slide ${index} não existe ou está vazio`);
+            // Se o slide não está disponível, procura o próximo slide disponível
+            const availableSlides = Array.from(currentSlides).filter((slide, i) => 
+                slide.innerHTML.trim() !== '' && currentIndicators[i] && currentIndicators[i].style.display !== 'none'
+            );
+            
+            if (availableSlides.length > 0) {
+                const firstAvailableIndex = Array.from(currentSlides).indexOf(availableSlides[0]);
+                currentSlides[firstAvailableIndex].classList.add('active');
+                currentSlides[firstAvailableIndex].style.display = 'grid';
+                if (currentIndicators[firstAvailableIndex]) {
+                    currentIndicators[firstAvailableIndex].classList.add('active');
+                }
+                currentSlide = firstAvailableIndex;
+                console.log(`Redirecionado para slide disponível ${firstAvailableIndex}`);
+            }
         }
     }
 
     // Função para reorganizar certificados em slides (para "Todos" ou qualquer categoria)
     function createSlidesView(category = 'all') {
-        // Coleta certificados da categoria especificada ou todos se category === 'all'
-        const certificates = [];
-        originalSlidesHTML.forEach(slideData => {
-            if (category === 'all' || slideData.category === category) {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = slideData.html;
-                const certs = tempDiv.querySelectorAll('.certificate-card');
-                certs.forEach(cert => {
-                    // Preserva o HTML original completo incluindo os assets do Laravel
-                    certificates.push({
-                        html: cert.outerHTML,
-                        element: cert.cloneNode(true)
-                    });
-                });
-            }
-        });
+        console.log(`🔧 Criando slides para categoria: ${category}`);
+        
+        // Para "all", usa todos os certificados individuais. Para categoria específica, filtra.
+        let certificates;
+        if (category === 'all') {
+            certificates = allOriginalCertificates.slice(); // Copia array de todos os certificados
+            console.log(`📋 Categoria "all": ${certificates.length} certificados encontrados`);
+        } else {
+            certificates = allOriginalCertificates.filter(cert => cert.category === category);
+            console.log(`📋 Categoria "${category}": ${certificates.length} certificados encontrados`);
+        }
 
         // Limpa os slides existentes
         slides.forEach(slide => {
@@ -720,58 +786,128 @@ function initCertificatesSystem() {
             slide.style.display = 'none';
         });
 
-        // Define quantos certificados por slide (máximo 4 para manter o layout responsivo)
-        const certificatesPerSlide = 4;
+        // Define quantos certificados por slide baseado no tamanho da tela
+        let certificatesPerSlide;
+        if (window.innerWidth <= 480) {
+            certificatesPerSlide = 2; // Mobile: máximo 2 certificados por slide (1 coluna)
+        } else if (window.innerWidth <= 768) {
+            certificatesPerSlide = 4; // Tablet: máximo 4 certificados por slide (2 colunas)
+        } else {
+            certificatesPerSlide = 4; // Desktop: máximo 4 certificados por slide
+        }
+        
         const totalSlides = Math.ceil(certificates.length / certificatesPerSlide);
+        console.log(`Categoria "${category}": ${certificates.length} certificados, ${certificatesPerSlide} por slide, ${totalSlides} slides totais`);
 
-        // Reorganiza em slides de até 4 certificados cada
-        for (let slideIndex = 0; slideIndex < totalSlides && slideIndex < slides.length; slideIndex++) {
+        // Se precisamos de mais slides do que temos no DOM, criar slides adicionais
+        const container = document.querySelector('.certificate-carousel');
+        if (totalSlides > slides.length && container) {
+            for (let i = slides.length; i < totalSlides; i++) {
+                const newSlide = document.createElement('div');
+                newSlide.className = 'certificate-slide';
+                newSlide.setAttribute('data-category', category);
+                newSlide.style.display = 'none';
+                container.appendChild(newSlide);
+                console.log(`✅ Slide extra ${i} criado dinamicamente`);
+            }
+            
+            // Atualizar a NodeList de slides
+            const updatedSlides = document.querySelectorAll('.certificate-slide');
+            // Copiar para o array slides (se necessário)
+            for (let i = 0; i < updatedSlides.length; i++) {
+                if (!slides[i]) {
+                    // Adicionar novos slides ao array
+                    slides[i] = updatedSlides[i];
+                }
+            }
+        }
+
+        // Se precisamos de mais indicadores, criar indicadores adicionais
+        const indicatorsContainer = document.querySelector('.indicators');
+        if (totalSlides > indicators.length && indicatorsContainer) {
+            for (let i = indicators.length; i < totalSlides; i++) {
+                const newIndicator = document.createElement('span');
+                newIndicator.className = 'indicator';
+                newIndicator.setAttribute('data-slide', i.toString());
+                newIndicator.addEventListener('click', () => {
+                    console.log(`Indicador ${i} clicado`);
+                    if (slides[i] && slides[i].innerHTML.trim() !== '') {
+                        showSlide(i);
+                    }
+                });
+                indicatorsContainer.appendChild(newIndicator);
+                console.log(`✅ Indicador extra ${i} criado dinamicamente`);
+            }
+            
+            // Atualizar a NodeList de indicadores
+            const updatedIndicators = document.querySelectorAll('.indicator');
+            for (let i = 0; i < updatedIndicators.length; i++) {
+                if (!indicators[i]) {
+                    indicators[i] = updatedIndicators[i];
+                }
+            }
+        }
+
+        // Reorganiza em slides de até 2-4 certificados cada (baseado no tamanho da tela)
+        const allSlides = document.querySelectorAll('.certificate-slide');
+        for (let slideIndex = 0; slideIndex < totalSlides && slideIndex < allSlides.length; slideIndex++) {
             const startIndex = slideIndex * certificatesPerSlide;
             const endIndex = Math.min(startIndex + certificatesPerSlide, certificates.length);
             const slideGroup = certificates.slice(startIndex, endIndex);
             
-            if (slides[slideIndex]) {
+            if (allSlides[slideIndex]) {
                 // Limpa o slide atual
-                slides[slideIndex].innerHTML = '';
+                allSlides[slideIndex].innerHTML = '';
                 
                 // Adiciona os certificados ao slide preservando o HTML original
                 slideGroup.forEach(certData => {
-                    slides[slideIndex].appendChild(certData.element);
+                    allSlides[slideIndex].appendChild(certData.element.cloneNode(true));
                 });
                 
-                // Garante que o slide mantenha o layout de grid e seja visível
-                slides[slideIndex].style.display = 'grid';
-                slides[slideIndex].style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
-                slides[slideIndex].style.gap = '20px';
-                slides[slideIndex].setAttribute('data-category', category);
+                // Garante que o slide mantenha o layout de grid mas inicialmente oculto
+                allSlides[slideIndex].style.display = slideIndex === 0 ? 'grid' : 'none'; // Só o primeiro visível
+                allSlides[slideIndex].style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
+                allSlides[slideIndex].style.gap = '20px';
+                allSlides[slideIndex].setAttribute('data-category', category);
                 
-                console.log(`Slide ${slideIndex} criado com ${slideGroup.length} certificados para categoria: ${category}`);
+                console.log(`✅ Slide ${slideIndex} criado com ${slideGroup.length} certificados para categoria: ${category}`);
             }
         }
 
-        // Atualiza indicadores para mostrar apenas os slides necessários
-        indicators.forEach((indicator, index) => {
+        // Atualiza indicadores para mostrar apenas os slides necessários  
+        const allIndicators = document.querySelectorAll('.indicator');
+        allIndicators.forEach((indicator, index) => {
             if (index < totalSlides) {
                 indicator.style.display = 'block';
                 indicator.classList.remove('active');
+                // Atualiza o data-slide para corresponder ao índice correto
+                indicator.setAttribute('data-slide', index.toString());
             } else {
                 indicator.style.display = 'none';
                 indicator.classList.remove('active');
             }
         });
 
-        // Esconde slides não utilizados
-        for (let i = totalSlides; i < slides.length; i++) {
-            if (slides[i]) {
-                slides[i].style.display = 'none';
-                slides[i].classList.remove('active');
+        // Esconde slides não utilizados e limpa seu conteúdo
+        for (let i = totalSlides; i < allSlides.length; i++) {
+            if (allSlides[i]) {
+                allSlides[i].style.display = 'none';
+                allSlides[i].classList.remove('active');
+                allSlides[i].innerHTML = ''; // Limpa o conteúdo
             }
         }
 
         // Mostra o primeiro slide se houver certificados
         if (totalSlides > 0) {
+            console.log(`Mostrando primeiro slide da categoria ${category}`);
             showSlide(0);
+            debugSlideState(); // Debug após criar slides
+        } else {
+            console.log(`Nenhum slide encontrado para categoria ${category}`);
         }
+        
+        // Atualiza a visibilidade dos botões de navegação
+        updateNavigationVisibility();
         
         console.log(`Sistema "${category}": Criados ${totalSlides} slides com ${certificates.length} certificados totais`);
         
@@ -787,15 +923,24 @@ function initCertificatesSystem() {
     function initFilters() {
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
+                console.log('🔘 Filtro clicado:', btn.textContent, 'Data-category:', btn.getAttribute('data-category'));
+                
                 // Remove active de todos os botões
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 
                 const category = btn.getAttribute('data-category');
+                console.log(`🎯 Aplicando filtro para categoria: ${category}`);
                 
                 // Usa a função unificada para criar slides organizados por categoria
                 // Para "all" mostra todos os certificados, para outras categorias mostra apenas da categoria específica
                 createSlidesView(category);
+                
+                // Debug após aplicar filtro
+                setTimeout(() => {
+                    console.log('🔍 Estado após filtro aplicado:');
+                    debugSlideState();
+                }, 200);
                 
                 // Reagregar os event listeners do modal após filtrar
                 setTimeout(() => {
@@ -811,42 +956,144 @@ function initCertificatesSystem() {
     function initCarouselNavigation() {
         if (prevBtn) {
             prevBtn.addEventListener('click', () => {
-                const visibleSlides = Array.from(slides).filter(slide => 
-                    slide.style.display !== 'none'
+                console.log('Botão prev clicado');
+                
+                // Usar elementos atuais do DOM (incluindo os criados dinamicamente)
+                const currentSlides = document.querySelectorAll('.certificate-slide');
+                const currentIndicators = document.querySelectorAll('.indicator');
+                
+                // Obter slides que têm conteúdo (não vazios)
+                const availableSlides = Array.from(currentSlides).filter((slide, index) => 
+                    slide.innerHTML.trim() !== '' && 
+                    currentIndicators[index] && 
+                    currentIndicators[index].style.display !== 'none'
                 );
-                const visibleIndices = visibleSlides.map(slide => 
-                    Array.from(slides).indexOf(slide)
+                const availableIndices = availableSlides.map(slide => 
+                    Array.from(currentSlides).indexOf(slide)
                 );
                 
-                const currentIndex = visibleIndices.indexOf(currentSlide);
-                const prevIndex = currentIndex > 0 ? currentIndex - 1 : visibleIndices.length - 1;
-                showSlide(visibleIndices[prevIndex]);
+                console.log('Slides disponíveis:', availableIndices);
+                console.log('Slide atual:', currentSlide);
+                
+                if (availableIndices.length <= 1) return; // Não há navegação se só há 1 slide
+                
+                const currentIndex = availableIndices.indexOf(currentSlide);
+                const prevIndex = currentIndex > 0 ? currentIndex - 1 : availableIndices.length - 1;
+                
+                console.log('Navegando para slide:', availableIndices[prevIndex]);
+                showSlide(availableIndices[prevIndex]);
             });
         }
 
         if (nextBtn) {
             nextBtn.addEventListener('click', () => {
-                const visibleSlides = Array.from(slides).filter(slide => 
-                    slide.style.display !== 'none'
+                console.log('Botão next clicado');
+                
+                // Usar elementos atuais do DOM (incluindo os criados dinamicamente)
+                const currentSlides = document.querySelectorAll('.certificate-slide');
+                const currentIndicators = document.querySelectorAll('.indicator');
+                
+                // Obter slides que têm conteúdo (não vazios)
+                const availableSlides = Array.from(currentSlides).filter((slide, index) => 
+                    slide.innerHTML.trim() !== '' && 
+                    currentIndicators[index] && 
+                    currentIndicators[index].style.display !== 'none'
                 );
-                const visibleIndices = visibleSlides.map(slide => 
-                    Array.from(slides).indexOf(slide)
+                const availableIndices = availableSlides.map(slide => 
+                    Array.from(currentSlides).indexOf(slide)
                 );
                 
-                const currentIndex = visibleIndices.indexOf(currentSlide);
-                const nextIndex = currentIndex < visibleIndices.length - 1 ? currentIndex + 1 : 0;
-                showSlide(visibleIndices[nextIndex]);
+                console.log('Slides disponíveis:', availableIndices);
+                console.log('Slide atual:', currentSlide);
+                
+                if (availableIndices.length <= 1) return; // Não há navegação se só há 1 slide
+                
+                const currentIndex = availableIndices.indexOf(currentSlide);
+                const nextIndex = currentIndex < availableIndices.length - 1 ? currentIndex + 1 : 0;
+                
+                console.log('Navegando para slide:', availableIndices[nextIndex]);
+                showSlide(availableIndices[nextIndex]);
+                debugSlideState(); // Debug após navegação
             });
         }
 
         // Indicadores
         indicators.forEach((indicator, index) => {
             indicator.addEventListener('click', () => {
-                if (slides[index] && slides[index].style.display !== 'none') {
+                console.log(`Indicador ${index} clicado`);
+                if (slides[index] && slides[index].innerHTML.trim() !== '' && 
+                    indicators[index] && indicators[index].style.display !== 'none') {
                     showSlide(index);
                 }
             });
         });
+    }
+
+    // Função para controlar visibilidade dos botões de navegação
+    function updateNavigationVisibility() {
+        // Usar elementos atuais do DOM (incluindo os criados dinamicamente)
+        const currentSlides = document.querySelectorAll('.certificate-slide');
+        const currentIndicators = document.querySelectorAll('.indicator');
+        
+        const availableSlides = Array.from(currentSlides).filter((slide, index) => 
+            slide.innerHTML.trim() !== '' && 
+            currentIndicators[index] && 
+            currentIndicators[index].style.display !== 'none'
+        );
+        
+        const availableIndicators = Array.from(currentIndicators).filter(indicator => 
+            indicator.style.display !== 'none' && indicator.style.display !== ''
+        );
+        
+        // Mostrar/esconder botões baseado no número de slides disponíveis
+        if (availableSlides.length <= 1) {
+            if (prevBtn) prevBtn.style.opacity = '0.3';
+            if (nextBtn) nextBtn.style.opacity = '0.3';
+        } else {
+            if (prevBtn) prevBtn.style.opacity = '1';
+            if (nextBtn) nextBtn.style.opacity = '1';
+        }
+        
+        console.log(`Navegação atualizada: ${availableSlides.length} slides disponíveis, ${availableIndicators.length} indicadores disponíveis`);
+    }
+
+    // Função para debug - mostra o estado atual dos slides
+    function debugSlideState() {
+        console.log('=== ESTADO COMPLETO DO CARROSSEL ===');
+        console.log(`Slide atual: ${currentSlide}`);
+        console.log(`Total certificados carregados: ${allOriginalCertificates.length}`);
+        
+        slides.forEach((slide, index) => {
+            const hasContent = slide.innerHTML.trim() !== '';
+            const displayStyle = slide.style.display;
+            const isActive = slide.classList.contains('active');
+            const indicatorVisible = indicators[index] ? indicators[index].style.display : 'N/A';
+            const indicatorActive = indicators[index] ? indicators[index].classList.contains('active') : false;
+            const certCount = slide.querySelectorAll('.certificate-card').length;
+            const category = slide.getAttribute('data-category');
+            
+            console.log(`Slide ${index}:`, {
+                hasContent,
+                displayStyle,
+                isActive,
+                indicatorVisible,
+                indicatorActive,
+                certCount,
+                category,
+                contentLength: slide.innerHTML.length
+            });
+        });
+        
+        // Verificar certificados por categoria
+        const certsByCategory = {};
+        allOriginalCertificates.forEach(cert => {
+            if (!certsByCategory[cert.category]) {
+                certsByCategory[cert.category] = 0;
+            }
+            certsByCategory[cert.category]++;
+        });
+        console.log('Certificados por categoria:', certsByCategory);
+        console.log('========================================');
     }
 
     // Auto-play do carousel (opcional)
@@ -874,7 +1121,23 @@ function initCertificatesSystem() {
     showSlide(0);
     // initAutoPlay(); // Descomente se quiser auto-play
 
-    console.log('Sistema de certificados inicializado');
+    // Listener para resize da janela - recalcula slides baseado no novo tamanho
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const activeBtn = document.querySelector('.filter-btn.active');
+            if (activeBtn) {
+                const currentCategory = activeBtn.getAttribute('data-category');
+                console.log('Recalculando slides devido ao resize para categoria:', currentCategory);
+                createSlidesView(currentCategory);
+            }
+        }, 300); // Debounce de 300ms
+    });
+
+    // Marcar como inicializado
+    window.certificatesSystemInitialized = true;
+    console.log('✅ Sistema de certificados inicializado com sucesso');
 }
 
 // Contador animado
@@ -1124,8 +1387,131 @@ function initCertificateModal() {
     addCertificateModalListeners();
 }
 
+// Mobile Menu Functionality
+function initMobileMenu() {
+    const btnOpenMenu = document.getElementById('btn-menu');
+    const menuMobile = document.getElementById('menu-mobile');
+    const btnCloseMenu = document.querySelector('.menu-mobile .btn-close');
+    const overlayMenu = document.getElementById('overlay-menu');
+    const menuLinks = document.querySelectorAll('.menu-mobile nav ul li a');
+
+    if (!btnOpenMenu || !menuMobile || !btnCloseMenu || !overlayMenu) {
+        console.warn('Elementos do menu mobile não encontrados');
+        return;
+    }
+
+    // Abrir menu
+    function openMenu() {
+        menuMobile.classList.add('open-menu');
+        overlayMenu.style.display = 'block';
+        setTimeout(() => {
+            overlayMenu.style.opacity = '1';
+        }, 10);
+        document.body.style.overflow = 'hidden'; // Previne scroll do body
+        console.log('Menu mobile aberto');
+    }
+
+    // Fechar menu
+    function closeMenu() {
+        menuMobile.classList.remove('open-menu');
+        overlayMenu.style.opacity = '0';
+        setTimeout(() => {
+            overlayMenu.style.display = 'none';
+        }, 300);
+        document.body.style.overflow = ''; // Restaura scroll do body
+        console.log('Menu mobile fechado');
+    }
+
+    // Event listeners
+    btnOpenMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openMenu();
+    });
+
+    btnCloseMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeMenu();
+    });
+
+    overlayMenu.addEventListener('click', closeMenu);
+
+    // Fechar menu ao clicar em um link
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            closeMenu();
+        });
+    });
+
+    // Fechar menu com ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menuMobile.classList.contains('open-menu')) {
+            closeMenu();
+        }
+    });
+
+    // Prevenir propagação de cliques dentro do menu
+    menuMobile.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    console.log('Menu mobile inicializado com sucesso');
+}
+
+// Desabilitar animações do portfolio em mobile
+function disablePortfolioAnimationsOnMobile() {
+    const portfolioItems = document.querySelectorAll('section.portfolio .scroll-reveal, section.portfolio .scroll-reveal-scale, section.portfolio [class*="scroll-reveal"]');
+    
+    function checkScreenSize() {
+        const isMobile = window.innerWidth <= 830;
+        
+        portfolioItems.forEach(item => {
+            if (isMobile) {
+                // Remover classes de animação em mobile
+                item.classList.remove('scroll-reveal', 'scroll-reveal-scale', 'scroll-reveal-delay-1', 'scroll-reveal-delay-2', 'scroll-reveal-delay-3', 'scroll-reveal-delay-4');
+                // Garantir visibilidade
+                item.style.opacity = '1';
+                item.style.transform = 'none';
+                item.style.transition = 'none';
+            } else {
+                // Re-adicionar classes de animação em desktop (se necessário)
+                const originalClasses = item.getAttribute('data-original-classes');
+                if (originalClasses) {
+                    item.className = originalClasses;
+                } else {
+                    // Fallback: re-adicionar classes básicas baseado no índice
+                    const index = Array.from(portfolioItems).indexOf(item);
+                    item.classList.add('scroll-reveal-scale');
+                    item.classList.add(`scroll-reveal-delay-${(index % 4) + 1}`);
+                }
+                // Remover estilos inline
+                item.style.opacity = '';
+                item.style.transform = '';
+                item.style.transition = '';
+            }
+        });
+    }
+    
+    // Salvar classes originais
+    portfolioItems.forEach(item => {
+        item.setAttribute('data-original-classes', item.className);
+    });
+    
+    // Verificar na inicialização
+    checkScreenSize();
+    
+    // Verificar quando redimensionar a janela
+    window.addEventListener('resize', checkScreenSize);
+    
+    console.log('Sistema de desabilitação de animações do portfolio inicializado');
+}
+
 // Inicializar a animação quando a página carregar
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('DOM carregado, inicializando componentes...');
+    
+    // Inicializar sistema de desabilitação de animações do portfolio
+    disablePortfolioAnimationsOnMobile();
+    
     const typewriterElement = document.querySelector('.typewriter');
     if (typewriterElement) {
         const texts = [
@@ -1141,7 +1527,15 @@ document.addEventListener('DOMContentLoaded', function () {
     initSmoothScroll();
     initHeaderScrollEffect();
     initScrollIndicator();
-    initScrollReveal();
+    
+    // Inicializar ScrollReveal apenas para desktop
+    if (window.innerWidth > 830) {
+        initScrollReveal();
+        console.log('ScrollReveal inicializado para desktop');
+    } else {
+        console.log('ScrollReveal desabilitado para mobile');
+    }
+    
     initCustomTooltips(); // Adicionar tooltips personalizados
     
     // Inicializar funcionalidades móveis
@@ -1156,4 +1550,10 @@ document.addEventListener('DOMContentLoaded', function () {
     initCertificatesSystem();
     initCounterAnimation();
     initCertificateModal();
+    
+    // Inicializar menu mobile
+    initMobileMenu();
 });
+
+// Importar e inicializar funcionalidades de contato
+import './contact.js';
