@@ -25,7 +25,7 @@ function NavBar() {
 
       {/* Drawer lateral */}
       <nav
-        className={`fixed top-0 left-0 h-full w-full  bg-azulEscuro z-[102] p-8 pt-20 flex flex-col gap-10 shadow-lg transition-transform duration-300 md:hidden justify-center items-center ${open ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 h-full w-screen max-w-full overflow-x-hidden bg-azulEscuro z-[102] p-8 pt-20 flex flex-col gap-10 shadow-lg transition-transform duration-300 md:hidden justify-center items-center ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
         {/* Links centralizados */}
         <div className="flex flex-col gap-10 flex-1 justify-center items-center">
