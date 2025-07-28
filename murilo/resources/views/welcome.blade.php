@@ -164,7 +164,7 @@
 
         <section id="specialties-menu" class="specialties">
             <div class="interface">
-                <h2 class="title title-reveal">MINHAS <span>ESPECIALIDADES.</span></h2>
+                <h2 class="title">MINHAS <span>ESPECIALIDADES.</span></h2>
                 <div class="flex">
                     <div class="specialties-box scroll-reveal scroll-reveal-delay-1">
                         <i class="bi bi-layout-text-window-reverse"></i>
@@ -192,134 +192,175 @@
 
         <section id="portfolio-menu" class="portfolio">
             <div class="interface">
-                <h2 class="title title-reveal">MEU <span>PORTFÓLIO.</span></h2>
-                <div class="flex">
-                    <a target="_blank" href="https://github.com/fernandokotinda/Sistema-Controle-de-Estoque" class="scroll-reveal-scale scroll-reveal-delay-1">
-                        <div class="img-port"
-                            style="background-image: url('{{ asset('images/portfolio/controle_de_estoque.png') }}');">
-                            <div class="overlay">
-                                <div class="project-info">
-                                    <h3>Controle de Estoque</h3>
-                                    <p class="project-description">Sistema completo para gerenciamento de estoque com controle de entrada e saída de produtos.</p>
-                                    <div class="project-tech">
-                                        <span class="tech-tag">HTML5</span>
-                                        <span class="tech-tag">CSS3</span>
-                                        <span class="tech-tag">JavaScript</span>
+                <h2 class="title">MEU <span>PORTFÓLIO.</span></h2>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <a target="_blank" href="https://github.com/fernandokotinda/Sistema-Controle-de-Estoque" class="portfolio-link">
+                            <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/controle_de_estoque.png') }}');">
+                                <div class="portfolio-title-overlay">
+                                    <h4>Controle de Estoque</h4>
+                                </div>
+                                <div class="portfolio-tech-badge">HTML5 • CSS3 • JS</div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <h3>Controle de Estoque</h3>
+                                        <p>Sistema completo para gerenciamento de estoque com controle de entrada e saída de produtos.</p>
+                                        <div class="portfolio-tags">
+                                            <span class="tag">HTML5</span>
+                                            <span class="tag">CSS3</span>
+                                            <span class="tag">JavaScript</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div><!--img-port-->
-                    </a>
-                    <a target="_blank" href="https://github.com/muriloLuix/Calculator" class="scroll-reveal-scale scroll-reveal-delay-2">
-                        <div class="img-port"
-                            style="background-image: url('{{ asset('images/portfolio/Calculadora.png') }}');">
-                            <div class="overlay">
-                                <div class="project-info">
-                                    <h3>Calculadora</h3>
-                                    <p class="project-description">Calculadora funcional com interface moderna e operações matemáticas básicas e avançadas.</p>
-                                    <div class="project-tech">
-                                        <span class="tech-tag">HTML5</span>
-                                        <span class="tech-tag">CSS3</span>
-                                        <span class="tech-tag">JavaScript</span>
+                        </a>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <a target="_blank" href="https://github.com/muriloLuix/Calculator" class="portfolio-link">
+                            <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/Calculadora.png') }}');">
+                                <div class="portfolio-title-overlay">
+                                    <h4>Calculadora</h4>
+                                </div>
+                                <div class="portfolio-tech-badge">HTML5 • CSS3 • JS</div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <h3>Calculadora</h3>
+                                        <p>Calculadora funcional com interface moderna e operações matemáticas básicas e avançadas.</p>
+                                        <div class="portfolio-tags">
+                                            <span class="tag">HTML5</span>
+                                            <span class="tag">CSS3</span>
+                                            <span class="tag">JavaScript</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div><!--img-port-->
-                    </a>
-                    <a target="_blank" href="https://github.com/muriloLuix/Game-of-Memory" class="scroll-reveal-scale scroll-reveal-delay-3">
-                        <div class="img-port"
-                            style="background-image: url('{{ asset('images/portfolio/memoryGame.png') }}');">
-                            <div class="overlay">
-                                <div class="project-info">
-                                    <h3>Memory Game</h3>
-                                    <p class="project-description">Jogo da memória interativo com diferentes níveis de dificuldade e sistema de pontuação.</p>
-                                    <div class="project-tech">
-                                        <span class="tech-tag">HTML5</span>
-                                        <span class="tech-tag">CSS3</span>
-                                        <span class="tech-tag">JavaScript</span>
+                        </a>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <a target="_blank" href="https://github.com/muriloLuix/Game-of-Memory" class="portfolio-link">
+                            <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/memoryGame.png') }}');">
+                                <div class="portfolio-title-overlay">
+                                    <h4>Memory Game</h4>
+                                </div>
+                                <div class="portfolio-tech-badge">HTML5 • CSS3 • JS</div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <h3>Memory Game</h3>
+                                        <p>Jogo da memória interativo com diferentes níveis de dificuldade e sistema de pontuação.</p>
+                                        <div class="portfolio-tags">
+                                            <span class="tag">HTML5</span>
+                                            <span class="tag">CSS3</span>
+                                            <span class="tag">JavaScript</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div><!--img-port-->
-                    </a>
-                    <a target="_blank" href="https://github.com/muriloLuix/Tic-Tac-Toe" class="scroll-reveal-scale scroll-reveal-delay-4">
-                        <div class="img-port"
-                            style="background-image: url('{{ asset('images/portfolio/jogoDaVelha.png') }}');">
-                            <div class="overlay">
-                                <div class="project-info">
-                                    <h3>Tic Tac Toe</h3>
-                                    <p class="project-description">Jogo da velha clássico com interface responsiva e modo para dois jogadores.</p>
-                                    <div class="project-tech">
-                                        <span class="tech-tag">HTML5</span>
-                                        <span class="tech-tag">CSS3</span>
-                                        <span class="tech-tag">JavaScript</span>
+                        </a>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <a target="_blank" href="https://github.com/muriloLuix/Tic-Tac-Toe" class="portfolio-link">
+                            <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/jogoDaVelha.png') }}');">
+                                <div class="portfolio-title-overlay">
+                                    <h4>Tic Tac Toe</h4>
+                                </div>
+                                <div class="portfolio-tech-badge">HTML5 • CSS3 • JS</div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <h3>Tic Tac Toe</h3>
+                                        <p>Jogo da velha clássico com interface responsiva e modo para dois jogadores.</p>
+                                        <div class="portfolio-tags">
+                                            <span class="tag">HTML5</span>
+                                            <span class="tag">CSS3</span>
+                                            <span class="tag">JavaScript</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div><!--img-port-->
-                    </a>
-                    <a href="{{ $baseUrl }}/privado" class="scroll-reveal-scale scroll-reveal-delay-1">
-                        <div class="img-port"
-                            style="background-image: url('{{ asset('images/portfolio/Echo.png') }}');">
-                            <div class="overlay">
-                                <div class="project-info">
-                                    <h3>Echo</h3>
-                                    <p class="project-description">Empresa de autoridade de Murilo Luiz Jaboinski focada no desenvolvimento web de pequenos comércios.</p>
-                                    <div class="project-tech">
-                                        <span class="tech-tag">HTML5</span>
-                                        <span class="tech-tag">CSS3</span>
-                                        <span class="tech-tag">JavaScript</span>
-                                        <span class="tech-tag">Laravel</span>
-                                        <span class="tech-tag">Blade</span>
+                        </a>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <a href="{{ $baseUrl }}/privado" class="portfolio-link">
+                            <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/Echo.png') }}');">
+                                <div class="portfolio-title-overlay">
+                                    <h4>Echo</h4>
+                                </div>
+                                <div class="portfolio-tech-badge">Laravel • PHP • Blade</div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <h3>Echo</h3>
+                                        <p>Empresa de autoridade de Murilo Luiz Jaboinski focada no desenvolvimento web de pequenos comércios.</p>
+                                        <div class="portfolio-tags">
+                                            <span class="tag">HTML5</span>
+                                            <span class="tag">CSS3</span>
+                                            <span class="tag">JavaScript</span>
+                                            <span class="tag">Laravel</span>
+                                            <span class="tag">Blade</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div><!--img-port-->
-                    </a>
-                    <a href="{{ $baseUrl }}/privado" class="scroll-reveal-scale scroll-reveal-delay-1">
-                        <div class="img-port"
-                            style="background-image: url('{{ asset('images/portfolio/csvFormatter.png') }}');">
-                            <div class="overlay">
-                                <div class="project-info">
-                                    <h3>Csv Formatter</h3>
-                                    <p class="project-description">Uma tela simples de formatação de um arquivo .xlsx para .csv com base no layout do .xlsx do índice de INPC.</p>
-                                    <div class="project-tech">
-                                        <span class="tech-tag">HTML5</span>
-                                        <span class="tech-tag">CSS3</span>
-                                        <span class="tech-tag">JavaScript</span>
-                                        <span class="tech-tag">Laravel</span>
-                                        <span class="tech-tag">Blade</span>
-                                        <span class="tech-tag">PHPSpreadsheet</span>
+                        </a>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <a href="{{ $baseUrl }}/privado" class="portfolio-link">
+                            <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/csvFormatter.png') }}');">
+                                <div class="portfolio-title-overlay">
+                                    <h4>Csv Formatter</h4>
+                                </div>
+                                <div class="portfolio-tech-badge">Laravel • PHP • Excel</div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <h3>Csv Formatter</h3>
+                                        <p>Uma tela simples de formatação de um arquivo .xlsx para .csv com base no layout do .xlsx do índice de INPC.</p>
+                                        <div class="portfolio-tags">
+                                            <span class="tag">HTML5</span>
+                                            <span class="tag">CSS3</span>
+                                            <span class="tag">JavaScript</span>
+                                            <span class="tag">Laravel</span>
+                                            <span class="tag">Blade</span>
+                                            <span class="tag">PHPSpreadsheet</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div><!--img-port-->
-                    </a>
-                    <a href="" class="scroll-reveal-scale scroll-reveal-delay-1">
-                        <div class="img-port"
-                            style="background-image: url('{{ asset('images/portfolio/BioVerde.png') }}');">
-                            <div class="overlay">
-                                <div class="project-info">
-                                    <h3>Bio Verde</h3>
-                                    <p class="project-description">Sistema completo de gestão para uma empresa de produtos orgânicos. </p>
-                                    <div class="project-tech">
-                                        <span class="tech-tag">HTML5</span>
-                                        <span class="tech-tag">TailwindCSS</span>
-                                        <span class="tech-tag">JavaScript</span>
-                                        <span class="tech-tag">React</span>
-                                        <span class="tech-tag">PHP</span>
-                                        <span class="tech-tag">MySQL</span>
+                        </a>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <a href="" class="portfolio-link">
+                            <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/BioVerde.png') }}');">
+                                <div class="portfolio-title-overlay">
+                                    <h4>Bio Verde</h4>
+                                </div>
+                                <div class="portfolio-tech-badge">React • PHP • MySQL</div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <h3>Bio Verde</h3>
+                                        <p>Sistema completo de gestão para uma empresa de produtos orgânicos.</p>
+                                        <div class="portfolio-tags">
+                                            <span class="tag">HTML5</span>
+                                            <span class="tag">TailwindCSS</span>
+                                            <span class="tag">JavaScript</span>
+                                            <span class="tag">React</span>
+                                            <span class="tag">PHP</span>
+                                            <span class="tag">MySQL</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div><!--img-port-->
-                    </a>
-                </div><!--flex-->
-            </div><!--interface-->
+                        </a>
+                    </div>
+                </div>
+            </div>
         </section><!--portfolio-->
         <section class="certificates" id="certificates">
             <div class="interface">
-                <h2 class="title title-reveal">CERTIFICADOS<span>.</span></h2>
+                <h2 class="title">CERTIFICADOS<span>.</span></h2>
                 
                 <!-- Filtros de Categoria -->
                 <div class="certificate-filters scroll-reveal">
@@ -510,7 +551,7 @@
 
         <section class="certificates" id="technologies">
             <div class="interface">
-                <h2 class="title title-reveal">LINGUAGENS E <span>TECNOLOGIAS.</span></h2>
+                <h2 class="title">LINGUAGENS E <span>TECNOLOGIAS.</span></h2>
                 
                 <!-- Front-end Technologies -->
                 <div class="tech-category">
@@ -550,7 +591,7 @@
 
         <section class="form" id="form-menu">
             <div class="interface">
-                <h2 class="title title-reveal">FALE <span>COMIGO.</span></h2>
+                <h2 class="title">FALE <span>COMIGO.</span></h2>
                 <form id="contact-form" action="{{ request()->is('murilo*') ? route('murilo.contact.send') : route('contact.send') }}" method="post">
                     @csrf
                     <input type="text" name="name" id="name" placeholder="Seu nome:" required>

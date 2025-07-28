@@ -426,81 +426,55 @@ function initTouchFeedback() {
 function initScrollReveal() {
     const scrollElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .title-reveal');
     
-    // Usar Intersection Observer para melhor performance
+    // Verificar se estamos em mobile
+    const isMobile = window.innerWidth <= 768;
+    
+    // Se for mobile, ativar todos os elementos imediatamente
+    if (isMobile) {
+        scrollElements.forEach(el => {
+            el.classList.add('reveal-active');
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.visibility = 'visible';
+        });
+        return;
+    }
+    
+    // Para desktop, usar Intersection Observer
+    if (window.IntersectionObserver) {
     const observerOptions = {
-        threshold: 0.05, /* Reduzido de 0.1 para 0.05 para ativação mais cedo */
-        rootMargin: '0px 0px -20px 0px' /* Reduzido de -50px para -20px */
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
     };
 
     const scrollObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Usar requestAnimationFrame para suavizar a animação
-                requestAnimationFrame(() => {
                     entry.target.classList.add('reveal-active');
-                });
-            } else {
-                // Remove a classe para re-animar quando sair e voltar na viewport
-                requestAnimationFrame(() => {
-                    entry.target.classList.remove('reveal-active');
-                });
             }
         });
     }, observerOptions);
 
     scrollElements.forEach(el => {
-        // Garantir que elementos tenham will-change apenas quando necessário
-        el.style.willChange = 'opacity, transform';
         scrollObserver.observe(el);
-        
-        // Remover will-change após animação para economizar recursos
-        el.addEventListener('transitionend', () => {
-            if (el.classList.contains('reveal-active')) {
-                el.style.willChange = 'auto';
-            }
         });
-    });
-
-    // Fallback para navegadores que não suportam Intersection Observer
-    if (!window.IntersectionObserver) {
-        const elementInView = (el, dividend = 1) => {
+    } else {
+        // Fallback simples para navegadores antigos
+        const elementInView = (el) => {
             const elementTop = el.getBoundingClientRect().top;
-            return (
-                elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
-            );
-        };
-
-        const elementOutofView = (el) => {
-            const elementTop = el.getBoundingClientRect().top;
-            return (
-                elementTop > (window.innerHeight || document.documentElement.clientHeight)
-            );
+            return elementTop <= window.innerHeight * 0.8;
         };
 
         const handleScrollAnimation = () => {
             scrollElements.forEach((el) => {
-                if (elementInView(el, 1.25)) {
+                if (elementInView(el)) {
                     el.classList.add('reveal-active');
-                } else if (elementOutofView(el)) {
-                    el.classList.remove('reveal-active');
                 }
             });
         };
 
-        // Event listener otimizado com throttling
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    handleScrollAnimation();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true });
-
-        // Executa uma vez no carregamento para elementos já visíveis
-        handleScrollAnimation();
+        window.addEventListener('scroll', handleScrollAnimation, { passive: true });
+        handleScrollAnimation(); // Executar uma vez no carregamento
     }
 }
 
@@ -1505,55 +1479,388 @@ function disablePortfolioAnimationsOnMobile() {
     console.log('Sistema de desabilitação de animações do portfolio inicializado');
 }
 
-// Inicializar a animação quando a página carregar
-document.addEventListener('DOMContentLoaded', function () {
-    console.log('DOM carregado, inicializando componentes...');
+// Função para garantir visibilidade das seções em todas as resoluções
+function ensureSectionsVisibility() {
+    const sections = document.querySelectorAll('section');
+    const isMobile = window.innerWidth <= 768;
     
-    // Inicializar sistema de desabilitação de animações do portfolio
-    disablePortfolioAnimationsOnMobile();
-    
-    const typewriterElement = document.querySelector('.typewriter');
-    if (typewriterElement) {
-        const texts = [
-            'DESENVOLVEDOR BACK-END',
-            'DESENVOLVEDOR FRONT-END'
-        ];
+    sections.forEach(section => {
+        // Garantir que todas as seções sejam visíveis
+        section.style.display = 'block';
+        section.style.opacity = '1';
+        section.style.visibility = 'visible';
+        section.style.position = 'relative';
+        
+        // Em mobile, garantir que todos os elementos filhos sejam visíveis
+        if (isMobile) {
+            const allElements = section.querySelectorAll('*');
+            allElements.forEach(el => {
+                if (el.classList.contains('scroll-reveal') || 
+                    el.classList.contains('scroll-reveal-left') || 
+                    el.classList.contains('scroll-reveal-right') || 
+                    el.classList.contains('scroll-reveal-scale') || 
+                    el.classList.contains('title-reveal')) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'none';
+                    el.style.visibility = 'visible';
+                    el.classList.add('reveal-active');
+                }
+            });
+        }
+    });
+}
 
-        new Typewriter(typewriterElement, texts, 100, 50, 2000);
+// Função específica para garantir visibilidade do portfólio
+function ensurePortfolioVisibility() {
+    const portfolioSection = document.querySelector('section.portfolio');
+    const portfolioElements = document.querySelectorAll('section.portfolio .scroll-reveal-scale, section.portfolio .img-port, section.portfolio .flex');
+    
+    if (portfolioSection) {
+        // Garantir que a seção seja visível
+        portfolioSection.style.display = 'block';
+        portfolioSection.style.opacity = '1';
+        portfolioSection.style.visibility = 'visible';
+        portfolioSection.style.position = 'relative';
+        portfolioSection.style.zIndex = '1';
+        
+        // Garantir que todos os elementos do portfólio sejam visíveis
+        portfolioElements.forEach(el => {
+            el.style.opacity = '1';
+            el.style.visibility = 'visible';
+            el.style.display = 'block';
+            el.style.transform = 'none';
+            el.classList.add('reveal-active');
+        });
+        
+        console.log('Portfólio garantido como visível');
     }
+}
 
-    // Inicializar funcionalidades existentes
-    initTiltEffect();
-    initSmoothScroll();
-    initHeaderScrollEffect();
-    initScrollIndicator();
+// Função agressiva para forçar exibição do portfólio
+function forcePortfolioDisplay() {
+    console.log('Forçando exibição do portfólio...');
     
-    // Inicializar ScrollReveal apenas para desktop
-    if (window.innerWidth > 830) {
-        initScrollReveal();
-        console.log('ScrollReveal inicializado para desktop');
+    // Forçar seção do portfólio
+    const portfolioSection = document.querySelector('section.portfolio');
+    if (portfolioSection) {
+        portfolioSection.style.cssText = `
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: relative !important;
+            z-index: 1 !important;
+            min-height: 400px !important;
+        `;
+        console.log('Seção do portfólio forçada como visível');
+    }
+    
+    // Forçar título
+    const portfolioTitle = document.querySelector('section.portfolio h2.title');
+    if (portfolioTitle) {
+        portfolioTitle.style.cssText = `
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            text-align: center !important;
+        `;
+        console.log('Título do portfólio forçado como visível');
+    }
+    
+    // Forçar container flex
+    const portfolioFlex = document.querySelector('section.portfolio .flex');
+    if (portfolioFlex) {
+        portfolioFlex.style.cssText = `
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+            gap: 30px !important;
+            margin-top: 60px !important;
+            max-width: 1400px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            justify-items: center !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        `;
+        console.log('Container flex do portfólio forçado como visível');
+    }
+    
+    // Forçar todos os links dos projetos
+    const portfolioLinks = document.querySelectorAll('section.portfolio .flex a');
+    portfolioLinks.forEach((link, index) => {
+        link.style.cssText = `
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            text-decoration: none !important;
+            color: inherit !important;
+        `;
+        console.log(`Link ${index + 1} do portfólio forçado como visível`);
+    });
+    
+    // Forçar todos os cards
+    const portfolioCards = document.querySelectorAll('section.portfolio .img-port');
+    portfolioCards.forEach((card, index) => {
+        card.style.cssText = `
+            width: 100% !important;
+            max-width: 400px !important;
+            height: 420px !important;
+            background-size: cover !important;
+            background-position: center !important;
+            border-radius: 20px !important;
+            position: relative !important;
+            overflow: hidden !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+            cursor: pointer !important;
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            margin: 0 !important;
+        `;
+        console.log(`Card ${index + 1} do portfólio forçado como visível`);
+    });
+    
+    // Forçar overlays
+    const portfolioOverlays = document.querySelectorAll('section.portfolio .overlay');
+    portfolioOverlays.forEach((overlay, index) => {
+        overlay.style.cssText = `
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(122, 44, 191, 0.85) 50%, rgba(0, 0, 0, 0.9) 100%) !important;
+            border-radius: 20px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            opacity: 0 !important;
+            transition: opacity 0.3s ease !important;
+            z-index: 2 !important;
+        `;
+        console.log(`Overlay ${index + 1} do portfólio forçado como visível`);
+    });
+    
+    // Forçar informações dos projetos
+    const projectInfos = document.querySelectorAll('section.portfolio .project-info');
+    projectInfos.forEach((info, index) => {
+        info.style.cssText = `
+            text-align: center !important;
+            color: white !important;
+            padding: 20px !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        `;
+        console.log(`Info do projeto ${index + 1} forçada como visível`);
+    });
+    
+    console.log('Portfólio completamente forçado como visível!');
+}
+
+// Função para remover classes de scroll-reveal do portfólio
+function removeScrollRevealFromPortfolio() {
+    console.log('Removendo classes scroll-reveal do portfólio...');
+    
+    // Remover classes de scroll-reveal de todos os elementos do portfólio
+    const portfolioElements = document.querySelectorAll('section.portfolio [class*="scroll-reveal"]');
+    portfolioElements.forEach(el => {
+        // Remover todas as classes que contêm scroll-reveal
+        const classes = Array.from(el.classList);
+        classes.forEach(className => {
+            if (className.includes('scroll-reveal')) {
+                el.classList.remove(className);
+            }
+        });
+        
+        // Forçar visibilidade
+        el.style.opacity = '1';
+        el.style.visibility = 'visible';
+        el.style.transform = 'none';
+        el.style.display = 'block';
+        
+        console.log('Classes scroll-reveal removidas de:', el);
+    });
+    
+    // Garantir que o container flex seja visível
+    const portfolioFlex = document.querySelector('section.portfolio .flex');
+    if (portfolioFlex) {
+        portfolioFlex.style.cssText = `
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+            gap: 30px !important;
+            margin-top: 60px !important;
+            max-width: 1400px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            justify-items: center !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        `;
+    }
+    
+    console.log('Classes scroll-reveal removidas com sucesso!');
+}
+
+// Função para garantir funcionamento da nova estrutura do portfólio
+function initNewPortfolio() {
+    console.log('Inicializando nova estrutura do portfólio...');
+    
+    // Verificar se a nova estrutura existe
+    const portfolioGrid = document.querySelector('.portfolio-grid');
+    if (portfolioGrid) {
+        console.log('Portfolio grid encontrado!');
+        
+        // Garantir que todos os itens sejam visíveis
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        portfolioItems.forEach((item, index) => {
+            item.style.cssText = `
+                display: block !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+            `;
+            console.log(`Item ${index + 1} do portfólio configurado`);
+        });
+        
+        // Garantir que o grid seja visível
+        portfolioGrid.style.cssText = `
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+            gap: 30px !important;
+            max-width: 1400px !important;
+            margin: 0 auto !important;
+            padding: 0 20px !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        `;
+        
+        console.log('Nova estrutura do portfólio inicializada com sucesso!');
     } else {
-        console.log('ScrollReveal desabilitado para mobile');
+        console.log('Portfolio grid não encontrado!');
     }
+}
+
+// Função para garantir funcionamento do hover do portfólio
+function initPortfolioHover() {
+    console.log('Inicializando hover do portfólio...');
     
-    initCustomTooltips(); // Adicionar tooltips personalizados
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
     
-    // Inicializar funcionalidades móveis
+    portfolioItems.forEach((item, index) => {
+        const overlay = item.querySelector('.portfolio-overlay');
+        const link = item.querySelector('.portfolio-link');
+        
+        if (overlay && link) {
+            // Adicionar eventos de mouse
+            item.addEventListener('mouseenter', () => {
+                overlay.style.opacity = '1';
+                overlay.style.background = 'linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(122, 44, 191, 0.85) 50%, rgba(0, 0, 0, 0.9) 100%)';
+                console.log(`Hover ativado no item ${index + 1}`);
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                overlay.style.opacity = '0';
+                overlay.style.background = 'linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(122, 44, 191, 0.8) 50%, rgba(0, 0, 0, 0.85) 100%)';
+                console.log(`Hover desativado no item ${index + 1}`);
+            });
+            
+            // Para mobile, mostrar sempre
+            if (window.innerWidth <= 768) {
+                overlay.style.opacity = '1';
+                overlay.style.background = 'linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(122, 44, 191, 0.7) 50%, rgba(0, 0, 0, 0.8) 100%)';
+            }
+            
+            console.log(`Item ${index + 1} configurado com hover`);
+        }
+    });
+    
+    console.log('Hover do portfólio inicializado!');
+}
+
+// Função principal de inicialização
+function initPortfolio() {
+    console.log('Iniciando portfolio...');
+    
+    // Garantir visibilidade das seções
+    ensureSectionsVisibility();
+    ensurePortfolioVisibility();
+    forcePortfolioDisplay();
+    removeScrollRevealFromPortfolio();
+    initNewPortfolio();
+    initPortfolioHover(); // Adicionado para garantir hover
+    
+    // Inicializar todas as funcionalidades
+    initHeaderScrollEffect();
+    initSmoothScroll();
+    initTiltEffect();
+    initScrollIndicator();
     initMobileTouchExperience();
     initOrientationHandling();
     initMobileOptimizations();
     initMobileScrollEnhancements();
     initTouchFeedback();
+    initScrollReveal();
     initCustomTooltips();
-    
-    // Inicializar sistema de certificados
     initCertificatesSystem();
     initCounterAnimation();
     initCertificateModal();
-    
-    // Inicializar menu mobile
     initMobileMenu();
-});
+    disablePortfolioAnimationsOnMobile();
+    
+    // Inicializar typewriter
+    const typewriterElement = document.querySelector('.typewriter');
+    if (typewriterElement) {
+        const typewriter = new Typewriter(typewriterElement, [
+            'DESENVOLVEDOR BACK-END',
+            'DESENVOLVEDOR FRONT-END',
+            'DESENVOLVEDOR FULL-STACK'
+        ]);
+        typewriter.type();
+    }
+    
+    console.log('Portfolio inicializado com sucesso!');
+}
+
+// Executar no carregamento e no redimensionamento
+window.addEventListener('load', ensureSectionsVisibility);
+window.addEventListener('resize', ensureSectionsVisibility);
+
+// Garantir que as seções sejam visíveis após um pequeno delay
+setTimeout(ensureSectionsVisibility, 100);
+setTimeout(ensureSectionsVisibility, 500);
+setTimeout(ensureSectionsVisibility, 1000);
+
+// Executar a função agressiva múltiplas vezes
+setTimeout(forcePortfolioDisplay, 100);
+setTimeout(forcePortfolioDisplay, 500);
+setTimeout(forcePortfolioDisplay, 1000);
+setTimeout(forcePortfolioDisplay, 2000);
+
+// Executar a função específica do portfólio
+setTimeout(ensurePortfolioVisibility, 100);
+setTimeout(ensurePortfolioVisibility, 500);
+setTimeout(ensurePortfolioVisibility, 1000);
+
+// Executar a função de remoção
+setTimeout(removeScrollRevealFromPortfolio, 100);
+setTimeout(removeScrollRevealFromPortfolio, 500);
+setTimeout(removeScrollRevealFromPortfolio, 1000);
+
+    // Executar a função de nova estrutura
+    setTimeout(initNewPortfolio, 100);
+    setTimeout(initNewPortfolio, 500);
+    setTimeout(initNewPortfolio, 1000);
+    
+    // Executar a função de hover
+    setTimeout(initPortfolioHover, 100);
+    setTimeout(initPortfolioHover, 500);
+    setTimeout(initPortfolioHover, 1000);
+
+// Executar quando o DOM estiver pronto
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPortfolio);
+} else {
+    initPortfolio();
+}
 
 // Importar e inicializar funcionalidades de contato
 import './contact.js';
