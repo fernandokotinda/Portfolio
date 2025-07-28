@@ -25,14 +25,14 @@ class Typewriter {
     updateDisplay() {
         const currentText = this.texts[this.currentTextIndex];
         const displayText = currentText.substring(0, this.currentCharIndex);
-        const cursor = this.cursorVisible ? '|' : '\u00A0'; // Usa espaço não-quebrável quando cursor não está visível
+        const cursor = this.cursorVisible ? '|' : ''; // Remove o espaço não-quebrável para permitir quebra de linha
         
-        // Garante que sempre há algo no elemento para manter a altura
+        // Atualiza o texto com cursor
         this.element.textContent = displayText + cursor;
         
-        // Se o texto estiver vazio, ainda mantém o cursor/espaço
+        // Se o texto estiver vazio, ainda mantém o cursor
         if (displayText.length === 0 && !this.cursorVisible) {
-            this.element.textContent = '\u00A0'; // Espaço não-quebrável para manter altura
+            this.element.textContent = '|'; // Mantém apenas o cursor
         }
     }
 
@@ -763,11 +763,27 @@ function initCertificatesSystem() {
         // Define quantos certificados por slide baseado no tamanho da tela
         let certificatesPerSlide;
         if (window.innerWidth <= 480) {
-            certificatesPerSlide = 2; // Mobile: máximo 2 certificados por slide (1 coluna)
+            certificatesPerSlide = 1; // Mobile: 1 certificado por slide para garantir navegação
         } else if (window.innerWidth <= 768) {
-            certificatesPerSlide = 4; // Tablet: máximo 4 certificados por slide (2 colunas)
+            certificatesPerSlide = 2; // Tablet: 2 certificados por slide
         } else {
-            certificatesPerSlide = 4; // Desktop: máximo 4 certificados por slide
+            certificatesPerSlide = 4; // Desktop: 4 certificados por slide
+        }
+        
+        // Garantir que sempre haja pelo menos 2 slides se houver certificados suficientes
+        if (certificates.length > certificatesPerSlide) {
+            // Se há mais certificados que cabem em 1 slide, dividir em múltiplos slides
+            const totalSlides = Math.ceil(certificates.length / certificatesPerSlide);
+            console.log(`Categoria "${category}": ${certificates.length} certificados, ${certificatesPerSlide} por slide, ${totalSlides} slides totais`);
+        } else if (certificates.length > 1) {
+            // Se há mais de 1 certificado mas poucos, dividir em 2 slides
+            certificatesPerSlide = Math.ceil(certificates.length / 2);
+            const totalSlides = 2;
+            console.log(`Categoria "${category}": ${certificates.length} certificados, divididos em 2 slides com ${certificatesPerSlide} por slide`);
+        } else {
+            // Se há apenas 1 certificado, usar 1 slide
+            const totalSlides = 1;
+            console.log(`Categoria "${category}": ${certificates.length} certificado, 1 slide`);
         }
         
         const totalSlides = Math.ceil(certificates.length / certificatesPerSlide);
@@ -949,7 +965,10 @@ function initCertificatesSystem() {
                 console.log('Slides disponíveis:', availableIndices);
                 console.log('Slide atual:', currentSlide);
                 
-                if (availableIndices.length <= 1) return; // Não há navegação se só há 1 slide
+                if (availableIndices.length <= 1) {
+                    console.log('Apenas 1 slide disponível, navegação desabilitada');
+                    return; // Não há navegação se só há 1 slide
+                }
                 
                 const currentIndex = availableIndices.indexOf(currentSlide);
                 const prevIndex = currentIndex > 0 ? currentIndex - 1 : availableIndices.length - 1;
@@ -980,7 +999,10 @@ function initCertificatesSystem() {
                 console.log('Slides disponíveis:', availableIndices);
                 console.log('Slide atual:', currentSlide);
                 
-                if (availableIndices.length <= 1) return; // Não há navegação se só há 1 slide
+                if (availableIndices.length <= 1) {
+                    console.log('Apenas 1 slide disponível, navegação desabilitada');
+                    return; // Não há navegação se só há 1 slide
+                }
                 
                 const currentIndex = availableIndices.indexOf(currentSlide);
                 const nextIndex = currentIndex < availableIndices.length - 1 ? currentIndex + 1 : 0;
@@ -1566,24 +1588,6 @@ function forcePortfolioDisplay() {
         console.log('Título do portfólio forçado como visível');
     }
     
-    // Forçar container flex
-    const portfolioFlex = document.querySelector('section.portfolio .flex');
-    if (portfolioFlex) {
-        portfolioFlex.style.cssText = `
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
-            gap: 30px !important;
-            margin-top: 60px !important;
-            max-width: 1400px !important;
-            margin-left: auto !important;
-            margin-right: auto !important;
-            justify-items: center !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        `;
-        console.log('Container flex do portfólio forçado como visível');
-    }
-    
     // Forçar todos os links dos projetos
     const portfolioLinks = document.querySelectorAll('section.portfolio .flex a');
     portfolioLinks.forEach((link, index) => {
@@ -1679,25 +1683,6 @@ function removeScrollRevealFromPortfolio() {
         
         console.log('Classes scroll-reveal removidas de:', el);
     });
-    
-    // Garantir que o container flex seja visível
-    const portfolioFlex = document.querySelector('section.portfolio .flex');
-    if (portfolioFlex) {
-        portfolioFlex.style.cssText = `
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
-            gap: 30px !important;
-            margin-top: 60px !important;
-            max-width: 1400px !important;
-            margin-left: auto !important;
-            margin-right: auto !important;
-            justify-items: center !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        `;
-    }
-    
-    console.log('Classes scroll-reveal removidas com sucesso!');
 }
 
 // Função para garantir funcionamento da nova estrutura do portfólio
@@ -1720,20 +1705,6 @@ function initNewPortfolio() {
             `;
             console.log(`Item ${index + 1} do portfólio configurado`);
         });
-        
-        // Garantir que o grid seja visível
-        portfolioGrid.style.cssText = `
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
-            gap: 30px !important;
-            max-width: 1400px !important;
-            margin: 0 auto !important;
-            padding: 0 20px !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        `;
-        
-        console.log('Nova estrutura do portfólio inicializada com sucesso!');
     } else {
         console.log('Portfolio grid não encontrado!');
     }
@@ -1806,14 +1777,14 @@ function initPortfolio() {
     initMobileMenu();
     disablePortfolioAnimationsOnMobile();
     
-    // Inicializar typewriter
+    // Inicializar typewriter com velocidades mais lentas
     const typewriterElement = document.querySelector('.typewriter');
     if (typewriterElement) {
         const typewriter = new Typewriter(typewriterElement, [
             'DESENVOLVEDOR BACK-END',
             'DESENVOLVEDOR FRONT-END',
             'DESENVOLVEDOR FULL-STACK'
-        ]);
+        ], 150, 200, 3000); // speed: 150ms, deleteSpeed: 120ms, pauseTime: 3000ms
         typewriter.type();
     }
     
