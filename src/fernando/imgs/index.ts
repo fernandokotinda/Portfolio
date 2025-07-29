@@ -1,27 +1,28 @@
-import htmlIcon from "./html.png";
-import cssIcon from "./css.png";
-import jsIcon from "./javascript.png";
-import tsIcon from "./typescript.png";
-import reactIcon from "./react.png";
-import nextIcon from "./nextjs.png";
-import bootstrapIcon from "./bootstrap.png";
-import sassIcon from "./sass.png";
-import tailwindIcon from "./tailwind.png";
-import phpIcon from "./php.png";
-import nodeIcon from "./node.png";
-import mysqlIcon from "./mysql.png";
+export { default as htmlIcon } from "./icons/html.png";
+export { default as cssIcon } from "./icons/css.png";
+export { default as jsIcon } from "./icons/javascript.png";
+export { default as tsIcon } from "./icons/typescript.png";
+export { default as reactIcon } from "./icons/react.png";
+export { default as nextIcon } from "./icons/nextjs.png";
+export { default as bootstrapIcon } from "./icons/bootstrap.png";
+export { default as sassIcon } from "./icons/sass.png";
+export { default as tailwindIcon } from "./icons/tailwind.png";
+export { default as phpIcon } from "./icons/php.png";
+export { default as nodeIcon } from "./icons/node.png";
+export { default as mysqlIcon } from "./icons/mysql.png";
+export { default as expressIcon } from "./icons/express.png";
+export { default as postgresql } from "./icons/postgresql.png";
+export { default as sqlServer } from "./icons/sql_server.png";
 
-export {
-  htmlIcon,
-  cssIcon,
-  jsIcon,
-  tsIcon,
-  reactIcon,
-  nextIcon,
-  bootstrapIcon,
-  sassIcon,
-  tailwindIcon,
-  phpIcon,
-  nodeIcon,
-  mysqlIcon
-};
+export { default as bioverdeEstoque } from "./projects/bioverde-estoque.png";
+export { default as bioverdeFornecedores } from "./projects/bioverde-fornecedores.png";
+export { default as bioverdeLogin } from "./projects/bioverde-login.png";
+export { default as bioverdeLogs } from "./projects/bioverde-logs.png";
+export { default as bioverdeDashboard } from "./projects/bioverde.jpg";
+export { default as pizzaCardapio } from "./projects/pizza-cardapio.png";
+export { default as pizzaFazerPedido } from "./projects/pizza-fazer-pedido.png";
+export { default as pizzaPedido } from "./projects/pizza-pedido.png";
+export { default as pizzaQmSomos } from "./projects/pizza-qm-somos.png";
+export { default as pizzaria } from "./projects/pizzaria.png";
+export { default as layoutRestaurante } from "./projects/layout_restaurante.png";
+export { default as resCardapio } from "./projects/res-cardapio.png";

@@ -1,25 +1,59 @@
-import bioverde from '../imgs/bioverde.jpg'
-import restaurante from '../imgs/layout_restaurante.png'
-import pizzaria from '../imgs/pizzaria.png'
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaYoutube } from "react-icons/fa";
 import { FiArrowRight } from "react-icons/fi";
 import Tag from '../components/Tag'
 import ProjectButton from '../components/ProjectButton'
 import Modal from '../components/Modal'
+import Carousel from '../components/Carousel'
 import React from 'react'
+import {
+  bioverdeEstoque,
+  bioverdeFornecedores,
+  bioverdeLogin,
+  bioverdeLogs,
+  bioverdeDashboard,
+  pizzaCardapio,
+  pizzaFazerPedido,
+  pizzaPedido,
+  pizzaQmSomos,
+  pizzaria,
+  layoutRestaurante,
+  resCardapio
+} from "../imgs";
 
 function Projects() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+
+  // Arrays de imagens para cada projeto
+  const bioverdeImages = [
+    bioverdeLogin,
+    bioverdeDashboard,
+    bioverdeEstoque,
+    bioverdeFornecedores,
+    bioverdeLogs,
+  ];
+
+  const restauranteImages = [
+    layoutRestaurante,
+    resCardapio
+  ];
+
+  const pizzariaImages = [
+    pizzaria,
+    pizzaQmSomos,
+    pizzaCardapio,
+    pizzaFazerPedido,
+    pizzaPedido
+  ];
   
   return (
     <div 
       id="projects" 
-      className="relative min-h-screen bg-cover bg-center bg-fixed flex flex-col bg-[url('/fundo-azul.jpg')] md:scroll-mt-16"
+      className="relative min-h-screen bg-cover bg-center bg-fixed flex flex-col bg-[url('/fundo-azul.jpg')]"
     >
-      <div className="absolute inset-0 bg-black/15 z-0 md:scroll-mt-16"></div>
+      <div className="absolute inset-0 bg-black/15 z-0"></div>
 
       <div className="relative z-10 m-10 md:m-20 text-white flex items-center justify-center flex-col gap-7 h-full">
         <h2 className="text-4xl font-bold text-white" data-aos="zoom-out">Projetos</h2>
@@ -34,10 +68,10 @@ function Projects() {
           {/* BioVerde */}
           <div className="w-full flex flex-col xl:flex-row justify-center items-center gap-12 md:gap-15">
             <div data-aos="fade-right" className="w-full max-w-md flex-shrink-0">
-              <img 
-                src={bioverde} 
-                alt="Foto do projeto BioVerde" 
-                className="w-full max-w-xs md:max-w-md m-auto h-auto object-cover rounded shadow-project hover:scale-110 transition-all duration-300"
+              <Carousel 
+                images={bioverdeImages}
+                alt="Projeto BioVerde"
+                className="w-full max-w-xs md:max-w-md m-auto hover:scale-110 transition-all duration-300"
               />
             </div>
             <div className="flex flex-col gap-4 w-full max-w-2xl">
@@ -69,19 +103,12 @@ function Projects() {
               {/* Botões de acesso ao projeto */}
               <div className="flex flex-col md:flex-row gap-4">
                 <ProjectButton 
-                  link="https://github.com/muriloLuix/BioVerde"
+                  link="https://github.com/fernandokotinda/BioVerde"
                   colorButton="bg-indigo-900"
                   colorHover="bg-[#221f5d]"
                   text="Ver no GitHub"
                   icon={<FaGithub className="ml-2 text-lg" size={20}/>} 
                 />
-                {/* <ProjectButton 
-                  link="#"
-                  colorButton="bg-blue-900"
-                  colorHover="bg-[#162b69]"
-                  text="Ver Projeto"
-                  icon={<FiArrowRight className="ml-1 text-lg" size={20} />}
-                /> */}
                 <button
                   type="button"
                   onClick={handleOpenModal}
@@ -144,10 +171,10 @@ function Projects() {
               
             </div>
             <div data-aos="fade-left" className='w-full max-w-md flex-shrink-0'>
-              <img 
-                src={restaurante} 
-                alt="Foto do projeto do Layout para Restaurante" 
-                className="w-full max-w-xs md:max-w-md m-auto h-auto object-cover rounded shadow-project hover:scale-110 transition-all duration-300"     
+              <Carousel 
+                images={restauranteImages}
+                alt="Layout para Restaurante"
+                className="w-full max-w-xs md:max-w-md m-auto hover:scale-110 transition-all duration-300"
               />
             </div>
           </div>
@@ -157,11 +184,11 @@ function Projects() {
           {/* Site para uma pizzaria */}
           <div className="w-full h-full flex flex-col xl:flex-row justify-center items-center gap-12 md:gap-15">
             <div data-aos="fade-right" className='w-full max-w-md flex-shrink-0'>
-              <img
-                src={pizzaria}
-                alt="Foto do projeto da pizzaria"
-                className="w-full max-w-xs md:max-w-md m-auto h-auto object-cover rounded shadow-project hover:scale-110 transition-all duration-300"
-               />
+              <Carousel 
+                images={pizzariaImages}
+                alt="Site para Pizzaria"
+                className="w-full max-w-xs md:max-w-md m-auto hover:scale-110 transition-all duration-300"
+              />
             </div>
             <div className="flex flex-col gap-4 w-full max-w-2xl">
 
@@ -211,16 +238,15 @@ function Projects() {
         <h2 className="text-xl font-semibold mb-4 text-center">Atenção!</h2>
         <p className=" flex flex-col gap-3 mb-6 text-center">
           <p>O link para acessar o sistema BioVerde ainda não está disponível publicamente.</p>
-          <p>Por enquanto, você pode visualizar o código-fonte completo do sistema no GitHub.</p>
-          <p>Em breve, o sistema estará disponível para demonstração online!</p>
+          <p>Por enquanto, você pode assistir um vídeo explicativo mostrando o sistema em funcionamento.</p>
         </p>
         <div className='flex justify-center'>
           <ProjectButton
-            link="https://github.com/muriloLuix/BioVerde"
-            colorButton="bg-indigo-900"
-            colorHover="bg-[#221f5d]"
-            text="Ver no GitHub"
-            icon={<FaGithub className="ml-2 text-lg" size={20}/>}
+            link="https://www.youtube.com/watch?v=8SN33KWR5TI"
+            colorButton="bg-red-600"
+            colorHover="bg-red-800"
+            text="Ver Vídeo"
+            icon={<FaYoutube className="ml-2 text-lg" size={20}/>}
             isModal
           />
         </div>

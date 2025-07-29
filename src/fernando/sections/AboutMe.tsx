@@ -4,11 +4,11 @@ function AboutMe() {
 
   return (
     <>
-      <div id="about" className="min-h-screen bg-[#1e293b] flex items-center justify-center px-10 flex-col lg:flex-row w-full gap-10 lg:gap-20 md:scroll-mt-16 border-y border-gray-600">
+      <div id="about" className="min-h-screen bg-[#1e293b] flex items-center justify-center px-10 flex-col lg:flex-row w-full gap-10 lg:gap-20 border-y border-gray-600 relative">
     
           {/* Foto de Perfil */}
           <div
-            className="w-40 h-40 md:w-55 md:h-55 lg:w-72 lg:h-72 rounded-full object-cover border-2 border-white shadow-white mt-10 lg:mt-0"
+            className="w-40 h-40 md:w-55 md:h-55 lg:w-72 lg:h-72 rounded-full object-cover border-2 border-white shadow-white mt-10 lg:mt-0 relative z-10"
             style={{
               animation: "float 3s ease-in-out infinite",
               boxShadow: "0 0 15px white",
@@ -22,7 +22,7 @@ function AboutMe() {
           </div>
 
           {/* Conteúdo */}
-          <div className="text-white space-y-4 lg:w-1/2 max-w-2xl mb-10 lg:mb-0">
+          <div className="text-white space-y-4 lg:w-1/2 max-w-2xl mb-10 lg:mb-0 relative z-10">
             <h2 className="text-3xl md:text-4xl font-bold text-beje" data-aos="zoom-out">Sobre Mim</h2>
             <hr className="border-beje" />
             <p className=" leading-relaxed">
@@ -33,10 +33,14 @@ function AboutMe() {
             </p>
             
             <div className="w-full flex justify-center">
-              <button className="mt-2 w-full px-4 py-2 bg-[#ABBDD7] text-[#0f172a] font-semibold rounded-xl hover:bg-[#ddeaff] transition duration-300 cursor-pointer shadow-md">
+              <a 
+                href="https://drive.google.com/file/d/1ynMHkzL9h7HZv0OVbal51_PmF5Ih2Nzh/view?usp=sharing" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 w-full px-4 py-2 bg-[#ABBDD7] text-[#0f172a] font-semibold rounded-xl hover:bg-[#ddeaff] transition duration-300 cursor-pointer shadow-md text-center block"
+              >
                 Baixar Currículo
-              </button>
-
+              </a>
             </div>
           </div>
 

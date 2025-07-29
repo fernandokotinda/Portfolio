@@ -1,9 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LinkMenu from "./LinkMenu";
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 
+// Hook personalizado para detectar direção do scroll
+function useScrollDirection() {
+  const [scrollDirection, setScrollDirection] = useState("up");
+  const [prevScrollY, setPrevScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > prevScrollY) {
+        setScrollDirection("down");
+      } else {
+        setScrollDirection("up");
+      }
+      
+      setPrevScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [prevScrollY]);
+
+  return scrollDirection;
+}
+
 function NavBar() {
   const [open, setOpen] = useState(false);
+  const scrollDirection = useScrollDirection();
 
   const handleToggle = () => setOpen((prev) => !prev);
   const handleClose = () => setOpen(false);
@@ -56,7 +82,9 @@ function NavBar() {
       </nav>
 
       {/* Menu horizontal para desktop/tablet */}
-      <div className="hidden md:fixed md:w-full md:z-100 md:bg-azulEscuro md:h-16 md:flex md:place-content-center md:border-b-1 md:border-beje">
+      <div className={`hidden md:fixed md:w-full md:z-100 md:bg-azulEscuro md:h-16 md:flex md:place-content-center md:border-b-1 md:border-beje transition-transform duration-300 ${
+        scrollDirection === "down" ? "-translate-y-full" : "translate-y-0"
+      }`}>
         <div className="hidden md:flex items-center gap-10">
           <LinkMenu link="#home" text="Início" />
           <LinkMenu link="#about" text="Sobre Mim" />

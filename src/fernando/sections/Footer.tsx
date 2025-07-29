@@ -2,8 +2,9 @@ import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer id="footer" className="bg-[#0d1321] text-white pt-10 border-t border-gray-800">
-      <div className="flex flex-col items-center justify-center text-center px-4">
+    <footer id="footer" className="bg-[#0d1321] text-white pt-10 border-t border-gray-800 relative">
+
+      <div className="flex flex-col items-center justify-center text-center px-4 relative z-10">
         <h2 className="text-3xl font-semibold mb-2">Fernando Kotinda</h2>
         <p className="max-w-xl text-gray-300 mb-6 text-sm">
           Este é meu portfólio! Fique à vontade para entrar em contato para dúvidas, sugestões ou oportunidades, será um prazer conversar com você!
@@ -26,7 +27,7 @@ function Footer() {
           <a href="#projects" className="hover:underline">Projetos</a>
         </nav>
       </div>
-      <div className="border-t bg-azulEscuro border-gray-700 mt-4 py-3 flex flex-col md:flex-row items-center justify-center px-4 text-sm text-gray-400">
+      <div className="border-t bg-azulEscuro border-gray-700 mt-4 py-3 flex flex-col md:flex-row items-center justify-center px-4 text-sm text-gray-400 relative z-10">
         <span>Desenvolvido por <strong>©<em>FernandoKotinda</em></strong></span>
       </div>
     </footer>
