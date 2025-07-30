@@ -91,7 +91,7 @@ main {
     transition: all 0.3s ease;
     color: #fff;
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* Permitir que o efeito seja visível */
     box-shadow: 0 4px 15px rgba(122, 44, 191, 0.3);
 }
 
@@ -119,13 +119,14 @@ form .btn-submit input:hover {
 /* Fix para evitar overflow no botão contato do header */
 .btn-contact {
     contain: layout style;
-    padding: 0;
+    padding: 10px; /* Adicionar padding para dar espaço ao efeito */
     margin-left: 20px;
+    overflow: visible; /* Permitir que o efeito seja visível */
 }
 
 .btn-contact button:hover {
-    transform: translateY(-2px) scale(1.02); /* Escala menor para evitar overflow */
-    box-shadow: 0px 8px 20px rgba(122, 44, 191, 0.4);
+    transform: translateY(-3px) scale(1.05); /* Efeito mais pronunciado */
+    box-shadow: 0px 10px 25px rgba(122, 44, 191, 0.5);
 }
 
 h2.title {
@@ -165,10 +166,11 @@ header>.interface {
     display: flex;
     align-items: center;
     justify-content: right;
-    overflow: hidden; /* Previne overflow no container */
+    overflow: visible; /* Permitir que o efeito de hover seja visível */
     width: 100%;
     max-width: 100%;
     position: relative;
+    padding: 10px 0; /* Adicionar padding para dar espaço ao efeito */
 }
 
 header a {
@@ -2292,13 +2294,13 @@ section.certificates {
     
     .certificates-carousel-container {
         padding: 15px 60px;
-        max-height: 500px; /* Altura máxima menor para mobile */
-        overflow: hidden;
+        max-height: none; /* Remove limitação de altura */
+        overflow: visible; /* Garante que nada seja cortado */
     }
     
     .certificates-carousel {
-        max-height: 420px; /* Altura máxima do carousel menor */
-        overflow: hidden;
+        max-height: none; /* Remove limitação de altura */
+        overflow: visible; /* Garante que nada seja cortado */
     }
     
     .carousel-navigation {
@@ -2397,6 +2399,13 @@ section.certificates {
 @media screen and (max-width: 425px) {
     .certificates-carousel-container {
         padding: 15px 50px; /* Reduzir padding lateral */
+        max-height: none !important; /* Remove limitação de altura */
+        overflow: visible !important; /* Garante que nada seja cortado */
+    }
+    
+    .certificates-carousel {
+        max-height: none !important; /* Remove limitação de altura */
+        overflow: visible !important; /* Garante que nada seja cortado */
     }
     
     .carousel-navigation {
@@ -2406,6 +2415,26 @@ section.certificates {
     
     .certificate-card {
         max-width: 280px; /* Reduzir largura máxima */
+        min-height: 200px; /* Garante altura mínima */
+        max-height: none !important; /* Remove limitação de altura */
+    }
+    
+    /* Garantir layout consistente para todas as categorias em 425px */
+    .certificate-slide[data-category="all"],
+    .certificate-slide[data-category="web-dev"],
+    .certificate-slide[data-category="programming"],
+    .certificate-slide[data-category="languages"],
+    .certificate-slide[data-category="admin"] {
+        grid-template-columns: 1fr !important; /* Força 1 coluna para 2 cards um embaixo do outro */
+        gap: 15px !important;
+        padding: 10px 0 !important;
+    }
+    
+    .certificate-slide {
+        gap: 15px !important; /* Espaçamento entre cards */
+        padding: 10px 0 !important; /* Padding vertical */
+        overflow: visible !important; /* Garante que nada seja cortado */
+        grid-template-columns: 1fr !important; /* Força 1 coluna para 2 cards um embaixo do outro */
     }
     
     .carousel-btn {
@@ -3968,7 +3997,7 @@ section.portfolio .img-port {
     background-position: center !important;
     border-radius: 20px !important;
     position: relative !important;
-    overflow: hidden !important;
+    overflow: visible !important; /* Permitir que o efeito de inclinação seja visível */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
     cursor: pointer !important;
     display: block !important;
@@ -4137,10 +4166,10 @@ section.portfolio h2.title span {
 .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
+    gap: 60px; /* Aumentar gap para dar mais espaço ao efeito de inclinação */
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 40px 20px; /* Aumentar padding vertical */
 }
 
 /* Item do portfólio */
@@ -4152,7 +4181,8 @@ section.portfolio h2.title span {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible; /* Permitir que o efeito de inclinação seja visível */
+    padding: 20px; /* Adicionar padding para dar espaço ao efeito */
 }
 
 /* Link do portfólio */
@@ -4164,7 +4194,7 @@ section.portfolio h2.title span {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible; /* Permitir que o efeito de inclinação seja visível */
 }
 
 .portfolio-link:hover {
@@ -4179,7 +4209,7 @@ section.portfolio h2.title span {
     background-position: center;
     border-radius: 20px;
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* Permitir que o efeito de inclinação seja visível */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     margin: 0 auto;

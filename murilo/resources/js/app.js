@@ -704,13 +704,11 @@ function initCertificatesSystem() {
         // Remove active de todos os slides e esconde todos
         currentSlides.forEach((slide, i) => {
             slide.classList.remove('active');
-            if (slide.style.display !== 'none') {
-                slide.style.display = 'none'; // Esconde slides que estão visíveis
-            }
+            slide.style.display = 'none'; // Esconde todos os slides
         });
         currentIndicators.forEach(indicator => indicator.classList.remove('active'));
         
-        // Verifica se o slide existe e está disponível (não hidden)
+        // Verifica se o slide existe e tem conteúdo
         if (currentSlides[index] && currentSlides[index].innerHTML.trim() !== '') {
             currentSlides[index].classList.add('active');
             currentSlides[index].style.display = 'grid'; // Mostra o slide
@@ -760,37 +758,34 @@ function initCertificatesSystem() {
             slide.style.display = 'none';
         });
 
-        // Define quantos certificados por slide baseado no tamanho da tela
+        // Define quantos certificados por slide baseado no tamanho da tela e categoria
         let certificatesPerSlide;
-        if (window.innerWidth <= 480) {
-            certificatesPerSlide = 1; // Mobile: 1 certificado por slide para garantir navegação
-        } else if (window.innerWidth <= 768) {
-            certificatesPerSlide = 2; // Tablet: 2 certificados por slide
-        } else {
-            certificatesPerSlide = 4; // Desktop: 4 certificados por slide
-        }
+        let totalSlides;
         
-        // Garantir que sempre haja pelo menos 2 slides se houver certificados suficientes
-        if (certificates.length > certificatesPerSlide) {
-            // Se há mais certificados que cabem em 1 slide, dividir em múltiplos slides
-            const totalSlides = Math.ceil(certificates.length / certificatesPerSlide);
+        if (category === 'all') {
+            // Para categoria "todos", sempre usar 1 slide com todos os certificados
+            certificatesPerSlide = certificates.length;
+            totalSlides = 1;
+            console.log(`Categoria "all": ${certificates.length} certificados, todos em 1 slide`);
+        } else {
+            // Para outras categorias, usar lógica baseada no tamanho da tela
+            if (window.innerWidth <= 425) {
+                certificatesPerSlide = 2; // Mobile pequeno: 2 certificados por slide
+            } else if (window.innerWidth <= 480) {
+                certificatesPerSlide = 1; // Mobile: 1 certificado por slide
+            } else if (window.innerWidth <= 768) {
+                certificatesPerSlide = 2; // Tablet: 2 certificados por slide
+            } else {
+                certificatesPerSlide = 4; // Desktop: 4 certificados por slide
+            }
+            
+            // Calcular total de slides para categorias específicas
+            totalSlides = Math.ceil(certificates.length / certificatesPerSlide);
             console.log(`Categoria "${category}": ${certificates.length} certificados, ${certificatesPerSlide} por slide, ${totalSlides} slides totais`);
-        } else if (certificates.length > 1) {
-            // Se há mais de 1 certificado mas poucos, dividir em 2 slides
-            certificatesPerSlide = Math.ceil(certificates.length / 2);
-            const totalSlides = 2;
-            console.log(`Categoria "${category}": ${certificates.length} certificados, divididos em 2 slides com ${certificatesPerSlide} por slide`);
-        } else {
-            // Se há apenas 1 certificado, usar 1 slide
-            const totalSlides = 1;
-            console.log(`Categoria "${category}": ${certificates.length} certificado, 1 slide`);
         }
-        
-        const totalSlides = Math.ceil(certificates.length / certificatesPerSlide);
-        console.log(`Categoria "${category}": ${certificates.length} certificados, ${certificatesPerSlide} por slide, ${totalSlides} slides totais`);
 
         // Se precisamos de mais slides do que temos no DOM, criar slides adicionais
-        const container = document.querySelector('.certificate-carousel');
+        const container = document.querySelector('.certificates-carousel');
         if (totalSlides > slides.length && container) {
             for (let i = slides.length; i < totalSlides; i++) {
                 const newSlide = document.createElement('div');
@@ -800,20 +795,10 @@ function initCertificatesSystem() {
                 container.appendChild(newSlide);
                 console.log(`✅ Slide extra ${i} criado dinamicamente`);
             }
-            
-            // Atualizar a NodeList de slides
-            const updatedSlides = document.querySelectorAll('.certificate-slide');
-            // Copiar para o array slides (se necessário)
-            for (let i = 0; i < updatedSlides.length; i++) {
-                if (!slides[i]) {
-                    // Adicionar novos slides ao array
-                    slides[i] = updatedSlides[i];
-                }
-            }
         }
 
         // Se precisamos de mais indicadores, criar indicadores adicionais
-        const indicatorsContainer = document.querySelector('.indicators');
+        const indicatorsContainer = document.querySelector('.carousel-indicators');
         if (totalSlides > indicators.length && indicatorsContainer) {
             for (let i = indicators.length; i < totalSlides; i++) {
                 const newIndicator = document.createElement('span');
@@ -821,20 +806,13 @@ function initCertificatesSystem() {
                 newIndicator.setAttribute('data-slide', i.toString());
                 newIndicator.addEventListener('click', () => {
                     console.log(`Indicador ${i} clicado`);
-                    if (slides[i] && slides[i].innerHTML.trim() !== '') {
+                    const currentSlides = document.querySelectorAll('.certificate-slide');
+                    if (currentSlides[i] && currentSlides[i].innerHTML.trim() !== '') {
                         showSlide(i);
                     }
                 });
                 indicatorsContainer.appendChild(newIndicator);
                 console.log(`✅ Indicador extra ${i} criado dinamicamente`);
-            }
-            
-            // Atualizar a NodeList de indicadores
-            const updatedIndicators = document.querySelectorAll('.indicator');
-            for (let i = 0; i < updatedIndicators.length; i++) {
-                if (!indicators[i]) {
-                    indicators[i] = updatedIndicators[i];
-                }
             }
         }
 
@@ -856,8 +834,10 @@ function initCertificatesSystem() {
                 
                 // Garante que o slide mantenha o layout de grid mas inicialmente oculto
                 allSlides[slideIndex].style.display = slideIndex === 0 ? 'grid' : 'none'; // Só o primeiro visível
-                allSlides[slideIndex].style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
-                allSlides[slideIndex].style.gap = '20px';
+                allSlides[slideIndex].classList.remove('active');
+                if (slideIndex === 0) {
+                    allSlides[slideIndex].classList.add('active');
+                }
                 allSlides[slideIndex].setAttribute('data-category', category);
                 
                 console.log(`✅ Slide ${slideIndex} criado com ${slideGroup.length} certificados para categoria: ${category}`);
@@ -877,6 +857,11 @@ function initCertificatesSystem() {
                 indicator.classList.remove('active');
             }
         });
+        
+        // Ativa o primeiro indicador
+        if (allIndicators[0]) {
+            allIndicators[0].classList.add('active');
+        }
 
         // Esconde slides não utilizados e limpa seu conteúdo
         for (let i = totalSlides; i < allSlides.length; i++) {
@@ -890,7 +875,7 @@ function initCertificatesSystem() {
         // Mostra o primeiro slide se houver certificados
         if (totalSlides > 0) {
             console.log(`Mostrando primeiro slide da categoria ${category}`);
-            showSlide(0);
+            currentSlide = 0;
             debugSlideState(); // Debug após criar slides
         } else {
             console.log(`Nenhum slide encontrado para categoria ${category}`);
@@ -900,6 +885,11 @@ function initCertificatesSystem() {
         updateNavigationVisibility();
         
         console.log(`Sistema "${category}": Criados ${totalSlides} slides com ${certificates.length} certificados totais`);
+        
+        // Debug adicional para verificar o estado
+        setTimeout(() => {
+            debugSlideState();
+        }, 100);
         
         // Reagregar os event listeners do modal após recriar os slides
         setTimeout(() => {
@@ -1041,16 +1031,36 @@ function initCertificatesSystem() {
             indicator.style.display !== 'none' && indicator.style.display !== ''
         );
         
+        console.log(`Navegação: ${availableSlides.length} slides disponíveis, ${availableIndicators.length} indicadores disponíveis`);
+        
         // Mostrar/esconder botões baseado no número de slides disponíveis
         if (availableSlides.length <= 1) {
-            if (prevBtn) prevBtn.style.opacity = '0.3';
-            if (nextBtn) nextBtn.style.opacity = '0.3';
+            if (prevBtn) {
+                prevBtn.style.opacity = '0.3';
+                prevBtn.style.pointerEvents = 'none';
+            }
+            if (nextBtn) {
+                nextBtn.style.opacity = '0.3';
+                nextBtn.style.pointerEvents = 'none';
+            }
         } else {
-            if (prevBtn) prevBtn.style.opacity = '1';
-            if (nextBtn) nextBtn.style.opacity = '1';
+            if (prevBtn) {
+                prevBtn.style.opacity = '1';
+                prevBtn.style.pointerEvents = 'auto';
+            }
+            if (nextBtn) {
+                nextBtn.style.opacity = '1';
+                nextBtn.style.pointerEvents = 'auto';
+            }
         }
         
-        console.log(`Navegação atualizada: ${availableSlides.length} slides disponíveis, ${availableIndicators.length} indicadores disponíveis`);
+        // Debug adicional
+        console.log('Slides disponíveis:', availableSlides.map((slide, i) => ({
+            index: i,
+            hasContent: slide.innerHTML.trim() !== '',
+            display: slide.style.display,
+            isActive: slide.classList.contains('active')
+        })));
     }
 
     // Função para debug - mostra o estado atual dos slides
@@ -1114,7 +1124,10 @@ function initCertificatesSystem() {
     // Inicializar sistema
     initFilters();
     initCarouselNavigation();
-    showSlide(0);
+    
+    // Criar slides iniciais para a categoria "all" (padrão)
+    createSlidesView('all');
+    
     // initAutoPlay(); // Descomente se quiser auto-play
 
     // Listener para resize da janela - recalcula slides baseado no novo tamanho
