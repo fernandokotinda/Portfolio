@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Helpers\TranslationHelper;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +37,26 @@ Route::prefix('murilo')->group(function () {
     Route::post('/enviar-contato', [ContactController::class, 'send'])
         ->name('murilo.contact.send')
         ->middleware('throttle:5,1');
+    
+    // Rota para trocar idioma dentro do prefixo /murilo
+    Route::get('/switch-language/{lang}', function($lang) {
+        if (in_array($lang, ['pt', 'en'])) {
+            TranslationHelper::setLanguage($lang);
+        }
+        return redirect()->back();
+    })->name('murilo.language.switch');
 });
 
 // Rota original para compatibilidade
 Route::post('/enviar-contato', [ContactController::class, 'send'])
     ->name('contact.send')
     ->middleware('throttle:5,1');
+
+// Rota simples para trocar idioma
+Route::get('/switch-language/{lang}', function($lang) {
+    if (in_array($lang, ['pt', 'en'])) {
+        TranslationHelper::setLanguage($lang);
+    }
+    return redirect()->back();
+})->name('language.switch');
+

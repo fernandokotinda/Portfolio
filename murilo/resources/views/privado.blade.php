@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <!-- CSS Privado -->
     @vite(['resources/css/privado.css'])
-    <link rel="shortcut icon" href="imgs/favicon-32x32.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <title>Projeto Privado | Murilo's Portfolio</title>
 </head>
 
@@ -84,7 +84,7 @@
         </p>
 
         <div class="action-buttons">
-            <a href="/murilo" class="btn btn-primary">
+            <a href="/murilo#portfolio-menu" class="btn btn-primary">
                 <i class="bi bi-house-fill"></i>
                 Voltar ao Portfólio
             </a>

@@ -1237,43 +1237,78 @@ function createCertificateModal() {
             opacity: 1;
         }
         
+        .certificate-modal.active .modal-content {
+            animation: modalSlideIn 0.4s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                transform: scale(0.8) translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+        
         .modal-content {
-            background: linear-gradient(145deg, rgba(122, 44, 191, 0.1), rgba(0, 0, 0, 0.8));
+            background: linear-gradient(145deg, rgba(122, 44, 191, 0.1), rgba(0, 0, 0, 0.9));
             border-radius: 20px;
-            padding: 30px;
-            max-width: 80%;
-            max-height: 80%;
+            padding: 40px;
+            max-width: 90%;
+            max-height: 90%;
+            width: 1200px;
+            height: 700px;
             border: 1px solid rgba(122, 44, 191, 0.3);
             position: relative;
             display: flex;
-            gap: 30px;
+            gap: 40px;
             align-items: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
         
         .modal-close {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
+            top: 20px;
+            right: 20px;
+            background: rgba(122, 44, 191, 0.2);
+            border: 2px solid rgba(122, 44, 191, 0.4);
+            border-radius: 50%;
             color: #7a2cbf;
             font-size: 24px;
             cursor: pointer;
             transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
         }
         
         .modal-close:hover {
+            background: rgba(122, 44, 191, 0.3);
             color: #a159e0;
             transform: scale(1.1);
+            border-color: rgba(122, 44, 191, 0.6);
         }
         
         .modal-image {
-            width: 400px;
-            height: 500px;
+            width: 600px;
+            height: 600px;
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(122, 44, 191, 0.2);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .modal-image:hover {
+            transform: scale(1.05);
         }
         
         .modal-info {
@@ -1282,35 +1317,107 @@ function createCertificateModal() {
         }
         
         .modal-info h3 {
-            font-size: 28px;
+            font-size: 36px;
             color: #7a2cbf;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
         
         .modal-info p {
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 20px;
+            font-size: 20px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #e0e0e0;
         }
         
         .modal-date {
-            background: rgba(122, 44, 191, 0.2);
-            padding: 8px 16px;
-            border-radius: 15px;
+            background: rgba(122, 44, 191, 0.3);
+            padding: 12px 20px;
+            border-radius: 20px;
             color: #7a2cbf;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-block;
+            border: 1px solid rgba(122, 44, 191, 0.4);
+        }
+        
+        @media (max-width: 1200px) {
+            .modal-content {
+                width: 95%;
+                height: auto;
+                max-height: 90%;
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .modal-image {
+                width: 100%;
+                max-width: 500px;
+                height: 400px;
+            }
+            
+            .modal-info h3 {
+                font-size: 28px;
+            }
+            
+            .modal-info p {
+                font-size: 18px;
+            }
         }
         
         @media (max-width: 768px) {
             .modal-content {
-                flex-direction: column;
-                max-width: 95%;
+                width: 95%;
+                height: auto;
                 max-height: 95%;
+                padding: 25px;
+                gap: 25px;
             }
             
             .modal-image {
                 width: 100%;
                 height: 300px;
+            }
+            
+            .modal-info h3 {
+                font-size: 24px;
+                margin-bottom: 15px;
+            }
+            
+            .modal-info p {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+            
+            .modal-date {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .modal-content {
+                width: 98%;
+                padding: 20px;
+                gap: 20px;
+            }
+            
+            .modal-image {
+                height: 250px;
+            }
+            
+            .modal-info h3 {
+                font-size: 22px;
+            }
+            
+            .modal-info p {
+                font-size: 15px;
+            }
+            
+            .modal-close {
+                top: 10px;
+                right: 10px;
+                font-size: 20px;
             }
         }
     `;
@@ -1335,6 +1442,9 @@ function createCertificateModal() {
             closeModal();
         }
     });
+    
+    // Permitir fechar clicando na imagem também
+    modal.querySelector('.modal-image').addEventListener('click', closeModal);
 
     // Fechar com ESC
     document.addEventListener('keydown', (e) => {
@@ -1760,6 +1870,54 @@ function initPortfolioHover() {
     console.log('Hover do portfólio inicializado!');
 }
 
+// Função para troca de idioma
+function initLanguageSwitch() {
+    const languageToggle = document.getElementById('language-toggle');
+    if (!languageToggle) {
+        console.log('Botão de troca de idioma não encontrado');
+        return;
+    }
+
+    languageToggle.addEventListener('click', function () {
+        // Alterna entre 'pt' e 'en'
+        const newLang = window.currentLanguage === 'pt' ? 'en' : 'pt';
+        console.log('Trocando idioma para:', newLang);
+        console.log('Idioma atual detectado:', window.currentLanguage);
+        console.log('Pathname atual:', window.location.pathname);
+
+        // Detectar a URL base correta
+        const baseUrl = window.location.pathname.includes('/murilo') ? '/murilo' : '';
+        const url = baseUrl + '/switch-language/' + newLang;
+        
+        console.log('URL base detectada:', baseUrl);
+        console.log('Redirecionando para:', url);
+        
+        // Aplicar traduções dinamicamente antes de redirecionar
+        applyTranslations();
+        
+        // Redirecionar para a rota que define a sessão
+        window.location.href = url;
+    });
+}
+
+// Função para aplicar traduções dinamicamente
+function applyTranslations() {
+    const elements = document.querySelectorAll('[data-translate]');
+    console.log('Elementos com data-translate encontrados:', elements.length);
+    
+    elements.forEach(element => {
+        const key = element.getAttribute('data-translate');
+        const translation = window.translations[key];
+        
+        if (translation) {
+            console.log(`Traduzindo ${key}: ${element.textContent} -> ${translation}`);
+            element.textContent = translation;
+        } else {
+            console.log(`Tradução não encontrada para: ${key}`);
+        }
+    });
+}
+
 // Função principal de inicialização
 function initPortfolio() {
     console.log('Iniciando portfolio...');
@@ -1789,15 +1947,23 @@ function initPortfolio() {
     initCertificateModal();
     initMobileMenu();
     disablePortfolioAnimationsOnMobile();
+    initLanguageSwitch();
     
     // Inicializar typewriter com velocidades mais lentas
     const typewriterElement = document.querySelector('.typewriter');
     if (typewriterElement) {
-        const typewriter = new Typewriter(typewriterElement, [
+        // Usar traduções do idioma atual
+        const typewriterTexts = window.currentLanguage === 'en' ? [
+            'BACK-END DEVELOPER',
+            'FRONT-END DEVELOPER',
+            'FULL-STACK DEVELOPER'
+        ] : [
             'DESENVOLVEDOR BACK-END',
             'DESENVOLVEDOR FRONT-END',
             'DESENVOLVEDOR FULL-STACK'
-        ], 150, 200, 3000); // speed: 150ms, deleteSpeed: 120ms, pauseTime: 3000ms
+        ];
+        
+        const typewriter = new Typewriter(typewriterElement, typewriterTexts, 150, 200, 3000);
         typewriter.type();
     }
     
