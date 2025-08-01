@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="{{ App\Helpers\TranslationHelper::getCurrentLanguage() === 'en' ? 'en' : 'pt-BR' }}">
 
 <head>
     @php
@@ -19,12 +19,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- GOOGLE FONTS FINAL -->
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
     <!-- Bootstrap ICONS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <!-- Bootstrap icons final -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="shortcut icon" href="imgs/favicon-32x32.png" type="image/x-icon">
     <title>Murilo's | Portfolio</title>
+    
+    <script>
+        // Inicializar helper de tradução
+        @php
+            App\Helpers\TranslationHelper::init();
+        @endphp
+        window.currentLanguage = '{{ App\Helpers\TranslationHelper::getCurrentLanguage() }}';
+        window.translations = @json(App\Helpers\TranslationHelper::getAllTranslations());
+        console.log('Idioma atual:', window.currentLanguage);
+        console.log('Traduções carregadas:', Object.keys(window.translations).length);
+        console.log('Sessão atual:', '{{ session('site_language', 'pt') }}');
+        console.log('Exemplo de tradução (home):', '{{ App\Helpers\TranslationHelper::get("home") }}');
+        console.log('Exemplo de tradução (contact):', '{{ App\Helpers\TranslationHelper::get("contact") }}');
+    </script>
 </head>
 
 <body>
@@ -84,16 +101,25 @@
         <div class="interface">
             <nav class="desktop-menu">
                 <ul>
-                    <li><a href="{{ $baseUrl ?: '/' }}">Inicio</a></li>
-                    <li><a href="{{ $baseUrl }}#specialties-menu">Habilidades</a></li>
-                    <li><a href="{{ $baseUrl }}#about-menu">Sobre</a></li>
-                    <li><a href="{{ $baseUrl }}#portfolio-menu">Projetos</a></li>
-                    <li><a href="{{ $baseUrl }}#certificates">Certificados</a></li>
-                    <li><a href="{{ $baseUrl }}#technologies">Tecnologias</a></li>
+                    <li><a href="{{ $baseUrl ?: '/' }}" data-translate="home">{{ App\Helpers\TranslationHelper::get('home') }}</a></li>
+                    <li><a href="{{ $baseUrl }}#specialties-menu" data-translate="skills">{{ App\Helpers\TranslationHelper::get('skills') }}</a></li>
+                    <li><a href="{{ $baseUrl }}#top-of-site" data-translate="about">{{ App\Helpers\TranslationHelper::get('about') }}</a></li>
+                    <li><a href="{{ $baseUrl }}#experience-menu" data-translate="experience">{{ App\Helpers\TranslationHelper::get('experience') }}</a></li>
+                    <li><a href="{{ $baseUrl }}#portfolio-menu" data-translate="projects">{{ App\Helpers\TranslationHelper::get('projects') }}</a></li>
+                    <li><a href="{{ $baseUrl }}#certificates" data-translate="certificates">{{ App\Helpers\TranslationHelper::get('certificates') }}</a></li>
+                    <li><a href="{{ $baseUrl }}#technologies" data-translate="technologies">{{ App\Helpers\TranslationHelper::get('technologies') }}</a></li>
                 </ul>
             </nav>
+            
+            <!-- Botão de alternância de idioma -->
+            <div class="language-switch">
+                <button id="language-toggle" class="language-btn" title="{{ App\Helpers\TranslationHelper::get('language_switch_tooltip') }}">
+                    <span class="language-text">{{ App\Helpers\TranslationHelper::get('language_switch') }}</span>
+                    <i class="bi bi-translate"></i>
+                </button>
+            </div>
             <div class="btn-contact">
-                <a href="{{ $baseUrl }}#form-menu"><button>CONTATO</button></a>
+                <a href="{{ $baseUrl }}#form-menu"><button data-translate="contact">{{ App\Helpers\TranslationHelper::get('contact') }}</button></a>
             </div><!--btn-contact-->
 
             <div class="btn-open-menu" id="btn-menu">
@@ -107,13 +133,14 @@
 
                 <nav>
                     <ul>
-                        <li><a href="{{ $baseUrl ?: '/' }}">Inicio</a></li>
-                        <li><a href="{{ $baseUrl }}#specialties-menu">Habilidades</a></li>
-                        <li><a href="{{ $baseUrl }}#about-menu">Sobre</a></li>
-                        <li><a href="{{ $baseUrl }}#portfolio-menu">Projetos</a></li>
-                        <li><a href="{{ $baseUrl }}#certificates">Certificados</a></li>
-                        <li><a href="{{ $baseUrl }}#technologies">Tecnologias</a></li>
-                        <li><a href="{{ $baseUrl }}#form-menu">Contato</a></li>
+                        <li><a href="{{ $baseUrl ?: '/' }}" data-translate="home">{{ App\Helpers\TranslationHelper::get('home') }}</a></li>
+                        <li><a href="{{ $baseUrl }}#specialties-menu" data-translate="skills">{{ App\Helpers\TranslationHelper::get('skills') }}</a></li>
+                        <li><a href="{{ $baseUrl }}#top-of-site" data-translate="about">{{ App\Helpers\TranslationHelper::get('about') }}</a></li>
+                        <li><a href="{{ $baseUrl }}#experience-menu" data-translate="experience">{{ App\Helpers\TranslationHelper::get('experience') }}</a></li>
+                        <li><a href="{{ $baseUrl }}#portfolio-menu" data-translate="projects">{{ App\Helpers\TranslationHelper::get('projects') }}</a></li>
+                        <li><a href="{{ $baseUrl }}#certificates" data-translate="certificates">{{ App\Helpers\TranslationHelper::get('certificates') }}</a></li>
+                        <li><a href="{{ $baseUrl }}#technologies" data-translate="technologies">{{ App\Helpers\TranslationHelper::get('technologies') }}</a></li>
+                        <li><a href="{{ $baseUrl }}#form-menu" data-translate="contact">{{ App\Helpers\TranslationHelper::get('contact') }}</a></li>
                     </ul>
                 </nav>
             </div><!--menu-mobile-->
@@ -124,28 +151,21 @@
     </header>
 
     <main>
-        <section class="top-of-site">
+        <section class="top-of-site" id="top-of-site">
             <div class="interface">
                 <div class="flex">
                     <div class="txt-top-of-site scroll-reveal-left">
-                        <h1>OLÁ! MEU NOME É MURILO<span>.</span></h1>
-                        <h2 class="typewriter">DESENVOLVEDOR BACK-END</h2>
-                        <p>Estou sempre aberto a novos desafios e oportunidades de colaboração! Se você tem um projeto
-                            em mente ou precisa de um desenvolvedor dedicado para transformar suas ideias em realidade
-                            digital, vamos conversar.</p>
+                        <h1 data-translate="hero_greeting">{{ App\Helpers\TranslationHelper::get('hero_greeting') }}<span>.</span></h1>
+                        <h2 class="typewriter" data-translate="hero_title">{{ App\Helpers\TranslationHelper::get('hero_title') }}</h2>
+                        <p data-translate="hero_description_1">{{ App\Helpers\TranslationHelper::get('hero_description_1') }}</p>
 
-                        <p>Minha jornada na tecnologia evoluiu para o desenvolvimento web, onde me especializo em criar
-                            websites responsivos, landing pages impactantes e sistemas de controle eficientes. Tenho
-                            experiência com HTML5, CSS3, JavaScript, Bootstrap, ReactJS e outras tecnologias modernas.
-                        </p>
+                        <p data-translate="hero_description_2">{{ App\Helpers\TranslationHelper::get('hero_description_2') }}</p>
 
-                        <p>Além da programação, possuo formação em Design Gráfico, Administração Financeira e Marketing
-                            Digital, o que me permite oferecer soluções completas e inovadoras. Vamos trabalhar juntos
-                            para criar algo incrível!</p>
+                        <p data-translate="hero_description_3">{{ App\Helpers\TranslationHelper::get('hero_description_3') }}</p>
 
                         <div class="btn-contact">
                             <a href="{{ $baseUrl }}#form-menu">
-                                <button>CONTATO</button>
+                                <button data-translate="contact">{{ App\Helpers\TranslationHelper::get('contact') }}</button>
                             </a>
                         </div>
                     </div>
@@ -164,47 +184,150 @@
 
         <section id="specialties-menu" class="specialties">
             <div class="interface">
-                <h2 class="title">MINHAS <span>ESPECIALIDADES.</span></h2>
+                <h2 class="title" data-translate="specialties_title">{{ App\Helpers\TranslationHelper::get('specialties_title') }}</h2>
                 <div class="flex">
                     <div class="specialties-box scroll-reveal scroll-reveal-delay-1">
                         <i class="bi bi-layout-text-window-reverse"></i>
-                        <h3>Criação de sites responsivos</h3>
-                        <p>Desenvolvimento de websites modernos e responsivos que se adaptam perfeitamente a qualquer dispositivo, garantindo uma experiência de usuário excepcional.</p>
+                        <h3 data-translate="specialty_1_title">{{ App\Helpers\TranslationHelper::get('specialty_1_title') }}</h3>
+                        <p data-translate="specialty_1_desc">{{ App\Helpers\TranslationHelper::get('specialty_1_desc') }}</p>
                     </div><!--specialties-box -->
                     <div class="specialties-box scroll-reveal scroll-reveal-delay-2">
                         <i class="bi bi-gear-wide-connected"></i>
-                        <h3>Desenvolvimento de sistemas sob medida</h3>
-                        <p>Criação de sistemas personalizados e soluções digitais específicas para atender às necessidades únicas do seu negócio.</p>
+                        <h3 data-translate="specialty_2_title">{{ App\Helpers\TranslationHelper::get('specialty_2_title') }}</h3>
+                        <p data-translate="specialty_2_desc">{{ App\Helpers\TranslationHelper::get('specialty_2_desc') }}</p>
                     </div><!--specialties-box -->
                     <div class="specialties-box scroll-reveal scroll-reveal-delay-3">
                         <i class="bi bi-tools"></i>
-                        <h3>Manutenção e otimização de sistemas existentes</h3>
-                        <p>Aprimoramento, correção e otimização de sistemas já em funcionamento para melhor performance e segurança.</p>
+                        <h3 data-translate="specialty_3_title">{{ App\Helpers\TranslationHelper::get('specialty_3_title') }}</h3>
+                        <p data-translate="specialty_3_desc">{{ App\Helpers\TranslationHelper::get('specialty_3_desc') }}</p>
                     </div><!--specialties-box -->
                     <div class="specialties-box scroll-reveal scroll-reveal-delay-4">
                         <i class="bi bi-code-square"></i>
-                        <h3>Refatoração e Otimização de Código</h3>
-                        <p>Melhoria de códigos existentes para garantir melhor desempenho, legibilidade, manutenibilidade e escalabilidade.</p>
+                        <h3 data-translate="specialty_4_title">{{ App\Helpers\TranslationHelper::get('specialty_4_title') }}</h3>
+                        <p data-translate="specialty_4_desc">{{ App\Helpers\TranslationHelper::get('specialty_4_desc') }}</p>
                     </div><!--specialties-box -->
                 </div>
             </div>
         </section> <!--Specialties -->
 
+        <section id="experience-menu" class="experience">
+            <div class="interface">
+                <h2 class="title" data-translate="experience_title">{{ App\Helpers\TranslationHelper::get('experience_title') }}</h2>
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <!-- Experiência 1 -->
+                        <div class="timeline-item scroll-reveal">
+                            <div class="timeline-dot">
+                                <i class="bi bi-briefcase"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <div class="timeline-header">
+                                    <h3 data-translate="job_1_title">{{ App\Helpers\TranslationHelper::get('job_1_title') }}</h3>
+                                    <span class="company" data-translate="job_1_company">{{ App\Helpers\TranslationHelper::get('job_1_company') }}</span>
+                                    <span class="period" data-translate="job_1_period">{{ App\Helpers\TranslationHelper::get('job_1_period') }}</span>
+                                </div>
+                                <div class="timeline-body">
+                                    <p data-translate="job_1_desc">{{ App\Helpers\TranslationHelper::get('job_1_desc') }}</p>
+                                    <div class="timeline-tech">
+                                        <span class="tech-tag">Laravel</span>
+                                        <span class="tech-tag">Symfony</span>
+                                        <span class="tech-tag">PHP</span>
+                                        <span class="tech-tag">PostgreSQL</span>
+                                        <span class="tech-tag">JavaScript</span>
+                                        <span class="tech-tag">AJAX</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Experiência 2 -->
+                        <div class="timeline-item scroll-reveal">
+                            <div class="timeline-dot">
+                                <i class="bi bi-code-slash"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <div class="timeline-header">
+                                    <h3 data-translate="job_2_title">{{ App\Helpers\TranslationHelper::get('job_2_title') }}</h3>
+                                    <span class="company" data-translate="job_2_company">{{ App\Helpers\TranslationHelper::get('job_2_company') }}</span>
+                                    <span class="period" data-translate="job_2_period">{{ App\Helpers\TranslationHelper::get('job_2_period') }}</span>
+                                </div>
+                                <div class="timeline-body">
+                                    <p data-translate="job_2_desc">{{ App\Helpers\TranslationHelper::get('job_2_desc') }}</p>
+                                    <div class="timeline-tech">
+                                        <span class="tech-tag">APIs</span>
+                                        <span class="tech-tag">PHP</span>
+                                        <span class="tech-tag">Sistemas</span>
+                                        <span class="tech-tag">Desenvolvimento</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Experiência 3 -->
+                        <div class="timeline-item scroll-reveal">
+                            <div class="timeline-dot">
+                                <i class="bi bi-headset"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <div class="timeline-header">
+                                    <h3 data-translate="job_3_title">{{ App\Helpers\TranslationHelper::get('job_3_title') }}</h3>
+                                    <span class="company" data-translate="job_3_company">{{ App\Helpers\TranslationHelper::get('job_3_company') }}</span>
+                                    <span class="period" data-translate="job_3_period">{{ App\Helpers\TranslationHelper::get('job_3_period') }}</span>
+                                </div>
+                                <div class="timeline-body">
+                                    <p data-translate="job_3_desc">{{ App\Helpers\TranslationHelper::get('job_3_desc') }}</p>
+                                    <div class="timeline-tech">
+                                        <span class="tech-tag">Suporte Técnico</span>
+                                        <span class="tech-tag">Atendimento</span>
+                                        <span class="tech-tag">Tecnologia</span>
+                                        <span class="tech-tag">Resolução</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Experiência 4 -->
+                        <div class="timeline-item scroll-reveal">
+                            <div class="timeline-dot">
+                                <i class="bi bi-tools"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <div class="timeline-header">
+                                    <h3 data-translate="job_4_title">{{ App\Helpers\TranslationHelper::get('job_4_title') }}</h3>
+                                    <span class="company" data-translate="job_4_company">{{ App\Helpers\TranslationHelper::get('job_4_company') }}</span>
+                                    <span class="period" data-translate="job_4_period">{{ App\Helpers\TranslationHelper::get('job_4_period') }}</span>
+                                </div>
+                                <div class="timeline-body">
+                                    <p data-translate="job_4_desc">{{ App\Helpers\TranslationHelper::get('job_4_desc') }}</p>
+                                    <div class="timeline-tech">
+                                        <span class="tech-tag">HelpDesk</span>
+                                        <span class="tech-tag">Manutenção</span>
+                                        <span class="tech-tag">SQL</span>
+                                        <span class="tech-tag">Suporte</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!--experience-->
+
         <section id="portfolio-menu" class="portfolio">
             <div class="interface">
-                <h2 class="title">MEU <span>PORTFÓLIO.</span></h2>
+                <h2 class="title" data-translate="portfolio_title">{{ App\Helpers\TranslationHelper::get('portfolio_title') }}</h2>
                 <div class="portfolio-grid">
                     <div class="portfolio-item">
-                        <a target="_blank" href="https://github.com/fernandokotinda/Sistema-Controle-de-Estoque" class="portfolio-link">
+                        <a target="_blank" href="https://fernandokotinda.github.io/Sistema-Controle-de-Estoque/controle-estoque.html" class="portfolio-link">
                             <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/controle_de_estoque.png') }}');">
                                 <div class="portfolio-title-overlay">
-                                    <h4>Controle de Estoque</h4>
+                                    <h4 data-translate="project_1_title">{{ App\Helpers\TranslationHelper::get('project_1_title') }}</h4>
                                 </div>
                                 <div class="portfolio-tech-badge">HTML5 • CSS3 • JS</div>
                                 <div class="portfolio-overlay">
                                     <div class="portfolio-content">
-                                        <h3>Controle de Estoque</h3>
-                                        <p>Sistema completo para gerenciamento de estoque com controle de entrada e saída de produtos.</p>
+                                        <h3 data-translate="project_1_title">{{ App\Helpers\TranslationHelper::get('project_1_title') }}</h3>
+                                        <p data-translate="project_1_desc">{{ App\Helpers\TranslationHelper::get('project_1_desc') }}</p>
                                         <div class="portfolio-tags">
                                             <span class="tag">HTML5</span>
                                             <span class="tag">CSS3</span>
@@ -217,16 +340,16 @@
                     </div>
                     
                     <div class="portfolio-item">
-                        <a target="_blank" href="https://github.com/muriloLuix/Calculator" class="portfolio-link">
+                        <a target="_blank" href="https://muriloluix.github.io/Calculator/" class="portfolio-link">
                             <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/Calculadora.png') }}');">
                                 <div class="portfolio-title-overlay">
-                                    <h4>Calculadora</h4>
+                                    <h4 data-translate="project_2_title">{{ App\Helpers\TranslationHelper::get('project_2_title') }}</h4>
                                 </div>
                                 <div class="portfolio-tech-badge">HTML5 • CSS3 • JS</div>
                                 <div class="portfolio-overlay">
                                     <div class="portfolio-content">
-                                        <h3>Calculadora</h3>
-                                        <p>Calculadora funcional com interface moderna e operações matemáticas básicas e avançadas.</p>
+                                        <h3 data-translate="project_2_title">{{ App\Helpers\TranslationHelper::get('project_2_title') }}</h3>
+                                        <p data-translate="project_2_desc">{{ App\Helpers\TranslationHelper::get('project_2_desc') }}</p>
                                         <div class="portfolio-tags">
                                             <span class="tag">HTML5</span>
                                             <span class="tag">CSS3</span>
@@ -239,16 +362,16 @@
                     </div>
                     
                     <div class="portfolio-item">
-                        <a target="_blank" href="https://github.com/muriloLuix/Game-of-Memory" class="portfolio-link">
+                        <a target="_blank" href="https://muriloluix.github.io/Game-of-Memory/" class="portfolio-link">
                             <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/memoryGame.png') }}');">
                                 <div class="portfolio-title-overlay">
-                                    <h4>Memory Game</h4>
+                                    <h4 data-translate="project_3_title">{{ App\Helpers\TranslationHelper::get('project_3_title') }}</h4>
                                 </div>
                                 <div class="portfolio-tech-badge">HTML5 • CSS3 • JS</div>
                                 <div class="portfolio-overlay">
                                     <div class="portfolio-content">
-                                        <h3>Memory Game</h3>
-                                        <p>Jogo da memória interativo com diferentes níveis de dificuldade e sistema de pontuação.</p>
+                                        <h3 data-translate="project_3_title">{{ App\Helpers\TranslationHelper::get('project_3_title') }}</h3>
+                                        <p data-translate="project_3_desc">{{ App\Helpers\TranslationHelper::get('project_3_desc') }}</p>
                                         <div class="portfolio-tags">
                                             <span class="tag">HTML5</span>
                                             <span class="tag">CSS3</span>
@@ -261,16 +384,16 @@
                     </div>
                     
                     <div class="portfolio-item">
-                        <a target="_blank" href="https://github.com/muriloLuix/Tic-Tac-Toe" class="portfolio-link">
+                        <a target="_blank" href="https://muriloluix.github.io/Tic-Tac-Toe/" class="portfolio-link">
                             <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/jogoDaVelha.png') }}');">
                                 <div class="portfolio-title-overlay">
-                                    <h4>Tic Tac Toe</h4>
+                                    <h4 data-translate="project_4_title">{{ App\Helpers\TranslationHelper::get('project_4_title') }}</h4>
                                 </div>
                                 <div class="portfolio-tech-badge">HTML5 • CSS3 • JS</div>
                                 <div class="portfolio-overlay">
                                     <div class="portfolio-content">
-                                        <h3>Tic Tac Toe</h3>
-                                        <p>Jogo da velha clássico com interface responsiva e modo para dois jogadores.</p>
+                                        <h3 data-translate="project_4_title">{{ App\Helpers\TranslationHelper::get('project_4_title') }}</h3>
+                                        <p data-translate="project_4_desc">{{ App\Helpers\TranslationHelper::get('project_4_desc') }}</p>
                                         <div class="portfolio-tags">
                                             <span class="tag">HTML5</span>
                                             <span class="tag">CSS3</span>
@@ -283,16 +406,16 @@
                     </div>
                     
                     <div class="portfolio-item">
-                        <a href="{{ $baseUrl }}/privado" class="portfolio-link">
+                        <a href="{{ $baseUrl }}/murilo/privado" class="portfolio-link">
                             <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/Echo.png') }}');">
                                 <div class="portfolio-title-overlay">
-                                    <h4>Echo</h4>
+                                    <h4 data-translate="project_5_title">{{ App\Helpers\TranslationHelper::get('project_5_title') }}</h4>
                                 </div>
                                 <div class="portfolio-tech-badge">Laravel • PHP • Blade</div>
                                 <div class="portfolio-overlay">
                                     <div class="portfolio-content">
-                                        <h3>Echo</h3>
-                                        <p>Empresa de autoridade de Murilo Luiz Jaboinski focada no desenvolvimento web de pequenos comércios.</p>
+                                        <h3 data-translate="project_5_title">{{ App\Helpers\TranslationHelper::get('project_5_title') }}</h3>
+                                        <p data-translate="project_5_desc">{{ App\Helpers\TranslationHelper::get('project_5_desc') }}</p>
                                         <div class="portfolio-tags">
                                             <span class="tag">HTML5</span>
                                             <span class="tag">CSS3</span>
@@ -307,16 +430,16 @@
                     </div>
                     
                     <div class="portfolio-item">
-                        <a href="{{ $baseUrl }}/privado" class="portfolio-link">
+                        <a href="{{ $baseUrl }}/murilo/privado" class="portfolio-link">
                             <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/csvFormatter.png') }}');">
                                 <div class="portfolio-title-overlay">
-                                    <h4>Csv Formatter</h4>
+                                    <h4 data-translate="project_6_title">{{ App\Helpers\TranslationHelper::get('project_6_title') }}</h4>
                                 </div>
                                 <div class="portfolio-tech-badge">Laravel • PHP • Excel</div>
                                 <div class="portfolio-overlay">
                                     <div class="portfolio-content">
-                                        <h3>Csv Formatter</h3>
-                                        <p>Uma tela simples de formatação de um arquivo .xlsx para .csv com base no layout do .xlsx do índice de INPC.</p>
+                                        <h3 data-translate="project_6_title">{{ App\Helpers\TranslationHelper::get('project_6_title') }}</h3>
+                                        <p data-translate="project_6_desc">{{ App\Helpers\TranslationHelper::get('project_6_desc') }}</p>
                                         <div class="portfolio-tags">
                                             <span class="tag">HTML5</span>
                                             <span class="tag">CSS3</span>
@@ -332,16 +455,16 @@
                     </div>
                     
                     <div class="portfolio-item">
-                        <a href="" class="portfolio-link">
+                        <a href="https://github.com/muriloLuix/BioVerde" class="portfolio-link" target="_blank">
                             <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/BioVerde.png') }}');">
                                 <div class="portfolio-title-overlay">
-                                    <h4>Bio Verde</h4>
+                                    <h4 data-translate="project_7_title">{{ App\Helpers\TranslationHelper::get('project_7_title') }}</h4>
                                 </div>
                                 <div class="portfolio-tech-badge">React • PHP • MySQL</div>
                                 <div class="portfolio-overlay">
                                     <div class="portfolio-content">
-                                        <h3>Bio Verde</h3>
-                                        <p>Sistema completo de gestão para uma empresa de produtos orgânicos.</p>
+                                        <h3 data-translate="project_7_title">{{ App\Helpers\TranslationHelper::get('project_7_title') }}</h3>
+                                        <p data-translate="project_7_desc">{{ App\Helpers\TranslationHelper::get('project_7_desc') }}</p>
                                         <div class="portfolio-tags">
                                             <span class="tag">HTML5</span>
                                             <span class="tag">TailwindCSS</span>
@@ -355,20 +478,88 @@
                             </div>
                         </a>
                     </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://muriloluix.github.io/Quiz-Angular/" class="portfolio-link" target="_blank">
+                            <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/QuizAngular.png') }}');">
+                                <div class="portfolio-title-overlay">
+                                    <h4 data-translate="project_8_title">{{ App\Helpers\TranslationHelper::get('project_8_title') }}</h4>
+                                </div>
+                                <div class="portfolio-tech-badge">HTML5 • CSS3 • JS • Angular</div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <h3 data-translate="project_8_title">{{ App\Helpers\TranslationHelper::get('project_8_title') }}</h3>
+                                        <p data-translate="project_8_desc">{{ App\Helpers\TranslationHelper::get('project_8_desc') }}</p>
+                                        <div class="portfolio-tags">
+                                            <span class="tag">HTML5</span>
+                                            <span class="tag">CSS3</span>
+                                            <span class="tag">JavaScript</span>
+                                            <span class="tag">Angular</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://github.com/muriloLuix/sorteadorDePersonagens" class="portfolio-link" target="_blank">
+                            <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/sorteadorDePersonagens.png') }}');">
+                                <div class="portfolio-title-overlay">
+                                    <h4 data-translate="project_9_title">{{ App\Helpers\TranslationHelper::get('project_9_title') }}</h4>
+                                </div>
+                                <div class="portfolio-tech-badge">HTML5 • CSS3 • JS • PHP</div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <h3 data-translate="project_9_title">{{ App\Helpers\TranslationHelper::get('project_9_title') }}</h3>
+                                        <p data-translate="project_9_desc">{{ App\Helpers\TranslationHelper::get('project_9_desc') }}</p>
+                                        <div class="portfolio-tags">
+                                            <span class="tag">HTML5</span>
+                                            <span class="tag">CSS3</span>
+                                            <span class="tag">JavaScript</span>
+                                            <span class="tag">Angular</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://github.com/muriloLuix/gerador-de-senha" class="portfolio-link" target="_blank">
+                            <div class="portfolio-image" style="background-image: url('{{ asset('images/portfolio/geradorDeSenhas.png') }}');">
+                                <div class="portfolio-title-overlay">
+                                    <h4 data-translate="project_10_title">{{ App\Helpers\TranslationHelper::get('project_10_title') }}</h4>
+                                </div>
+                                <div class="portfolio-tech-badge">Expo • React Native • JS</div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <h3 data-translate="project_10_title">{{ App\Helpers\TranslationHelper::get('project_10_title') }}</h3>
+                                        <p data-translate="project_10_desc">{{ App\Helpers\TranslationHelper::get('project_10_desc') }}</p>
+                                        <div class="portfolio-tags">
+                                            <span class="tag">Expo</span>
+                                            <span class="tag">React Native</span>
+                                            <span class="tag">JS</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section><!--portfolio-->
         <section class="certificates" id="certificates">
             <div class="interface">
-                <h2 class="title">CERTIFICADOS<span>.</span></h2>
+                <h2 class="title" data-translate="certificates_title">{{ App\Helpers\TranslationHelper::get('certificates_title') }}</h2>
                 
                 <!-- Filtros de Categoria -->
                 <div class="certificate-filters scroll-reveal">
-                    <button class="filter-btn active" data-category="all">Todos</button>
-                    <button class="filter-btn" data-category="web-dev">Desenvolvimento Web</button>
-                    <button class="filter-btn" data-category="programming">Programação</button>
-                    <button class="filter-btn" data-category="languages">Idiomas</button>
-                    <button class="filter-btn" data-category="admin">Administração</button>
+                    <button class="filter-btn active" data-category="all" data-translate="filter_all">{{ App\Helpers\TranslationHelper::get('filter_all') }}</button>
+                    <button class="filter-btn" data-category="web-dev" data-translate="filter_web_dev">{{ App\Helpers\TranslationHelper::get('filter_web_dev') }}</button>
+                    <button class="filter-btn" data-category="programming" data-translate="filter_programming">{{ App\Helpers\TranslationHelper::get('filter_programming') }}</button>
+                    <button class="filter-btn" data-category="languages" data-translate="filter_languages">{{ App\Helpers\TranslationHelper::get('filter_languages') }}</button>
+                    <button class="filter-btn" data-category="admin" data-translate="filter_admin">{{ App\Helpers\TranslationHelper::get('filter_admin') }}</button>
                 </div>
 
                 <!-- Container do Carousel -->
@@ -379,32 +570,32 @@
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/CertificadoHTML5.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>HTML5</h4>
-                                    <p>Fundamentos do HTML5</p>
+                                    <h4 data-translate="cert_html5_title">{{ App\Helpers\TranslationHelper::get('cert_html5_title') }}</h4>
+                                    <p data-translate="cert_html5_desc">{{ App\Helpers\TranslationHelper::get('cert_html5_desc') }}</p>
                                     <span class="certificate-date">2023</span>
                                 </div>
                             </div>
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/CertificadoCSS3.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>CSS3</h4>
-                                    <p>Estilização Avançada</p>
+                                    <h4 data-translate="cert_css3_title">{{ App\Helpers\TranslationHelper::get('cert_css3_title') }}</h4>
+                                    <p data-translate="cert_css3_desc">{{ App\Helpers\TranslationHelper::get('cert_css3_desc') }}</p>
                                     <span class="certificate-date">2023</span>
                                 </div>
                             </div>
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/CertificadoHTML5Curso.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>HTML5/CSS3</h4>
-                                    <p>Curso Completo</p>
+                                    <h4 data-translate="cert_html5css3_title">{{ App\Helpers\TranslationHelper::get('cert_html5css3_title') }}</h4>
+                                    <p data-translate="cert_html5css3_desc">{{ App\Helpers\TranslationHelper::get('cert_html5css3_desc') }}</p>
                                     <span class="certificate-date">2023</span>
                                 </div>
                             </div>
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/ReactJS.png') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>ReactJS</h4>
-                                    <p>Desenvolvimento Frontend</p>
+                                    <h4 data-translate="cert_react_title">{{ App\Helpers\TranslationHelper::get('cert_react_title') }}</h4>
+                                    <p data-translate="cert_react_desc">{{ App\Helpers\TranslationHelper::get('cert_react_desc') }}</p>
                                     <span class="certificate-date">2024</span>
                                 </div>
                             </div>
@@ -415,24 +606,24 @@
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/CertificadoCC50.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>Ciência da Computação</h4>
-                                    <p>CS50 - Harvard</p>
+                                    <h4 data-translate="cert_cs50_title">{{ App\Helpers\TranslationHelper::get('cert_cs50_title') }}</h4>
+                                    <p data-translate="cert_cs50_desc">{{ App\Helpers\TranslationHelper::get('cert_cs50_desc') }}</p>
                                     <span class="certificate-date">2023</span>
                                 </div>
                             </div>
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Escola Virtual - Fundação Bradesco-1.png') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>Python - Básico</h4>
-                                    <p>Fundação Bradesco</p>
+                                    <h4 data-translate="cert_python_title">{{ App\Helpers\TranslationHelper::get('cert_python_title') }}</h4>
+                                    <p data-translate="cert_python_desc">{{ App\Helpers\TranslationHelper::get('cert_python_desc') }}</p>
                                     <span class="certificate-date">2023</span>
                                 </div>
                             </div>
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Informática Básica.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>Informática Básica</h4>
-                                    <p>Fundamentos da Informática</p>
+                                    <h4 data-translate="cert_basic_it_title">{{ App\Helpers\TranslationHelper::get('cert_basic_it_title') }}</h4>
+                                    <p data-translate="cert_basic_it_desc">{{ App\Helpers\TranslationHelper::get('cert_basic_it_desc') }}</p>
                                     <span class="certificate-date">2022</span>
                                 </div>
                             </div>
@@ -443,32 +634,32 @@
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Ceriticado Inglês II.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>Inglês II</h4>
-                                    <p>Nível Intermediário</p>
+                                    <h4 data-translate="cert_english2_title">{{ App\Helpers\TranslationHelper::get('cert_english2_title') }}</h4>
+                                    <p data-translate="cert_english2_desc">{{ App\Helpers\TranslationHelper::get('cert_english2_desc') }}</p>
                                     <span class="certificate-date">2023</span>
                                 </div>
                             </div>
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certitificado Dialogue I.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>Dialogue I</h4>
-                                    <p>Inglês Básico</p>
+                                    <h4 data-translate="cert_dialogue1_title">{{ App\Helpers\TranslationHelper::get('cert_dialogue1_title') }}</h4>
+                                    <p data-translate="cert_dialogue1_desc">{{ App\Helpers\TranslationHelper::get('cert_dialogue1_desc') }}</p>
                                     <span class="certificate-date">2022</span>
                                 </div>
                             </div>
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Dialogue II.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>Dialogue II</h4>
-                                    <p>Inglês Pré-Intermediário</p>
+                                    <h4 data-translate="cert_dialogue2_title">{{ App\Helpers\TranslationHelper::get('cert_dialogue2_title') }}</h4>
+                                    <p data-translate="cert_dialogue2_desc">{{ App\Helpers\TranslationHelper::get('cert_dialogue2_desc') }}</p>
                                     <span class="certificate-date">2022</span>
                                 </div>
                             </div>
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Dialogue III.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>Dialogue III</h4>
-                                    <p>Inglês Intermediário</p>
+                                    <h4 data-translate="cert_dialogue3_title">{{ App\Helpers\TranslationHelper::get('cert_dialogue3_title') }}</h4>
+                                    <p data-translate="cert_dialogue3_desc">{{ App\Helpers\TranslationHelper::get('cert_dialogue3_desc') }}</p>
                                     <span class="certificate-date">2023</span>
                                 </div>
                             </div>
@@ -479,8 +670,8 @@
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Dialogue IV.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>Dialogue IV</h4>
-                                    <p>Inglês Avançado</p>
+                                    <h4 data-translate="cert_dialogue4_title">{{ App\Helpers\TranslationHelper::get('cert_dialogue4_title') }}</h4>
+                                    <p data-translate="cert_dialogue4_desc">{{ App\Helpers\TranslationHelper::get('cert_dialogue4_desc') }}</p>
                                     <span class="certificate-date">2023</span>
                                 </div>
                             </div>
@@ -491,24 +682,24 @@
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Auxiliar Administrativo.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>Auxiliar Administrativo</h4>
-                                    <p>Gestão Administrativa</p>
+                                    <h4 data-translate="cert_admin_title">{{ App\Helpers\TranslationHelper::get('cert_admin_title') }}</h4>
+                                    <p data-translate="cert_admin_desc">{{ App\Helpers\TranslationHelper::get('cert_admin_desc') }}</p>
                                     <span class="certificate-date">2022</span>
                                 </div>
                             </div>
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Treinamento e Desenvolvimento.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>Treinamento e Desenvolvimento</h4>
-                                    <p>Gestão de Pessoas</p>
+                                    <h4 data-translate="cert_training_title">{{ App\Helpers\TranslationHelper::get('cert_training_title') }}</h4>
+                                    <p data-translate="cert_training_desc">{{ App\Helpers\TranslationHelper::get('cert_training_desc') }}</p>
                                     <span class="certificate-date">2022</span>
                                 </div>
                             </div>
                             <div class="certificate-card">
                                 <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Cedaspy.jpg') }}');"></div>
                                 <div class="certificate-info">
-                                    <h4>Cedaspy</h4>
-                                    <p>Certificação Profissional</p>
+                                    <h4 data-translate="cert_cedaspy_title">{{ App\Helpers\TranslationHelper::get('cert_cedaspy_title') }}</h4>
+                                    <p data-translate="cert_cedaspy_desc">{{ App\Helpers\TranslationHelper::get('cert_cedaspy_desc') }}</p>
                                     <span class="certificate-date">2022</span>
                                 </div>
                             </div>
@@ -539,11 +730,11 @@
                 <div class="certificates-counter scroll-reveal scroll-reveal-delay-2">
                     <div class="counter-item">
                         <span class="counter-number" data-count="15">0</span>
-                        <span class="counter-label">Certificados</span>
+                        <span class="counter-label" data-translate="certificate_count">{{ App\Helpers\TranslationHelper::get('certificate_count') }}</span>
                     </div>
                     <div class="counter-item">
                         <span class="counter-number" data-count="4">0</span>
-                        <span class="counter-label">Categorias</span>
+                        <span class="counter-label" data-translate="category_count">{{ App\Helpers\TranslationHelper::get('category_count') }}</span>
                     </div>
                 </div>
             </div>
@@ -551,11 +742,11 @@
 
         <section class="certificates" id="technologies">
             <div class="interface">
-                <h2 class="title">LINGUAGENS E <span>TECNOLOGIAS.</span></h2>
+                <h2 class="title" data-translate="technologies_title">{{ App\Helpers\TranslationHelper::get('technologies_title') }}</h2>
                 
                 <!-- Front-end Technologies -->
                 <div class="tech-category">
-                    <h3 class="tech-title scroll-reveal">FRONT-END</h3>
+                    <h3 class="tech-title scroll-reveal" data-translate="frontend_title">{{ App\Helpers\TranslationHelper::get('frontend_title') }}</h3>
                     <div class="imgLanguages">
                         <img src="{{ asset('images/linguagens/html5.png') }}" alt="HTML5" class="scroll-reveal scroll-reveal-delay-1" title="HTML5">
                         <img src="{{ asset('images/linguagens/css3.png') }}" alt="CSS3" class="scroll-reveal scroll-reveal-delay-2" title="CSS3">
@@ -569,7 +760,7 @@
 
                 <!-- Back-end Technologies -->
                 <div class="tech-category">
-                    <h3 class="tech-title scroll-reveal">BACK-END</h3>
+                    <h3 class="tech-title scroll-reveal" data-translate="backend_title">{{ App\Helpers\TranslationHelper::get('backend_title') }}</h3>
                     <div class="imgLanguages">
                         <img src="{{ asset('images/linguagens/php.png') }}" alt="PHP" class="scroll-reveal scroll-reveal-delay-1" title="PHP">
                         <img src="{{ asset('images/linguagens/laravel-original.svg') }}" alt="Laravel" class="scroll-reveal scroll-reveal-delay-2" title="Laravel">
@@ -579,7 +770,7 @@
 
                 <!-- Database Technologies -->
                 <div class="tech-category">
-                    <h3 class="tech-title scroll-reveal">BANCO DE DADOS</h3>
+                    <h3 class="tech-title scroll-reveal" data-translate="database_title">{{ App\Helpers\TranslationHelper::get('database_title') }}</h3>
                     <div class="imgLanguages">
                         <img src="{{ asset('images/linguagens/mysql-original-wordmark.svg') }}" alt="MySQL" class="scroll-reveal scroll-reveal-delay-1" title="MySQL">
                         <img src="{{ asset('images/linguagens/postgresql-plain-wordmark.svg') }}" alt="PostgreSQL" class="scroll-reveal scroll-reveal-delay-2" title="PostgreSQL">
@@ -591,15 +782,15 @@
 
         <section class="form" id="form-menu">
             <div class="interface">
-                <h2 class="title">FALE <span>COMIGO.</span></h2>
+                <h2 class="title" data-translate="contact_title">{{ App\Helpers\TranslationHelper::get('contact_title') }}</h2>
                 <form id="contact-form" action="{{ request()->is('murilo*') ? route('murilo.contact.send') : route('contact.send') }}" method="post">
                     @csrf
-                    <input type="text" name="name" id="name" placeholder="Seu nome:" required>
-                    <input type="email" name="email" id="email" placeholder="Seu e-mail:" required>
-                    <input type="tel" name="phone" id="telefone" placeholder="Seu celular:" maxlength="15">
-                    <textarea name="message" id="message" placeholder="Sua mensagem" required></textarea>
+                    <input type="text" name="name" id="name" placeholder="{{ App\Helpers\TranslationHelper::get('name_placeholder') }}" required>
+                    <input type="email" name="email" id="email" placeholder="{{ App\Helpers\TranslationHelper::get('email_placeholder') }}" required>
+                    <input type="tel" name="phone" id="telefone" placeholder="{{ App\Helpers\TranslationHelper::get('phone_placeholder') }}" maxlength="15">
+                    <textarea name="message" id="message" placeholder="{{ App\Helpers\TranslationHelper::get('message_placeholder') }}" required></textarea>
                     <div class="btn-submit">
-                        <input type="submit" value="ENVIAR">
+                        <input type="submit" value="{{ App\Helpers\TranslationHelper::get('send_button') }}" data-translate="send_button">
                     </div>
                     <div id="form-messages">
                         @if(session('success'))
