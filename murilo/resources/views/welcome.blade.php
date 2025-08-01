@@ -612,7 +612,7 @@
                                 </div>
                             </div>
                             <div class="certificate-card">
-                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Escola Virtual - Fundação Bradesco-1.png') }}');"></div>
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/pythonBasico.png') }}');"></div>
                                 <div class="certificate-info">
                                     <h4 data-translate="cert_python_title">{{ App\Helpers\TranslationHelper::get('cert_python_title') }}</h4>
                                     <p data-translate="cert_python_desc">{{ App\Helpers\TranslationHelper::get('cert_python_desc') }}</p>
@@ -620,7 +620,7 @@
                                 </div>
                             </div>
                             <div class="certificate-card">
-                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Certificado Informática Básica.jpg') }}');"></div>
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/informaticaBasica.jpg') }}');"></div>
                                 <div class="certificate-info">
                                     <h4 data-translate="cert_basic_it_title">{{ App\Helpers\TranslationHelper::get('cert_basic_it_title') }}</h4>
                                     <p data-translate="cert_basic_it_desc">{{ App\Helpers\TranslationHelper::get('cert_basic_it_desc') }}</p>
@@ -632,7 +632,7 @@
                         <!-- Slide 3 - Idiomas -->
                         <div class="certificate-slide" data-category="languages">
                             <div class="certificate-card">
-                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/Ceriticado Inglês II.jpg') }}');"></div>
+                                <div class="certificate-image" style="background-image: url('{{ asset('images/certificados/inglesII.jpg') }}');"></div>
                                 <div class="certificate-info">
                                     <h4 data-translate="cert_english2_title">{{ App\Helpers\TranslationHelper::get('cert_english2_title') }}</h4>
                                     <p data-translate="cert_english2_desc">{{ App\Helpers\TranslationHelper::get('cert_english2_desc') }}</p>
