@@ -14,7 +14,15 @@ import {
   mysqlIcon,
   expressIcon,
   postgresql,
-  sqlServer
+  sqlServer,
+  ingles,
+  office,
+  jest,
+  git,
+  gitHub,
+  powerBI,
+  apiRest,
+  figma,
 } from "../imgs";
 
 const Technologies = () => {
@@ -65,6 +73,23 @@ const Technologies = () => {
               <TechnologyCard name="PostgreSQL" icon={postgresql} />
               <TechnologyCard name="SQL Server" icon={sqlServer} />
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Outros */}
+      <div className="max-w-3xl flex flex-col items-center relative z-10">
+        <h3 className="text-white text-xl mb-4 w-full text-left pl-2">Outros:</h3>
+        <div className="flex flex-col gap-4 items-center w-full">
+          <div className="flex flex-wrap justify-center gap-4">
+            <TechnologyCard name="API REST" icon={apiRest} />
+            <TechnologyCard name="Jest" icon={jest} />
+            <TechnologyCard name="Git" icon={git} />
+            <TechnologyCard name="GitHub" icon={gitHub} />
+            <TechnologyCard name="Power BI" icon={powerBI} />
+            <TechnologyCard name="Figma" icon={figma} />
+            <TechnologyCard name="Pacote Office" icon={office} />
+            <TechnologyCard name="Inglês" icon={ingles} />
           </div>
         </div>
       </div>

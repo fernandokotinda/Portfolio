@@ -13,6 +13,14 @@ export { default as mysqlIcon } from "./icons/mysql.png";
 export { default as expressIcon } from "./icons/express.png";
 export { default as postgresql } from "./icons/postgresql.png";
 export { default as sqlServer } from "./icons/sql_server.png";
+export { default as apiRest } from "./icons/apiRest.png";
+export { default as jest } from "./icons/jest.png";
+export { default as git } from "./icons/git.png";
+export { default as gitHub } from "./icons/gitHub.png";
+export { default as powerBI } from "./icons/powerBI.png";
+export { default as figma } from "./icons/figma.png";
+export { default as office } from "./icons/office.png";
+export { default as ingles } from "./icons/ingles.png";
 
 export { default as bioverdeEstoque } from "./projects/bioverde-estoque.png";
 export { default as bioverdeFornecedores } from "./projects/bioverde-fornecedores.png";

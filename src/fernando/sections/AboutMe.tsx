@@ -34,12 +34,12 @@ function AboutMe() {
             
             <div className="w-full flex justify-center">
               <a 
-                href="https://drive.google.com/file/d/1_i9kkSUXAaGyUXtjBUUa8wyRoFEcd3og/view?usp=sharing" 
+                href="https://www.linkedin.com/in/fernando-kotinda/" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 w-full px-4 py-2 bg-[#ABBDD7] text-[#0f172a] font-semibold rounded-xl hover:bg-[#ddeaff] transition duration-300 cursor-pointer shadow-md text-center block"
               >
-                Baixar Currículo
+                Ver LinkedIn
               </a>
             </div>
           </div>
